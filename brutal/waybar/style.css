@@ -1,0 +1,131 @@
+/*
+* ▓▓▓ BRUTAL VOID WAYBAR ▓▓▓
+* Raw concrete meets digital minimalism
+* No curves. No mercy. Pure function.
+* ----------------------------------------------------- 
+*/
+
+* {
+  font-family: "JetBrains Mono", "Fira Code", "Source Code Pro", monospace;
+  border: none;
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 0;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+window#waybar {
+  background: #0a0a0a;
+  border: none;
+  border-top: 2px solid #ffffff;
+  border-bottom: 1px solid #333333;
+}
+
+/* -----------------------------------------------------
+* WORKSPACES - Digital Brutalism
+* ----------------------------------------------------- */
+#custom-workspaces-left,
+#custom-workspaces-right {
+  background: #000000;
+  color: #ffffff;
+  padding: 0 16px;
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 800;
+  border-right: 1px solid #333333;
+}
+
+#custom-workspaces-right {
+  border-right: none;
+  border-left: 1px solid #333333;
+}
+
+/* -----------------------------------------------------
+* WINDOW TITLE - Functional Display
+* ----------------------------------------------------- */
+#window {
+  background: #111111;
+  color: #cccccc;
+  font-weight: 500;
+  padding: 0 24px;
+  margin: 0;
+  font-size: 12px;
+  border-right: 1px solid #333333;
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+
+/* -----------------------------------------------------
+* CLOCK - Central Authority
+* ----------------------------------------------------- */
+#clock {
+  background: #000000;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 16px;
+  padding: 0 32px;
+  margin: 0;
+  letter-spacing: 2px;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+}
+
+#clock:hover {
+  background: #222222;
+}
+
+/* -----------------------------------------------------
+* SYSTEM MONITORS - Raw Data
+* ----------------------------------------------------- */
+#memory {
+  background: #111111;
+  color: #ffffff;
+  padding: 0 20px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  border-right: 1px solid #333333;
+  transition: all 0.2s ease;
+}
+
+#memory:hover {
+  background: #222222;
+  color: #ff0000;
+}
+
+#pulseaudio {
+  background: #000000;
+  color: #ffffff;
+  padding: 0 20px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  border-right: 1px solid #333333;
+  transition: all 0.2s ease;
+}
+
+#pulseaudio:hover {
+  background: #222222;
+  color: #00ff00;
+}
+
+#pulseaudio.muted {
+  background: #111111;
+  color: #666666;
+}
+
+/* -----------------------------------------------------
+* TOOLTIPS - Minimal Information
+* ----------------------------------------------------- */
+tooltip {
+  background: #000000;
+  border: 2px solid #ffffff;
+  padding: 12px 16px;
+}
+
+tooltip label {
+  color: #ffffff;
+  font-weight: 700;
+}
