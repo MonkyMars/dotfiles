@@ -1,0 +1,1218 @@
+usb() {
+  local cmd="$1"
+  
+  # Only shift if there are arguments
+  [ $# -gt 0 ] && shift
+
+  # Function to check if a device is a USB device
+  check_usb_device() {
+    local device="$1"
+    local base_device=$(echo "$device" | sed 's/[0-9]*$//')
+    
+    # Check if removable
+    local removable=$(cat "/sys/block/$base_device/removable" 2>/dev/null || echo 0)
+    if [ "$removable" != "1" ]; then
+      return 1
+    fi
+    
+    # Check if it's connected via USB by looking at the device path
+    local device_path=$(readlink -f "/sys/block/$base_device")
+    if [[ ! "$device_path" =~ usb ]]; then
+      return 1
+    fi
+    
+    return 0
+  }
+
+  # Function to resolve identifier to device path
+  resolve_usb_device() {
+    local identifier="$1"
+    local device_path=""
+    
+    # Case 1: Full path like /dev/sda1
+    if [[ "$identifier" =~ ^/dev/ ]]; then
+      device_path="$identifier"
+      local base_device=$(echo "$identifier" | sed 's|/dev/||' | sed 's/[0-9]*$//')
+      if check_usb_device "$base_device"; then
+        echo "$device_path"
+        return 0
+      fi
+    fi
+    
+    # Case 2: Device name like sda1
+    if [[ "$identifier" =~ ^sd[a-z][0-9]+$ ]] || [[ "$identifier" =~ ^nvme[0-9]n[0-9]p[0-9]+$ ]]; then
+      device_path="/dev/$identifier"
+      local base_device=$(echo "$identifier" | sed 's/[0-9]*$//')
+      if check_usb_device "$base_device"; then
+        echo "$device_path"
+        return 0
+      fi
+    fi
+    
+    # Case 3: Label
+    while read device label; do
+      if [ "$label" = "$identifier" ]; then
+        local base_device=$(echo "$device" | sed 's|/dev/||' | sed 's/[0-9]*$//')
+        if check_usb_device "$base_device"; then
+          echo "$device"
+          return 0
+        fi
+      fi
+    done < <(lsblk -prno NAME,LABEL)
+    
+    return 1
+  }
+
+  # Function to count connected removable USBs
+  count_connected_usbs() {
+    local count=0
+    local lsblk_output=$(lsblk -prno KNAME,RM,MOUNTPOINT)
+    
+    while IFS= read -r device_info; do
+      local kname=$(echo "$device_info" | awk '{print $1}')
+      local rm=$(echo "$device_info" | awk '{print $2}')
+      local mountpoint=$(echo "$device_info" | awk '{print $3}')
+      
+      # Check if device is removable partition (has mountpoint) and name contains partition number
+      if [[ "$rm" == "1" && -n "$mountpoint" && "$kname" =~ [0-9]$ ]]; then
+        ((count++))
+      fi
+    done <<< "$lsblk_output"
+    echo "$count"
+  }
+
+  # Function to get the single connected USB device (returns empty if not exactly one)
+  get_single_usb_device() {
+    local found_device=""
+    local device_count=0
+    
+    # Use a simple approach to avoid shell complexity issues
+    local lsblk_output=$(lsblk -prno KNAME,RM,MOUNTPOINT)
+    
+    while IFS= read -r device_info; do
+      local kname=$(echo "$device_info" | awk '{print $1}')
+      local rm=$(echo "$device_info" | awk '{print $2}')
+      local mountpoint=$(echo "$device_info" | awk '{print $3}')
+      
+      # Check if device is removable partition (has mountpoint) and name contains partition number
+      if [[ "$rm" == "1" && -n "$mountpoint" && "$kname" =~ [0-9]$ ]]; then
+        found_device="$kname"
+        ((device_count++))
+      fi
+    done <<< "$lsblk_output"
+    
+    # Return the device only if exactly one USB is connected
+    if [[ $device_count -eq 1 ]]; then
+      echo "$found_device"
+      return 0
+    else
+      return 1
+    fi
+  }
+
+  # Function to resolve path (USB or filesystem)
+  resolve_path() {
+    local path_input="$1"
+    
+    # Handle home directory expansion
+    if [[ "$path_input" =~ ^~/ ]]; then
+      path_input="${HOME}/${path_input#~/}"
+    elif [[ "$path_input" = "~" ]]; then
+      path_input="$HOME"
+    fi
+    
+    # If it starts with / it's an absolute path
+    if [[ "$path_input" =~ ^/ ]]; then
+      echo "$path_input"
+      return 0
+    fi
+    
+    # Check if it contains / and first part might be USB device
+    if [[ "$path_input" =~ / ]]; then
+      local usb_part="${path_input%%/*}"
+      local file_part="${path_input#*/}"
+      
+      # Try to resolve as USB device
+      local dev_path
+      dev_path=$(resolve_usb_device "$usb_part" 2>/dev/null)
+      if [ $? -eq 0 ]; then
+        local mountpoint
+        mountpoint=$(lsblk -prno MOUNTPOINT "$dev_path" 2>/dev/null | head -1)
+        if [ -n "$mountpoint" ]; then
+          echo "$mountpoint/$file_part"
+          return 0
+        else
+          echo "USB_NOT_MOUNTED:$usb_part:$file_part"
+          return 1
+        fi
+      fi
+    else
+      # Single component - try USB device first
+      local dev_path
+      dev_path=$(resolve_usb_device "$path_input" 2>/dev/null)
+      if [ $? -eq 0 ]; then
+        local mountpoint
+        mountpoint=$(lsblk -prno MOUNTPOINT "$dev_path" 2>/dev/null | head -1)
+        if [ -n "$mountpoint" ]; then
+          echo "$mountpoint"
+          return 0
+        else
+          echo "USB_NOT_MOUNTED:$path_input:"
+          return 1
+        fi
+      fi
+    fi
+    
+    # Check for single USB auto-resolution before falling back to relative path
+    # Only apply auto-resolution if exactly one USB is connected and the path doesn't start with / or ~
+    if [[ ! "$path_input" =~ ^[/~] ]]; then
+      local single_usb_device
+      single_usb_device=$(get_single_usb_device)
+      if [[ -n "$single_usb_device" ]]; then
+        local mountpoint
+        mountpoint=$(lsblk -prno MOUNTPOINT "$single_usb_device" 2>/dev/null | head -1)
+        if [[ -n "$mountpoint" ]]; then
+          # Check if path contains / - if so, treat first part as directory on USB
+          if [[ "$path_input" =~ / ]]; then
+            echo "$mountpoint/$path_input"
+            return 0
+          else
+            # Single component - always resolve to USB when only one is connected
+            echo "$mountpoint/$path_input"
+            return 0
+          fi
+        fi
+      fi
+    fi
+    
+    # Fallback to relative path from current directory
+    echo "$(pwd)/$path_input"
+    return 0
+  }
+
+  # Function to handle copy/move operations
+  usb_copy_move() {
+    local operation="$1" # "cp" or "mv"
+    local verbose=false
+    local source=""
+    local dest=""
+    
+    # Parse arguments for verbose flag
+    shift # Remove operation
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+        -v|--verbose)
+          verbose=true
+          shift
+          ;;
+        *)
+          if [ -z "$source" ]; then
+            source="$1"
+          elif [ -z "$dest" ]; then
+            dest="$1"
+          fi
+          shift
+          ;;
+      esac
+    done
+    
+    if [ -z "$source" ] || [ -z "$dest" ]; then
+      echo "Usage: usb $operation [-v] <source> <destination>"
+      echo "  -v, --verbose     Show detailed file operations"
+      echo ""
+      echo "Path formats:"
+      echo "  USB with path:    school/file.txt  (USB label 'school')"
+      echo "  USB root:         school           (USB label 'school')"
+      echo "  Regular path:     /school/file.txt   (absolute path)"
+      echo "  Home path:        ~/file.txt       (home directory)"
+      echo "  Relative path:    file.txt         (current directory)"
+      echo ""
+      echo "Examples:"
+      echo "  usb $operation school/file.txt ~/Documents/"
+      echo "  usb $operation -v ~/file.txt work/backup/"
+      echo "  usb $operation school/folder work/"
+      return 1
+    fi
+
+    # List of directories to exclude (case-insensitive)
+    local exclude_dirs=(
+      "node_modules"
+      ".git"
+      ".svn"
+      ".hg"
+      "__pycache__"
+      ".pytest_cache"
+      ".mypy_cache"
+      ".tox"
+      ".venv"
+      "venv"
+      ".DS_Store"
+      "Thumbs.db"
+      ".tmp"
+      ".temp"
+      "target"
+      "build"
+      "dist"
+      ".gradle"
+      ".idea"
+      ".vscode"
+			".next"
+			".cache"
+			".cargo"
+			".cargo-cache"
+			"bower_components"
+			"vendor"
+			"log"
+			"logs"
+			"tmp"
+			"temp"
+			"cache"
+    )
+
+    # Function to check if a directory should be excluded
+    should_exclude_dir() {
+      local dir_name="$1"
+      local base_name=$(basename "$dir_name")
+      
+      for exclude in "${exclude_dirs[@]}"; do
+        if [[ "$(echo "$base_name" | tr '[:upper:]' '[:lower:]')" == "$(echo "$exclude" | tr '[:upper:]' '[:lower:]')" ]]; then
+          return 0  # Should exclude
+        fi
+      done
+      return 1  # Should not exclude
+    }
+
+    # Function to perform safe copy/move with exclusions
+    safe_copy_move() {
+      local op="$1"
+      local src="$2"
+      local dst="$3"
+      local is_directory="$4"
+      local verbose="$5"
+      
+      if [ "$is_directory" = "true" ]; then
+        # Check if this directory should be excluded
+        if should_exclude_dir "$src"; then
+          echo "Skipping excluded directory: $(basename "$src")"
+          return 0
+        fi
+        
+        # Create destination directory
+        mkdir -p "$dst"
+        
+        # Copy/move directory contents, excluding problematic folders recursively
+        local operation_word
+        if [ "$op" = "cp" ]; then
+          operation_word="Copying"
+        else
+          operation_word="Moving"
+        fi
+        echo "$operation_word directory '$src' to '$dst' (excluding problematic folders)..."
+        
+        local failed_items=()
+        local excluded_count=0
+        local processed_count=0
+        
+        # Process each top-level item in the source directory
+        for item in "$src"/*; do
+          [ ! -e "$item" ] && continue  # Skip if no files match
+          
+          local item_name=$(basename "$item")
+          local dest_item="$dst/$item_name"
+          
+          # Check if this top-level item should be excluded
+          if [ -d "$item" ] && should_exclude_dir "$item"; then
+            if [ "$verbose" = "true" ]; then
+              echo "  Skipping: $item_name"
+            fi
+            excluded_count=$((excluded_count + 1))
+            continue
+          fi
+          
+          # For directories, use a custom copy function that excludes nested problematic dirs
+          if [ -d "$item" ]; then
+            if [ "$verbose" = "true" ]; then
+              echo "  Processing directory: $item_name"
+            fi
+            if [ "$op" = "cp" ]; then
+              copy_dir_with_exclusions "$item" "$dest_item" "$verbose"
+            else
+              # For move, copy first then remove source if successful
+              copy_dir_with_exclusions "$item" "$dest_item" "$verbose"
+              if [ $? -eq 0 ]; then
+                rm -rf "$item"
+              else
+                failed_items+=("$item_name")
+                echo "  Failed: $item_name (could not copy for move operation)"
+                continue
+              fi
+            fi
+          else
+            # For files, use simple copy/move
+            if [ "$op" = "cp" ]; then
+              cp -L "$item" "$dest_item" 2>/dev/null  # -L follows symlinks
+            else
+              mv "$item" "$dest_item" 2>/dev/null
+            fi
+          fi
+          
+          # Check if operation failed
+          if [ $? -ne 0 ]; then
+            failed_items+=("$item_name")
+            echo "  Failed: $item_name (operation not permitted or other error)"
+          else
+            processed_count=$((processed_count + 1))
+          fi
+        done
+        
+        # Report results
+        if [ $excluded_count -gt 0 ]; then
+          echo "Excluded $excluded_count problematic directories"
+        fi
+        
+        if [ $processed_count -gt 0 ]; then
+          echo "Successfully processed $processed_count items"
+        fi
+        
+        if [ ${#failed_items[@]} -gt 0 ]; then
+          echo "Failed to process ${#failed_items[@]} items due to permission or other errors"
+          return 1
+        fi
+        
+      else
+        # For files, use cp/mv with flags to handle actual files (not symlinks)
+        if [ "$op" = "cp" ]; then
+          echo "Copying file '$src' to '$dst'..."
+          cp -L "$src" "$dst"  # -L follows symlinks and copies actual files
+        else
+          echo "Moving file '$src' to '$dst'..."
+          mv "$src" "$dst"
+        fi
+      fi
+    }
+
+    # Function to copy directory with recursive exclusions
+    copy_dir_with_exclusions() {
+      local src_dir="$1"
+      local dst_dir="$2"
+      local verbose="$3"
+      
+      # Create destination directory
+      mkdir -p "$dst_dir"
+      
+      # Use rsync with exclude patterns (more reliable than find)
+      local rsync_excludes=""
+      for exclude in "${exclude_dirs[@]}"; do
+        rsync_excludes="$rsync_excludes --exclude=$exclude"
+      done
+      
+      # Copy with exclusions using rsync
+      if command -v rsync >/dev/null 2>&1; then
+        if [ "$verbose" = "true" ]; then
+          eval "rsync -av --copy-links $rsync_excludes \"$src_dir/\" \"$dst_dir/\""
+        else
+          eval "rsync -a --copy-links $rsync_excludes \"$src_dir/\" \"$dst_dir/\"" 2>/dev/null
+        fi
+      else
+        # Fallback: manual copy with directory exclusion checks
+        (
+          cd "$src_dir" || return 1
+          find . -type f -print0 | while IFS= read -r -d '' file; do
+            local dir_path=$(dirname "$file")
+            local skip=false
+            
+            # Check if any part of the path contains excluded directories
+            for exclude in "${exclude_dirs[@]}"; do
+              if [[ "$file" == *"/$exclude/"* ]] || [[ "$file" == "./$exclude/"* ]]; then
+                skip=true
+                break
+              fi
+            done
+            
+            if [ "$skip" = false ]; then
+              local dst_file="$dst_dir/$file"
+              local dst_file_dir="$(dirname "$dst_file")"
+              mkdir -p "$dst_file_dir"
+              if [ "$verbose" = "true" ]; then
+                echo "  Copying: $file"
+              fi
+              cp -L "$file" "$dst_file" 2>/dev/null
+            fi
+          done
+        )
+      fi
+      
+      return $?
+    }
+    
+    # Resolve source path
+    local resolved_source
+    resolved_source=$(resolve_path "$source")
+    if [ $? -ne 0 ]; then
+      if [[ "$resolved_source" =~ ^USB_NOT_MOUNTED: ]]; then
+        local usb_label=$(echo "$resolved_source" | cut -d: -f2)
+        local file_part=$(echo "$resolved_source" | cut -d: -f3)
+        echo "USB device '$usb_label' is not mounted."
+        echo -n "Mount it now? (y/n): "
+        read -r response
+        if [[ "$response" =~ ^[Yy] ]]; then
+          if resolve_usb_device "$usb_label" >/dev/null 2>&1; then
+            echo "Mounting USB device '$usb_label'..."
+            usb mount "$usb_label"
+            if [ $? -eq 0 ]; then
+              resolved_source=$(resolve_path "$source")
+            else
+              echo "Failed to mount USB device '$usb_label'"
+              return 1
+            fi
+          else
+            echo "USB device '$usb_label' not found"
+            return 1
+          fi
+        else
+          echo "Operation cancelled."
+          return 0
+        fi
+      else
+        echo "Error: Could not resolve source path '$source'"
+        return 1
+      fi
+    fi
+    
+    # Resolve destination path
+    local resolved_dest
+    resolved_dest=$(resolve_path "$dest")
+    if [ $? -ne 0 ]; then
+      if [[ "$resolved_dest" =~ ^USB_NOT_MOUNTED: ]]; then
+        local usb_label=$(echo "$resolved_dest" | cut -d: -f2)
+        local file_part=$(echo "$resolved_dest" | cut -d: -f3)
+        echo "USB device '$usb_label' is not mounted."
+        echo -n "Mount it now? (y/n): "
+        read -r response
+        if [[ "$response" =~ ^[Yy] ]]; then
+          if resolve_usb_device "$usb_label" >/dev/null 2>&1; then
+            echo "Mounting USB device '$usb_label'..."
+            usb mount "$usb_label"
+            if [ $? -eq 0 ]; then
+              resolved_dest=$(resolve_path "$dest")
+            else
+              echo "Failed to mount USB device '$usb_label'"
+              return 1
+            fi
+          else
+            echo "USB device '$usb_label' not found"
+            return 1
+          fi
+        else
+          echo "Operation cancelled."
+          return 0
+        fi
+      else
+        echo "Error: Could not resolve destination path '$dest'"
+        return 1
+      fi
+    fi
+    
+    # Check if source exists
+    if [ ! -e "$resolved_source" ]; then
+      echo "Error: Source '$source' does not exist"
+      return 1
+    fi
+    
+    # Determine if we're copying to a directory or specific file
+    local final_dest="$resolved_dest"
+    if [ -d "$resolved_dest" ]; then
+      final_dest="$resolved_dest/$(basename "$resolved_source")"
+    fi
+    
+    # Check for existing destination and ask for overwrite
+    if [ -e "$final_dest" ]; then
+      if [ -d "$resolved_source" ] && [ -d "$final_dest" ]; then
+        echo "Directory '$final_dest' already exists."
+        echo -n "Overwrite entire directory? (y/n): "
+        read -r response
+        if [[ ! "$response" =~ ^[Yy] ]]; then
+          echo "Operation cancelled."
+          return 0
+        fi
+        # Remove existing directory for clean overwrite
+        rm -rf "$final_dest"
+      elif [ -f "$resolved_source" ] && [ -f "$final_dest" ]; then
+        echo "File '$final_dest' already exists."
+        echo -n "Overwrite? (y/n): "
+        read -r response
+        if [[ ! "$response" =~ ^[Yy] ]]; then
+          echo "Operation cancelled."
+          return 0
+        fi
+      fi
+    fi
+    
+    # Create destination directory if needed
+    local dest_dir
+    if [ -d "$resolved_dest" ]; then
+      dest_dir="$resolved_dest"
+    else
+      dest_dir="$(dirname "$final_dest")"
+    fi
+    
+    if [ ! -d "$dest_dir" ]; then
+      echo "Creating destination directory: $dest_dir"
+      mkdir -p "$dest_dir"
+    fi
+    
+    # Perform the operation using safe copy/move
+    if [ -d "$resolved_source" ]; then
+      # Directory operation
+      safe_copy_move "$operation" "$resolved_source" "$final_dest" "true" "$verbose"
+    else
+      # File operation
+      safe_copy_move "$operation" "$resolved_source" "$final_dest" "false" "$verbose"
+    fi
+    
+    if [ $? -eq 0 ]; then
+      echo "Operation completed successfully."
+    else
+      echo "Operation failed."
+      return 1
+    fi
+  }
+
+  case "$cmd" in
+    -s)
+      if [ -z "$1" ]; then
+        echo "Usage: usb -s <path>"
+        echo "Examples: usb -s school"
+        echo "          usb -s school/Coding"
+        echo "          usb -s sda1"
+        echo "          usb -s /dev/sda1"
+        return 1
+      fi
+
+      local identifier="$1"
+      local resolved_path
+      
+      # First try to resolve as a path (supports USB paths like school/Coding)
+      resolved_path=$(resolve_path "$identifier")
+      if [ $? -eq 0 ] && [ -d "$resolved_path" ]; then
+        echo "Changing to $resolved_path..."
+        cd "$resolved_path"
+        return 0
+      fi
+      
+      # Fallback: try to resolve as USB device identifier for root access
+      local dev_path
+      dev_path=$(resolve_usb_device "$identifier")
+      if [ $? -ne 0 ]; then
+        echo "Error: '$identifier' is not found as a path or USB device"
+        return 1
+      fi
+
+      # Check if the device is mounted
+      local current_mountpoint
+      current_mountpoint=$(lsblk -prno MOUNTPOINT "$dev_path" 2>/dev/null | head -1)
+      if [ -z "$current_mountpoint" ]; then
+        echo "Error: '$identifier' is not mounted"
+        echo "Use 'usb mount $identifier' to mount it first"
+        return 1
+      fi
+
+      echo "Changing to $current_mountpoint..."
+      cd "$current_mountpoint"
+      ;;
+
+    cp)
+      usb_copy_move "cp" "$@"
+      ;;
+
+    mv)
+      usb_copy_move "mv" "$@"
+      ;;
+
+    rm)
+      if [ -z "$1" ]; then
+        echo "Usage: usb rm <path1> [path2] [path3] ..."
+        echo "Examples: usb rm school/oldfile.txt"
+        echo "          usb rm ~/Downloads/file.txt work/backups/"
+        echo "          usb rm file1.txt file2.txt dir1/ dir2/"
+        return 1
+      fi
+
+      local targets=("$@")
+      local resolved_targets=()
+      local files_to_delete=()
+      local dirs_to_delete=()
+      local failed_resolves=()
+      local nonexistent_targets=()
+
+      # First pass: resolve all paths and categorize them
+      for target in "${targets[@]}"; do
+        local resolved_target
+        resolved_target=$(resolve_path "$target")
+        if [ $? -ne 0 ]; then
+          failed_resolves+=("$target")
+          continue
+        fi
+
+        if [ ! -e "$resolved_target" ]; then
+          nonexistent_targets+=("$target")
+          continue
+        fi
+
+        resolved_targets+=("$resolved_target")
+        if [ -d "$resolved_target" ]; then
+          dirs_to_delete+=("$resolved_target")
+        else
+          files_to_delete+=("$resolved_target")
+        fi
+      done
+
+      # Report any resolution or existence errors
+      if [ ${#failed_resolves[@]} -gt 0 ]; then
+        echo "Error: Could not resolve the following paths:"
+        for failed in "${failed_resolves[@]}"; do
+          echo "  - $failed"
+        done
+      fi
+
+      if [ ${#nonexistent_targets[@]} -gt 0 ]; then
+        echo "Error: The following paths do not exist:"
+        for nonexistent in "${nonexistent_targets[@]}"; do
+          echo "  - $nonexistent"
+        done
+      fi
+
+      # Exit if there were any errors
+      if [ ${#failed_resolves[@]} -gt 0 ] || [ ${#nonexistent_targets[@]} -gt 0 ]; then
+        return 1
+      fi
+
+      # Show what will be deleted and ask for confirmation
+      if [ ${#files_to_delete[@]} -gt 0 ] || [ ${#dirs_to_delete[@]} -gt 0 ]; then
+        echo "The following items will be deleted:"
+        
+        if [ ${#files_to_delete[@]} -gt 0 ]; then
+          echo "Files:"
+          for file in "${files_to_delete[@]}"; do
+            echo "  - $file"
+          done
+        fi
+        
+        if [ ${#dirs_to_delete[@]} -gt 0 ]; then
+          echo "Directories (and all their contents):"
+          for dir in "${dirs_to_delete[@]}"; do
+            echo "  - $dir"
+          done
+        fi
+
+        echo -n "Are you sure you want to delete these items? (y/n): "
+        read -r confirm
+        case "$confirm" in
+          [Yy]|[Yy][Ee][Ss])
+            # Proceed with deletion
+            ;;
+          *)
+            echo "Operation cancelled."
+            return 0
+            ;;
+        esac
+      fi
+
+      # Perform deletions
+      local deletion_errors=()
+      local successful_deletions=()
+
+      # Delete files first
+      for file in "${files_to_delete[@]}"; do
+        echo "Removing file '$file'..."
+        rm "$file"
+        if [ $? -eq 0 ]; then
+          successful_deletions+=("$file")
+        else
+          deletion_errors+=("$file")
+        fi
+      done
+
+      # Delete directories
+      for dir in "${dirs_to_delete[@]}"; do
+        echo "Removing directory '$dir'..."
+        rm -rf "$dir"
+        if [ $? -eq 0 ]; then
+          successful_deletions+=("$dir")
+        else
+          deletion_errors+=("$dir")
+        fi
+      done
+
+      # Report results
+      if [ ${#successful_deletions[@]} -gt 0 ]; then
+        echo "Successfully deleted ${#successful_deletions[@]} item(s)."
+      fi
+
+      if [ ${#deletion_errors[@]} -gt 0 ]; then
+        echo "Failed to delete the following items:"
+        for failed in "${deletion_errors[@]}"; do
+          echo "  - $failed"
+        done
+        return 1
+      fi
+      ;;
+
+    mkdir)
+      if [ -z "$1" ]; then
+        echo "Usage: usb mkdir <path>"
+        echo "Examples: usb mkdir school/newfolder"
+        echo "          usb mkdir ~/Documents/projects"
+        echo "          usb mkdir work/backup/2025"
+        return 1
+      fi
+
+      local target="$1"
+      local resolved_target
+      
+      resolved_target=$(resolve_path "$target")
+      if [ $? -ne 0 ]; then
+        if [[ "$resolved_target" =~ ^USB_NOT_MOUNTED: ]]; then
+          local usb_label=$(echo "$resolved_target" | cut -d: -f2)
+          local file_part=$(echo "$resolved_target" | cut -d: -f3)
+          echo "USB device '$usb_label' is not mounted."
+          echo -n "Mount it now? (y/n): "
+          read -r response
+          if [[ "$response" =~ ^[Yy] ]]; then
+            if resolve_usb_device "$usb_label" >/dev/null 2>&1; then
+              echo "Mounting USB device '$usb_label'..."
+              usb mount "$usb_label"
+              if [ $? -eq 0 ]; then
+                resolved_target=$(resolve_path "$target")
+              else
+                echo "Failed to mount USB device '$usb_label'"
+                return 1
+              fi
+            else
+              echo "USB device '$usb_label' not found"
+              return 1
+            fi
+          else
+            echo "Operation cancelled."
+            return 0
+          fi
+        else
+          echo "Error: Could not resolve '$target'"
+          return 1
+        fi
+      fi
+
+      if [ -e "$resolved_target" ]; then
+        echo "Error: '$resolved_target' already exists"
+        return 1
+      fi
+
+      echo "Creating directory '$resolved_target'..."
+      mkdir -p "$resolved_target"
+      
+      if [ $? -eq 0 ]; then
+        echo "Successfully created directory '$resolved_target'"
+      else
+        echo "Failed to create directory '$resolved_target'"
+        return 1
+      fi
+      ;;
+
+    touch)
+      if [ -z "$1" ]; then
+        echo "Usage: usb touch <path>"
+        echo "Examples: usb touch school/newfile.txt"
+        echo "          usb touch ~/Documents/notes.md"
+        echo "          usb touch work/data/config.json"
+        return 1
+      fi
+
+      local target="$1"
+      local resolved_target
+      
+      resolved_target=$(resolve_path "$target")
+      if [ $? -ne 0 ]; then
+        if [[ "$resolved_target" =~ ^USB_NOT_MOUNTED: ]]; then
+          local usb_label=$(echo "$resolved_target" | cut -d: -f2)
+          local file_part=$(echo "$resolved_target" | cut -d: -f3)
+          echo "USB device '$usb_label' is not mounted."
+          echo -n "Mount it now? (y/n): "
+          read -r response
+          if [[ "$response" =~ ^[Yy] ]]; then
+            if resolve_usb_device "$usb_label" >/dev/null 2>&1; then
+              echo "Mounting USB device '$usb_label'..."
+              usb mount "$usb_label"
+              if [ $? -eq 0 ]; then
+                resolved_target=$(resolve_path "$target")
+              else
+                echo "Failed to mount USB device '$usb_label'"
+                return 1
+              fi
+            else
+              echo "USB device '$usb_label' not found"
+              return 1
+            fi
+          else
+            echo "Operation cancelled."
+            return 0
+          fi
+        else
+          echo "Error: Could not resolve '$target'"
+          return 1
+        fi
+      fi
+
+      # Create parent directory if it doesn't exist
+      local parent_dir
+      parent_dir="$(dirname "$resolved_target")"
+      if [ ! -d "$parent_dir" ]; then
+        echo "Creating parent directory '$parent_dir'..."
+        mkdir -p "$parent_dir"
+      fi
+
+      if [ -e "$resolved_target" ]; then
+        echo "Updating timestamp for '$resolved_target'..."
+      else
+        echo "Creating file '$resolved_target'..."
+      fi
+      
+      touch "$resolved_target"
+      
+      if [ $? -eq 0 ]; then
+        if [ -e "$resolved_target" ]; then
+          echo "Successfully created/updated '$resolved_target'"
+        else
+          echo "Failed to create/update '$resolved_target'"
+          return 1
+        fi
+      else
+        echo "Failed to create/update '$resolved_target'"
+        return 1
+      fi
+      ;;
+
+    ls)
+      if [ -z "$1" ]; then
+        echo "Usage: usb ls <path> [ls_options]"
+        echo "Examples: usb ls school"
+        echo "          usb ls school/documents"
+        echo "          usb ls ~/Downloads"
+        echo "          usb ls work/projects -la"
+        return 1
+      fi
+
+      local target="$1"
+      shift  # Remove the path argument, leaving any ls options
+      local ls_options="$@"
+      local resolved_target
+      
+      resolved_target=$(resolve_path "$target")
+      if [ $? -ne 0 ]; then
+        if [[ "$resolved_target" =~ ^USB_NOT_MOUNTED: ]]; then
+          local usb_label=$(echo "$resolved_target" | cut -d: -f2)
+          local file_part=$(echo "$resolved_target" | cut -d: -f3)
+          echo "USB device '$usb_label' is not mounted."
+          echo -n "Mount it now? (y/n): "
+          read -r response
+          if [[ "$response" =~ ^[Yy] ]]; then
+            if resolve_usb_device "$usb_label" >/dev/null 2>&1; then
+              echo "Mounting USB device '$usb_label'..."
+              usb mount "$usb_label"
+              if [ $? -eq 0 ]; then
+                resolved_target=$(resolve_path "$target")
+              else
+                echo "Failed to mount USB device '$usb_label'"
+                return 1
+              fi
+            else
+              echo "USB device '$usb_label' not found"
+              return 1
+            fi
+          else
+            echo "Operation cancelled."
+            return 0
+          fi
+        else
+          echo "Error: Could not resolve '$target'"
+          return 1
+        fi
+      fi
+
+      if [ ! -e "$resolved_target" ]; then
+        echo "Error: '$resolved_target' does not exist"
+        return 1
+      fi
+
+      if [ ! -d "$resolved_target" ]; then
+        echo "Error: '$resolved_target' is not a directory"
+        return 1
+      fi
+
+      if [ -n "$ls_options" ]; then
+        eval "ls $ls_options \"$resolved_target\""
+      else
+        ls "$resolved_target"
+      fi
+      ;;
+
+    list)
+      # List all removable USB devices (both mounted and unmounted)
+      echo "USB Devices:"
+      echo "┌─────────────┬──────────┬─────────────────┬─────────────────┐"
+      echo "│ Device      │ Size     │ Mount Point     │ Label           │"
+      echo "├─────────────┼──────────┼─────────────────┼─────────────────┤"
+      
+      local found_usb=false
+      
+      while IFS= read -r line; do
+        # Parse each field separately to handle empty mountpoints correctly
+        local device=$(echo "$line" | awk '{print $1}')
+        local size=$(echo "$line" | awk '{print $2}')
+        local mountpoint=$(lsblk -prno MOUNTPOINT "$device" 2>/dev/null | head -1)
+        local label=$(lsblk -prno LABEL "$device" 2>/dev/null | head -1)
+        
+        local base_device=$(echo "$device" | sed 's|/dev/||' | sed 's/[0-9]*$//')
+        
+        if check_usb_device "$base_device"; then
+          mountpoint=${mountpoint:-"Not mounted"}
+          label=${label:-"No label"}
+          printf "│ %-11s │ %-8s │ %-15s │ %-15s │\n" "$device" "$size" "$mountpoint" "$label"
+          found_usb=true
+        fi
+      done < <(lsblk -prno NAME,SIZE | awk '$0 ~ /sd[a-z][0-9]/ || $0 ~ /nvme[0-9]n[0-9]p[0-9]/')
+      
+      if [ "$found_usb" = false ]; then
+        echo "│ No USB devices found                                           │"
+      fi
+      
+      echo "└─────────────┴──────────┴─────────────────┴─────────────────┘"
+      ;;
+
+    label)
+      if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Usage: usb label <device> <label>"
+        echo "Example: usb label sda1 MyUSB"
+        echo "         usb label /dev/sda1 MyUSB"
+        echo "         usb label oldlabel MyUSB"
+        return 1
+      fi
+
+      local identifier="$1"
+      local new_label="$2"
+      local dev_path
+      
+      dev_path=$(resolve_usb_device "$identifier")
+      if [ $? -ne 0 ]; then
+        echo "Error: '$identifier' is not found or not a USB device"
+        echo "This command only works with USB devices for safety"
+        return 1
+      fi
+
+      # Detect filesystem type
+      local fstype
+      fstype=$(lsblk -prno FSTYPE "$dev_path" 2>/dev/null | head -1)
+
+      if [ -z "$fstype" ]; then
+        echo "Error: Cannot detect filesystem type for $dev_path"
+        return 1
+      fi
+
+      echo "Setting label '$new_label' on $dev_path (filesystem: $fstype)..."
+
+      case "$fstype" in
+        ext2|ext3|ext4)
+          sudo e2label "$dev_path" "$new_label"
+          ;;
+        fat|vfat|fat32)
+          sudo fatlabel "$dev_path" "$new_label"
+          ;;
+        exfat)
+          sudo exfatlabel "$dev_path" "$new_label"
+          ;;
+        ntfs)
+          sudo ntfslabel "$dev_path" "$new_label"
+          ;;
+        *)
+          echo "Error: Unsupported filesystem type: $fstype"
+          echo "Supported types: ext2/3/4, fat/vfat/fat32, exfat, ntfs"
+          return 1
+          ;;
+      esac
+
+      if [ $? -eq 0 ]; then
+        echo "Successfully set label '$new_label' on $dev_path"
+      else
+        echo "Failed to set label on $dev_path"
+        return 1
+      fi
+      ;;
+
+    mount)
+      local base_mountpoint="/mnt"
+      
+      if [ -n "$1" ]; then
+        # Mount specific device
+        local identifier="$1"
+        local dev_path
+        
+        dev_path=$(resolve_usb_device "$identifier")
+        if [ $? -ne 0 ]; then
+          echo "Error: '$identifier' is not found or not a USB device"
+          return 1
+        fi
+        
+        # Check if already mounted
+        local current_mountpoint
+        current_mountpoint=$(lsblk -prno MOUNTPOINT "$dev_path" 2>/dev/null | head -1)
+        if [ -n "$current_mountpoint" ]; then
+          echo "$dev_path is already mounted at $current_mountpoint"
+          return 0
+        fi
+        
+        # Get the label for this partition
+        local label
+        label=$(lsblk -prno LABEL "$dev_path" 2>/dev/null | head -1)
+        
+        local mountpoint
+        if [ -n "$label" ] && [ "$label" != "" ]; then
+          # Use label as mountpoint name, sanitize it for filesystem
+          local clean_label=$(echo "$label" | tr ' ' '_' | tr -cd '[:alnum:]_-')
+          mountpoint="${base_mountpoint}/${clean_label}"
+        else
+          # Fallback to device name
+          mountpoint="${base_mountpoint}/$(basename "$dev_path")"
+        fi
+        
+        [ ! -d "$mountpoint" ] && sudo mkdir -p "$mountpoint"
+        echo "Mounting $dev_path to $mountpoint..."
+        sudo mount -o uid=$(id -u),gid=$(id -g),umask=0022 "$dev_path" "$mountpoint"
+      else
+        # Mount all unmounted USB devices
+        local parts=()
+        
+        # Get all removable partitions (RM=1) that are NOT mounted
+        while read device rm mountpoint; do
+          if [ "$rm" = "1" ] && [ -z "$mountpoint" ] && [[ "$device" =~ ^/dev/sd[a-z][0-9]+$ ]]; then
+            parts+=("$device")
+          fi
+        done < <(lsblk -prno KNAME,RM,MOUNTPOINT)
+
+        if [ ${#parts[@]} -eq 0 ]; then
+          echo "No unmounted USB devices found."
+          return 1
+        fi
+
+        for part in "${parts[@]}"; do
+          # Get the label for this partition
+          local label
+          label=$(lsblk -prno LABEL "$part" 2>/dev/null | head -1)
+          
+          local mountpoint
+          if [ -n "$label" ] && [ "$label" != "" ]; then
+            # Use label as mountpoint name, sanitize it for filesystem
+            local clean_label=$(echo "$label" | tr ' ' '_' | tr -cd '[:alnum:]_-')
+            mountpoint="${base_mountpoint}/${clean_label}"
+          else
+            # Fallback to device name
+            mountpoint="${base_mountpoint}/$(basename "$part")"
+          fi
+          
+          [ ! -d "$mountpoint" ] && sudo mkdir -p "$mountpoint"
+          echo "Mounting $part to $mountpoint..."
+          sudo mount -o uid=$(id -u),gid=$(id -g),umask=0022 "$part" "$mountpoint"
+        done
+      fi
+      ;;
+
+    unmount)
+      if [ -z "$1" ]; then
+        echo "Usage: usb unmount <device_identifier>"
+        echo "Examples: usb unmount school"
+        echo "          usb unmount sda1"
+        echo "          usb unmount /dev/sda1"
+        return 1
+      fi
+
+      local identifier="$1"
+      local dev_path
+      
+      dev_path=$(resolve_usb_device "$identifier")
+      if [ $? -ne 0 ]; then
+        echo "Error: '$identifier' is not found or not a USB device"
+        echo "This command only works with USB devices for safety"
+        return 1
+      fi
+
+      # Get the base device for power-off
+      local base_dev=$(echo "$dev_path" | sed 's/[0-9]*$//')
+      local mounted_parts=($(mount | awk -v dev="$base_dev" '$1 ~ dev { print $1 }'))
+
+      if [ ${#mounted_parts[@]} -eq 0 ]; then
+        echo "No mounted partitions found for '$identifier'"
+        return 1
+      fi
+
+			for part in "${mounted_parts[@]}"; do
+				local mountpoint
+				mountpoint=$(mount | awk -v p="$part" '$1 == p { print $3 }')
+				echo "Unmounting $part from $mountpoint..."
+				sudo umount "$mountpoint" || return 1
+
+				# Safely remove the mountpoint if it's empty and not critical
+				if [[ "$mountpoint" == /mnt/* || "$mountpoint" == /media/* ]]; then
+					if [ -d "$mountpoint" ] && [ -z "$(ls -A "$mountpoint")" ]; then
+						echo "Removing empty mountpoint $mountpoint..."
+						sudo rmdir "$mountpoint"
+					fi
+				fi
+			done
+      ;;
+
+    *)
+      echo "Usage: usb <-s|cp|mv|rm|mkdir|touch|ls|list|label|mount|unmount>"
+      echo "  -s <path>                          - Change to USB directory or device"
+      echo "  cp [-v] <source> <destination>     - Copy files/directories"
+      echo "  mv [-v] <source> <destination>     - Move files/directories"
+      echo "  rm <path1> [path2] [path3] ...     - Remove files/directories"
+      echo "  mkdir <path>                       - Create directories"
+      echo "  touch <path>                       - Create files or update timestamps"
+      echo "  ls <path> [options]                - List directory contents"
+      echo "  list                               - Show all USB devices"
+      echo "  label <device> <label>             - Set label on USB device"
+      echo "  mount [device]                     - Mount USB device(s)"
+      echo "  unmount <device>                   - Unmount USB device"
+      echo ""
+      echo "Flags:"
+      echo "  -v, --verbose    Show detailed file operations for cp/mv"
+      echo ""
+      echo "Path formats:"
+      echo "  USB with path:    school/file.txt  (USB label 'school')"
+      echo "  USB root:         school           (USB label 'school')"
+      echo "  Regular path:     /work/file.txt   (absolute path)"
+      echo "  Home path:        ~/file.txt       (home directory)"
+      echo "  Relative path:    file.txt         (current directory)"
+      echo ""
+      echo "Device formats supported:"
+      echo "  Full path:    /dev/sda1"
+      echo "  Device name:  sda1"
+      echo "  Label:        school"
+      echo ""
+      echo "Examples:"
+      echo "  usb -s school             # Change to /mnt/school"
+      echo "  usb cp school/file.txt ~/Documents/"
+      echo "  usb cp -v ~/Coding school/  # Copy with verbose output"
+      echo "  usb mv ~/file.txt work/backup/"
+      echo "  usb rm school/oldfile.txt    # Remove single file from USB"
+      echo "  usb rm file1.txt file2.txt dir1/  # Remove multiple items"
+      echo "  usb mkdir work/projects      # Create directory on USB"
+      echo "  usb touch school/notes.md    # Create file on USB"
+      echo "  usb ls school                # List USB contents"
+      echo "  usb ls work/docs -la         # List with options"
+      echo "  usb mount school          # Mount by label"
+      echo "  usb mount sda1            # Mount by device name"
+      echo "  usb mount /dev/sda1       # Mount by full path"
+      echo "  usb mount                 # Mount all unmounted USB devices"
+      return 1
+      ;;
+  esac
+}
