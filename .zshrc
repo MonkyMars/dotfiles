@@ -19,21 +19,11 @@ fdall() {
   sudo fd "$@" / 2>/dev/null
 }
 
-peek() {
-  if [ -z "$1" ]; then
-    echo "Usage: peek <directory>"
-    return 1
-  fi
-  if [ ! -d "$1" ]; then
-    echo "Directory not found: $1"
-    return 1
-  fi
-  (cd "$1" && ls -a)
-}
-
 alias langsort='~/Coding/golang/LangSort/./filesorting'
 alias g='git'
 alias pw='poweroff'
+alias ls='eza --all --icons'
+alias ff='fastfetch'
 
 autoload -Uz compinit
 compinit
@@ -67,15 +57,15 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#1e3a5f'
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+
+source /usr/share/nvm/init-nvm.sh
 
 # Load custom USB script
-source ~/.zsh/usb
+# source ~/.zsh/usb
 
 # Zinit Bootstrap
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -92,3 +82,7 @@ zinit light-mode for \
   zdharma-continuum/zinit-annex-bin-gem-node \
   zdharma-continuum/zinit-annex-patch-dl \
   zdharma-continuum/zinit-annex-rust
+export PATH=$HOME/.local/bin:$PATH
+
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestions
