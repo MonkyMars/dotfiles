@@ -1,8 +1,15 @@
 # Save history immediately after each command
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 setopt NO_BG_NICE
 setopt NO_CLOBBER
 setopt AUTO_CD
@@ -21,21 +28,24 @@ fdall() {
 
 alias langsort='~/Coding/golang/LangSort/./filesorting'
 alias g='git'
+alias gs='git status'
 alias pw='poweroff'
-alias ls='eza --all --icons'
+alias c='clear'
+alias cr='cargo run'
+alias cc='cargo check'
+alias rb='reboot'
 alias ff='fastfetch'
+alias ls='eza --all --icons --group-directories-first --color=always'
 
 autoload -Uz compinit
 compinit
-
-zstyle ':completion:*' menu select
-bindkey '^I' expand-or-complete
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 autoload -U add-zsh-hook
+
 load-nvmrc() {
   local node_version="$(nvm version)"
   local nvmrc_path="$(nvm_find_nvmrc)"
@@ -53,6 +63,7 @@ load-nvmrc() {
     fi
   fi
 }
+
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
@@ -61,11 +72,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#1e3a5f'
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
 
-
-source /usr/share/nvm/init-nvm.sh
-
 # Load custom USB script
-# source ~/.zsh/usb
+source ~/.zsh/usb
 
 # Zinit Bootstrap
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -77,12 +85,33 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+# Snippets
+zinit light Aloxaf/fzf-tab
+zinit snippet OMZP::command-not-found
+zinit cdreplay -q
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+
+# Keybinds
+bindkey '^I' expand-or-complete
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+# Completetions
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu select
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
 zinit light-mode for \
   zdharma-continuum/zinit-annex-as-monitor \
   zdharma-continuum/zinit-annex-bin-gem-node \
   zdharma-continuum/zinit-annex-patch-dl \
   zdharma-continuum/zinit-annex-rust
-export PATH=$HOME/.local/bin:$PATH
 
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
+
+export PATH=$HOME/.local/bin:$PATH
