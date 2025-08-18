@@ -28,7 +28,7 @@
   "buffer_font_size": 15,
   "theme": {
     "mode": "system",
-    "light": "VSCode Dark Polished",
+    "light": "One Dark Pro",
     "dark": "One Dark"
   }
 }

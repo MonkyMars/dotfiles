@@ -116,3 +116,4 @@ zinit light zsh-users/zsh-autosuggestions
 
 # Export path so it is available in my shell
 export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.cargo/bin:$PATH"
