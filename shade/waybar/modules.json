@@ -1,0 +1,44 @@
+{
+  "hyprland/workspaces": {
+    "description": "Hyprland workspace indicator with custom icons",
+    "on-click": "activate",
+    "sort-by-number": true
+  },
+
+  "hyprland/window": {
+    "description": "Currently focused window title",
+    "rewrite": {
+      "(.*) — Mozilla Firefox": " $1",
+      "(.*) - Visual Studio Code": "󰨞 $1",
+      "(.*) - Alacritty": " $1",
+      "Spotify": "󰓇 Spotify",
+      "Discord": "󰙯 Discord",
+      "": "="
+    }
+  },
+
+  "clock": {
+    "description": "System time and date",
+    "actions": {
+      "on-click": "mode",
+      "on-scroll-up": "tz_up",
+      "on-scroll-down": "tz_down"
+    }
+  },
+
+  "memory": {
+    "description": "RAM usage percentage",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    },
+    "on-click": "alacritty -e htop"
+  },
+
+  "pulseaudio": {
+    "description": "Audio control and volume",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "pamixer -i 5",
+    "on-scroll-down": "pamixer -d 5"
+  }
+}

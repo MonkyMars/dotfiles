@@ -15,10 +15,6 @@ setopt NO_CLOBBER
 setopt AUTO_CD
 setopt CORRECT
 
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-
 # Init starship and zoxide
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
@@ -27,7 +23,7 @@ eval "$(zoxide init zsh)"
 alias langsort='~/Coding/golang/LangSort/./filesorting'
 alias g='git'
 alias gs='git status'
-alias gm='git commit -m'
+alias add='git add'
 alias pw='poweroff'
 alias c='clear'
 alias cr='cargo run'
@@ -72,7 +68,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#1e3a5f'
 typeset -A ZSH_HIGHLIGHT_STYLES
 
 # Load custom USB script
-source ~/.zsh/usb
+source ~/dotfiles/.zsh/usb
 
 # Zinit Bootstrap
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
