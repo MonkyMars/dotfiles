@@ -19,16 +19,15 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
+# Init starship and zoxide
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
-fdall() {
-  sudo fd "$@" / 2>/dev/null
-}
-
+# Powerful aliases that I use commonly
 alias langsort='~/Coding/golang/LangSort/./filesorting'
 alias g='git'
 alias gs='git status'
+alias gm='git commit -m'
 alias pw='poweroff'
 alias c='clear'
 alias cr='cargo run'
@@ -40,12 +39,14 @@ alias ls='eza --all --icons --group-directories-first --color=always'
 autoload -Uz compinit
 compinit
 
+# Export nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 autoload -U add-zsh-hook
 
+# Load the node version of the .nvmrc when loaded into the directory for fast switching
 load-nvmrc() {
   local node_version="$(nvm version)"
   local nvmrc_path="$(nvm_find_nvmrc)"
@@ -64,13 +65,13 @@ load-nvmrc() {
   fi
 }
 
+# Add the hook and load the function
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
+# Set autosuggestions styling
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#1e3a5f'
-
 typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
 
 # Load custom USB script
 source ~/.zsh/usb
@@ -111,7 +112,9 @@ zinit light-mode for \
   zdharma-continuum/zinit-annex-patch-dl \
   zdharma-continuum/zinit-annex-rust
 
+# Load syntax highlighting and autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 
+# Export path so it is available in my shell
 export PATH=$HOME/.local/bin:$PATH
