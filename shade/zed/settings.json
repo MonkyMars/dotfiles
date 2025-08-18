@@ -12,6 +12,7 @@
   },
   "icon_theme": "Colored Zed Icons Theme Dark",
   "agent": {
+    "always_allow_tool_actions": true,
     "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",

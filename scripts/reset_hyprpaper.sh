@@ -1,1 +1,1 @@
-hyprpaper && pkill hyprpaper && hyprpaper &
+pkill hyprpaper && hyprpaper &
