@@ -39,10 +39,8 @@ alias ls='eza --all --icons --group-directories-first --color=always'
 autoload -Uz compinit
 compinit
 
-# Export nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# Source nvm
+source /usr/share/nvm/init-nvm.sh
 
 autoload -U add-zsh-hook
 
