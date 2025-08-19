@@ -3,10 +3,10 @@ configuration{
     show-icons: true;
     terminal: "kitty";
     drun-display-format: "{icon} {name}";
-    run-display-format: " {name}";
+    run-display-format: " {name}";
     disable-history: false;
-    display-drun: "   Apps ";
-    display-run: "   Run ";
+    display-drun: "   Apps ";
+    display-run: "   Run ";
     display-window: " 󰕰  Window";
     display-Network: " 󰤨  Network";
     click-to-exit: true;
@@ -15,19 +15,17 @@ configuration{
     me-select-entry: "MouseDPrimary";
     hover-select: true;
 }
-
 window{
     transparency: "real";
     location: center;
     anchor: center;
     width: 800px;
     height: 47%;
-    background-color: rgba(12, 42, 54, 0.7);
-    border-radius: 10px;
+    background-color: rgba(8, 12, 16, 0.85);
+    border-radius: 12px;
     border: 2px;
-    border-color: rgba(28, 108, 137, 0.8);
+    border-color: rgba(64, 224, 208, 0.6);
 }
-
 mainbox{
     enabled: true;
     spacing: 0px;
@@ -35,97 +33,88 @@ mainbox{
     orientation: vertical;
     children: [ "inputbar", "listbox"];
 }
-
 inputbar {
     enabled: true;
     spacing: 5px;
-    padding: 10px;
+    padding: 12px;
     background-color: transparent;
-    text-color: rgb(68, 71, 90);
+    text-color: rgb(176, 196, 222);
     orientation: horizontal;
     children: [ "prompt", "textbox-prompt-colon", "entry" ];
 }
-
 prompt {
     font-family: "SF Pro Display", "Jetbrains Mono Nerd Font Propo";
-    background-color: rgb(28, 108, 137);
-    text-color: #0b151c;
-    padding: 10px;
-    border-radius: 5px;
+    background-color: rgba(64, 224, 208, 0.9);
+    text-color: rgb(8, 12, 16);
+    padding: 12px;
+    border-radius: 8px;
     border: 1px;
-    border-color: rgba(28, 108, 137, 1);
+    border-color: rgba(64, 224, 208, 1);
 }
-
 textbox-prompt-colon {
     enabled: false;
 }
-
 entry {
     enabled: true;
     placeholder: "Search";
-    placeholder-color: rgb(167, 190, 196);
-    background-color: rgba(28, 108, 137, 0.3);
-    color: rgb(12, 42, 54);
-    cursor-color: rgba(167, 190, 196, 0.5);
-    padding: 10px;
+    placeholder-color: rgba(176, 196, 222, 0.7);
+    background-color: rgba(20, 25, 30, 0.8);
+    color: rgb(220, 220, 220);
+    cursor-color: rgba(64, 224, 208, 0.8);
+    padding: 12px;
     border: 1px;
-    border-color: rgba(28, 108, 137, 0.8);
-    border-radius: 5px;
+    border-color: rgba(64, 224, 208, 0.4);
+    border-radius: 8px;
 }
-
 listbox {
-    spacing: 10px;
-    padding: 10px;
+    spacing: 12px;
+    padding: 12px;
     background-color: transparent;
     orientation: vertical;
     children: [ "message", "listview" ];
 }
-
 listview {
     enabled: true;
-    padding: 5px;
+    padding: 6px;
     scrollbar: false;
-    border: 5px;
-    border-color: rgba(28, 108, 137, 0.3);
-    border-radius: 10px;
+    border: 3px;
+    border-color: rgba(64, 224, 208, 0.2);
+    border-radius: 12px;
     children: [ "element" ];
     cycle: true;
     dynamic: true;
 }
-
 element {
-    background-color: rgba(28, 108, 137, 0.8);
-    spacing: 1px;
-    padding: 1px;
-    padding-left: 5px;
-    border-color: rgba(28, 108, 137, 0.3);
+    background-color: transparent;
+    spacing: 2px;
+    padding: 2px;
+    margin-left: 20px;
+    border-color: rgba(64, 224, 208, 0.3);
 }
-
 element.normal.normal {
     background-color: transparent;
-    color: rgb(167, 190, 196);
+    color: rgb(200, 200, 200);
 }
 element.alternate.normal {
-    background-color: transparent;
-    color: rgb(167, 190, 196);
+    background-color: rgba(20, 25, 30, 0.3);
+    color: rgb(200, 200, 200);
 }
-
 element.selected.normal {
-    background-color: rgba(28, 108, 137, 0.3);
-    border: 1px;
-    border-color: rgba(28, 108, 137, 0.8);
+    background-color: rgba(64, 224, 208, 0.15);
+    border: 2px;
+    border-color: rgba(64, 224, 208, 0.8);
     border-radius: 10px;
+    color: rgb(255, 255, 255);
 }
-
 element-icon {
     enabled: true;
     size: 24px;
+    padding: 8px;
     background-color: transparent;
 }
-
 element-text {
     enabled: true;
-    padding: 10px;
+    padding: 12px;
     font-weight: bold;
     font: "SF Pro Display", "Jetbrains Mono Nerd Font Propo 13";
     background-color: transparent;
