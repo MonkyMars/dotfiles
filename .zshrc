@@ -113,3 +113,7 @@ zinit light zsh-users/zsh-autosuggestions
 # Export path so it is available in my shell
 export PATH=$HOME/.local/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
+export FILEMANAGER="kitty -e yazi"
+export XDG_UTILS_FILE_MANAGER="$FILEMANAGER"
+export XDG_CURRENT_DESKTOP=Hyprland
+export XDG_SESSION_TYPE=wayland

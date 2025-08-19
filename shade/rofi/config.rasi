@@ -1,435 +1,132 @@
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████ BRUTAL VOID - ROFI APPLICATION LAUNCHER ████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*
-* Raw concrete meets digital minimalism
-* Industrial machinery hum • Stark fluorescent light
-* No curves. No mercy. Pure function.
-* Cold steel • Binary precision • Unforgiving efficiency
-*
-* "The machine does not lie. The machine does not compromise."
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
-
-configuration {
-    font:                        "JetBrains Mono 14";
-    show-icons:                  true;
-    icon-theme:                  "Papirus-Dark";
-    display-drun:                "| EXECUTE";
-    display-run:                 "| RUN";
-    display-window:              "| WINDOW";
-    display-ssh:                 "| SSH";
-    display-combi:               "| SEARCH";
-    drun-display-format:         "{name}";
-    window-format:               "{w} ▓ {c} ▓ {t}";
-    disable-history:             false;
-    hide-scrollbar:              true;
-    sidebar-mode:                false;
-    matching:                    "fuzzy";
-    scroll-method:               0;
-    case-sensitive:              false;
-    cycle:                       true;
-    eh:                          1;
-    auto-select:                 false;
-    parse-hosts:                 true;
-    parse-known-hosts:           true;
-    combi-modi:                  "window,drun,ssh";
-    modi:                        "combi,drun,run,window,ssh";
-    ml-row-left:                 "ScrollLeft";
-    ml-row-right:                "ScrollRight";
-    ml-row-up:                   "ScrollUp";
-    ml-row-down:                 "ScrollDown";
-    me-select-entry:             "MousePrimary";
-    me-accept-entry:             "MouseDPrimary";
-    me-accept-custom:            "Control+MouseDPrimary";
-    timeout {
-        action: "kb-cancel";
-        delay:  0;
-    }
-    filebrowser {
-        directories-first: true;
-        sorting-method:    "name";
-    }
+configuration{
+    modi: "run,drun,window";
+    show-icons: true;
+    terminal: "kitty";
+    drun-display-format: "{icon} {name}";
+    run-display-format: " {name}";
+    disable-history: false;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: " 󰕰  Window";
+    display-Network: " 󰤨  Network";
+    click-to-exit: true;
+    global-kb: true;
+    me-accept-entry: "MousePrimary";
+    me-select-entry: "MouseDPrimary";
+    hover-select: true;
 }
 
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████████████ BRUTAL VOID VISUAL MATRIX ████████████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
-
-* {
-    /* ▓▓▓ CORE INDUSTRIAL PALETTE ▓▓▓ */
-    void-black:              #000000;
-    concrete-gray:           #111111;
-    steel-gray:              #222222;
-    iron-gray:               #333333;
-    silver-gray:             #666666;
-    light-steel:             #888888;
-    aluminum:                #aaaaaa;
-    chrome:                  #cccccc;
-    titanium:                #dddddd;
-    platinum:                #eeeeee;
-    pure-white:              #ffffff;
-    
-    /* ▓▓▓ TRANSPARENT OVERLAYS ▓▓▓ */
-    void-transparent:        #00000000;
-    void-semi:               #000000dd;
-    steel-semi:              #22222280;
-    white-semi:              #ffffff20;
-    
-    /* ▓▓▓ ACCENT HIGHLIGHTS ▓▓▓ */
-    warning-red:             #ff0000;
-    success-green:           #00ff00;
-    info-blue:               #0080ff;
-    
-    /* ▓▓▓ INTERFACE ASSIGNMENTS ▓▓▓ */
-    background-color:        @void-black;
-    foreground-color:        @pure-white;
-    border-color:            @pure-white;
-    separatorcolor:          @iron-gray;
-    scrollbar-handle:        @silver-gray;
-    
-    /* ▓▓▓ SELECTION STATES ▓▓▓ */
-    selected-normal-foreground:  @void-black;
-    selected-normal-background:  @pure-white;
-    selected-active-foreground:  @void-black;
-    selected-active-background:  @chrome;
-    selected-urgent-foreground:  @void-black;
-    selected-urgent-background:  @warning-red;
-    
-    /* ▓▓▓ NORMAL STATES ▓▓▓ */
-    normal-foreground:       @chrome;
-    normal-background:       @void-transparent;
-    active-foreground:       @pure-white;
-    active-background:       @void-transparent;
-    urgent-foreground:       @warning-red;
-    urgent-background:       @void-transparent;
-    
-    /* ▓▓▓ ALTERNATE STATES ▓▓▓ */
-    alternate-normal-foreground: @chrome;
-    alternate-normal-background: @concrete-gray;
-    alternate-active-foreground: @pure-white;
-    alternate-active-background: @steel-gray;
-    alternate-urgent-foreground: @warning-red;
-    alternate-urgent-background: @concrete-gray;
+window{
+    transparency: "real";
+    location: center;
+    anchor: center;
+    width: 800px;
+    height: 47%;
+    background-color: rgba(12, 42, 54, 0.7);
+    border-radius: 10px;
+    border: 2px;
+    border-color: rgba(28, 108, 137, 0.8);
 }
 
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████████████ WINDOW ARCHITECTURE ████████████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
-
-window {
-    transparency:            "real";
-    background-color:        @void-semi;
-    border:                  2px;
-    border-color:            @pure-white;
-    border-radius:           0px;
-    width:                   800px;
-    height:                  600px;
-    x-offset:                0px;
-    y-offset:                0px;
-    location:                center;
-    anchor:                  center;
-    fullscreen:              false;
-    enabled:                 true;
-    margin:                  0px;
-    orientation:             vertical;
-    cursor:                  "default";
+mainbox{
+    enabled: true;
+    spacing: 0px;
+    background-color: transparent;
+    orientation: vertical;
+    children: [ "inputbar", "listbox"];
 }
-
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████████████ MAIN CONTAINER MATRIX ████████████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
-
-mainbox {
-    enabled:                 true;
-    spacing:                 0px;
-    margin:                  0px;
-    padding:                 0px;
-    border:                  0px solid;
-    border-radius:           0px;
-    border-color:            @border-color;
-    background-color:        @void-black;
-    children:                [ "inputbar", "message", "listview", "mode-switcher" ];
-}
-
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████████████ INPUT CONTROL STATION ████████████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
 
 inputbar {
-    enabled:                 true;
-    spacing:                 0px;
-    margin:                  0px;
-    padding:                 20px 24px;
-    border:                  0px solid;
-    border-radius:           0px;
-    border-color:            @border-color;
-    background-color:        @void-black;
-    text-color:              @foreground-color;
-    children:                [ "prompt", "textbox-prompt-colon", "entry" ];
+    enabled: true;
+    spacing: 5px;
+    padding: 10px;
+    background-color: transparent;
+    text-color: rgb(68, 71, 90);
+    orientation: horizontal;
+    children: [ "prompt", "textbox-prompt-colon", "entry" ];
 }
 
 prompt {
-    enabled:                 true;
-    background-color:        inherit;
-    text-color:              inherit;
-    font:                    "JetBrains Mono Bold 16";
+    font-family: "SF Pro Display", "Jetbrains Mono Nerd Font Propo";
+    background-color: rgb(28, 108, 137);
+    text-color: #0b151c;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px;
+    border-color: rgba(28, 108, 137, 1);
 }
 
 textbox-prompt-colon {
-    enabled:                 true;
-    padding:                 0px 12px 0px 0px;
-    expand:                  false;
-    str:                     " |";
-    background-color:        inherit;
-    text-color:              inherit;
-    font:                    "JetBrains Mono Bold 16";
+    enabled: false;
 }
 
 entry {
-    enabled:                 true;
-    background-color:        inherit;
-    text-color:              inherit;
-    cursor:                  text;
-    placeholder:             "SEARCH...";
-    placeholder-color:       @silver-gray;
-    font:                    "JetBrains Mono 14";
+    enabled: true;
+    placeholder: "Search";
+    placeholder-color: rgb(167, 190, 196);
+    background-color: rgba(28, 108, 137, 0.3);
+    color: rgb(12, 42, 54);
+    cursor-color: rgba(167, 190, 196, 0.5);
+    padding: 10px;
+    border: 1px;
+    border-color: rgba(28, 108, 137, 0.8);
+    border-radius: 5px;
 }
 
-num-filtered-rows {
-    enabled:                 true;
-    expand:                  false;
-    background-color:        inherit;
-    text-color:              @silver-gray;
+listbox {
+    spacing: 10px;
+    padding: 10px;
+    background-color: transparent;
+    orientation: vertical;
+    children: [ "message", "listview" ];
 }
-
-textbox-num-sep {
-    enabled:                 true;
-    expand:                  false;
-    str:                     "/";
-    background-color:        inherit;
-    text-color:              @silver-gray;
-}
-
-num-rows {
-    enabled:                 true;
-    expand:                  false;
-    background-color:        inherit;
-    text-color:              @silver-gray;
-}
-
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████████████ RESULT DISPLAY MATRIX ████████████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
 
 listview {
-    enabled:                 true;
-    columns:                 1;
-    lines:                   12;
-    cycle:                   true;
-    dynamic:                 true;
-    scrollbar:               false;
-    layout:                  vertical;
-    reverse:                 false;
-    fixed-height:            true;
-    fixed-columns:           true;
-    spacing:                 0px;
-    margin:                  0px;
-    padding:                 0px;
-    border:                  2px solid 0px 0px;
-    border-radius:           0px;
-    border-color:            @pure-white;
-    background-color:        @void-black;
-    text-color:              @foreground-color;
-    cursor:                  "default";
+    enabled: true;
+    padding: 5px;
+    scrollbar: false;
+    border: 5px;
+    border-color: rgba(28, 108, 137, 0.3);
+    border-radius: 10px;
+    children: [ "element" ];
+    cycle: true;
+    dynamic: true;
 }
-
-scrollbar {
-    enabled:                 true;
-    width:                   4px;
-    margin:                  0px;
-    padding:                 0px;
-    border:                  0px;
-    border-radius:           0px;
-    background-color:        @steel-gray;
-    handle-color:            @pure-white;
-    handle-width:            4px;
-    cursor:                  "default";
-}
-
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████████████ ELEMENT CONTROL UNITS ████████████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
 
 element {
-    enabled:                 true;
-    spacing:                 16px;
-    margin:                  0px;
-    padding:                 12px 24px;
-    border:                  0px solid;
-    border-radius:           0px;
-    border-color:            @border-color;
-    background-color:        transparent;
-    text-color:              @chrome;
-    orientation:             horizontal;
-    cursor:                  pointer;
+    background-color: rgba(28, 108, 137, 0.8);
+    spacing: 1px;
+    padding: 1px;
+    padding-left: 5px;
+    border-color: rgba(28, 108, 137, 0.3);
 }
 
-element normal.normal {
-    background-color:        @normal-background;
-    text-color:              @normal-foreground;
+element.normal.normal {
+    background-color: transparent;
+    color: rgb(167, 190, 196);
+}
+element.alternate.normal {
+    background-color: transparent;
+    color: rgb(167, 190, 196);
 }
 
-element normal.urgent {
-    background-color:        @urgent-background;
-    text-color:              @urgent-foreground;
-}
-
-element normal.active {
-    background-color:        @active-background;
-    text-color:              @active-foreground;
-}
-
-element selected.normal {
-    background-color:        @selected-normal-background;
-    text-color:              @selected-normal-foreground;
-}
-
-element selected.urgent {
-    background-color:        @selected-urgent-background;
-    text-color:              @selected-urgent-foreground;
-}
-
-element selected.active {
-    background-color:        @selected-active-background;
-    text-color:              @selected-active-foreground;
-}
-
-element alternate.normal {
-    background-color:        @alternate-normal-background;
-    text-color:              @alternate-normal-foreground;
-}
-
-element alternate.urgent {
-    background-color:        @alternate-urgent-background;
-    text-color:              @alternate-urgent-foreground;
-}
-
-element alternate.active {
-    background-color:        @alternate-active-background;
-    text-color:              @alternate-active-foreground;
+element.selected.normal {
+    background-color: rgba(28, 108, 137, 0.3);
+    border: 1px;
+    border-color: rgba(28, 108, 137, 0.8);
+    border-radius: 10px;
 }
 
 element-icon {
-    background-color:        transparent;
-    text-color:              inherit;
-    size:                    20px;
-    cursor:                  inherit;
+    enabled: true;
+    size: 24px;
+    background-color: transparent;
 }
 
 element-text {
-    background-color:        transparent;
-    text-color:              inherit;
-    highlight:               inherit;
-    cursor:                  inherit;
-    vertical-align:          0.5;
-    horizontal-align:        0.0;
-    font:                    "JetBrains Mono 13";
+    enabled: true;
+    padding: 10px;
+    font-weight: bold;
+    font: "SF Pro Display", "Jetbrains Mono Nerd Font Propo 13";
+    background-color: transparent;
 }
-
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████████████ MODE SWITCHING PANEL ████████████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
-
-mode-switcher {
-    enabled:                 true;
-    spacing:                 0px;
-    margin:                  0px;
-    padding:                 0px;
-    border:                  2px solid 0px 0px;
-    border-radius:           0px;
-    border-color:            @pure-white;
-    background-color:        @void-black;
-    text-color:              @foreground-color;
-}
-
-button {
-    padding:                 16px 24px;
-    border:                  0px solid;
-    border-radius:           0px;
-    border-color:            @border-color;
-    background-color:        @steel-gray;
-    text-color:              @chrome;
-    cursor:                  pointer;
-    font:                    "JetBrains Mono Bold 12";
-}
-
-button selected {
-    background-color:        @pure-white;
-    text-color:              @void-black;
-}
-
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* ████████████ MESSAGE DISPLAY UNIT ████████████
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
-
-message {
-    enabled:                 true;
-    margin:                  0px;
-    padding:                 0px;
-    border:                  0px solid;
-    border-radius:           0px;
-    border-color:            @border-color;
-    background-color:        @void-black;
-    text-color:              @foreground-color;
-}
-
-textbox {
-    padding:                 16px 24px;
-    border:                  0px solid;
-    border-radius:           0px;
-    border-color:            @border-color;
-    background-color:        @steel-gray;
-    text-color:              @pure-white;
-    vertical-align:          0.5;
-    horizontal-align:        0.0;
-    highlight:               none;
-    placeholder-color:       @silver-gray;
-    blink:                   true;
-    markup:                  true;
-    font:                    "JetBrains Mono 13";
-}
-
-error-message {
-    padding:                 16px 24px;
-    border:                  2px solid;
-    border-radius:           0px;
-    border-color:            @warning-red;
-    background-color:        @void-black;
-    text-color:              @warning-red;
-    font:                    "JetBrains Mono Bold 13";
-}
-
-/*
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-* END BRUTAL VOID ROFI CONFIGURATION
-* Machine configured. Launcher operational. Deploy.
-* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-*/
