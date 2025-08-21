@@ -20,17 +20,17 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 # Powerful aliases that I use commonly
-alias langsort='~/Coding/golang/LangSort/./filesorting'
 alias g='git'
 alias gs='git status'
 alias add='git add'
+alias rb='reboot'
 alias pw='poweroff'
 alias c='clear'
 alias cr='cargo run'
 alias cc='cargo check'
-alias rb='reboot'
 alias ff='fastfetch'
 alias ls='eza --all --icons --group-directories-first --color=always'
+alias bd='bun run dev'
 
 autoload -Uz compinit
 compinit

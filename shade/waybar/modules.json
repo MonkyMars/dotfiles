@@ -6,15 +6,18 @@
   },
 
   "hyprland/window": {
-    "description": "Currently focused window title",
+    "format": "{}",
+    "max-length": 50,
     "rewrite": {
-      "(.*) — Mozilla Firefox": " $1",
-      "(.*) - Visual Studio Code": "󰨞 $1",
-      "(.*) - Alacritty": " $1",
-      "Spotify": "󰓇 Spotify",
-      "Discord": "󰙯 Discord",
+      "(.*) - Brave": "BROWSER @ $1",
+      "(.*) - Firefox": "BROWSER @ $1",
+      "(.*) - Chromium": "BROWSER @ $1",
+      "(.*) - Zed": "EDITOR @ $1",
+      "(.*) - Discord": "CHAT @ $1",
+      "(.*) - Spotify": "AUDIO @ $1",
       "": "="
-    }
+    },
+    "separate-outputs": true
   },
 
   "clock": {
