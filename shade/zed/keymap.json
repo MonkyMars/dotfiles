@@ -35,5 +35,11 @@
     "bindings": {
       "ctrl-shift-n": "project_panel::NewDirectory"
     }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-home": "editor::OpenFile"
+    }
   }
 ]
