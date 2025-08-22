@@ -1,10 +1,10 @@
 {
-  "hyprland/workspaces": {
-    "description": "Hyprland workspace indicator with custom icons",
-    "on-click": "activate",
-    "sort-by-number": true
+  "custom/workspaces-left": {
+    "exec": "~/.config/waybar/scripts/secondary.sh",
+    "return-type": "html",
+    "interval": 0.1,
+    "restart-interval": 1
   },
-
   "hyprland/window": {
     "format": "{}",
     "max-length": 50,
@@ -15,7 +15,7 @@
       "(.*) - Zed": "EDITOR @ $1",
       "(.*) - Discord": "CHAT @ $1",
       "(.*) - Spotify": "AUDIO @ $1",
-      "": "="
+      "": "@"
     },
     "separate-outputs": true
   },
@@ -35,12 +35,12 @@
       "warning": 70,
       "critical": 90
     },
-    "on-click": "alacritty -e htop"
+    "on-click": "kitty -e btop"
   },
 
   "pulseaudio": {
     "description": "Audio control and volume",
-    "on-click-right": "pavucontrol",
+    "on-click": "GTK_THEME=Adwaita-dark pavucontrol",
     "on-scroll-up": "pamixer -i 5",
     "on-scroll-down": "pamixer -d 5"
   }
