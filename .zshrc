@@ -22,23 +22,28 @@ eval "$(zoxide init zsh)"
 # Powerful aliases that I use commonly
 alias g='git'
 alias gs='git status'
+alias gc='checkout'
 alias add='git add'
 alias rb='reboot'
 alias pw='poweroff'
 alias c='clear'
+alias e='exit'
+alias .='cd'
 alias cr='cargo run'
 alias cc='cargo check'
 alias ct='cargo test'
 alias cb='cargo build'
+alias bd='bun run dev'
 alias ff='fastfetch'
 alias ls='eza --all --icons --group-directories-first --color=always'
-alias bd='bun run dev'
 
 autoload -Uz compinit
 compinit
 
 # Source nvm
-source /usr/share/nvm/init-nvm.sh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 autoload -U add-zsh-hook
 
@@ -119,3 +124,8 @@ export FILEMANAGER="kitty -e yazi"
 export XDG_UTILS_FILE_MANAGER="$FILEMANAGER"
 export XDG_CURRENT_DESKTOP=Hyprland
 export XDG_SESSION_TYPE=wayland
+export GTK_THEME="Adwaita:dark"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

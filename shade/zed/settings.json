@@ -13,7 +13,7 @@
   "icon_theme": "Colored Zed Icons Theme Dark",
   "agent": {
     "always_allow_tool_actions": true,
-    "default_profile": "write",
+    "default_profile": "ask",
     "default_model": {
       "provider": "copilot_chat",
       "model": "claude-sonnet-4"
