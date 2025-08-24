@@ -1,0 +1,10 @@
+[[keymaps]]
+command = "Repeat"
+key_sequence = "c r"
+[[keymaps]]
+command = "Shuffle"
+key_sequence = "c s"
+
+[[actions]]
+action = "AddToQueue"
+key_sequence = "d"

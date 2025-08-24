@@ -136,3 +136,10 @@ fi
 
 # Load custom scripts if they exist
 [[ -f ~/dotfiles/.zsh/usb ]] && source ~/dotfiles/.zsh/usb
+
+# bun completions
+[ -s "/home/monky/.bun/_bun" ] && source "/home/monky/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

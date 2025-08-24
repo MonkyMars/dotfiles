@@ -39,7 +39,7 @@
   {
     "context": "Editor",
     "bindings": {
-      "ctrl-home": "editor::OpenFile"
+      "ctrl-home": "editor::OpenSelectedFilename"
     }
   }
 ]
