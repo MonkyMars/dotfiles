@@ -1,131 +1,138 @@
-# Save history immediately after each command
+# History configuration - load early for immediate availability
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
-setopt NO_BG_NICE
-setopt NO_CLOBBER
-setopt AUTO_CD
-setopt CORRECT
+setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups
+setopt hist_save_no_dups hist_ignore_dups hist_find_no_dups
 
-# Init starship and zoxide
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+# Shell options
+setopt NO_BG_NICE NO_CLOBBER AUTO_CD CORRECT
 
-# Powerful aliases that I use commonly
-alias g='git'
-alias gs='git status'
-alias gc='checkout'
-alias add='git add'
-alias rb='reboot'
-alias pw='poweroff'
-alias c='clear'
-alias e='exit'
-alias .='cd'
-alias cr='cargo run'
-alias cc='cargo check'
-alias ct='cargo test'
-alias cb='cargo build'
-alias bd='bun run dev'
-alias ff='fastfetch'
+# Environment variables - set early
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+export XDG_CURRENT_DESKTOP=Hyprland
+export FILE_MANAGER=thunar
+export file_manager=thunar
+export XDG_SESSION_TYPE=wayland
+export GTK_THEME="Adwaita:dark"
+export editor="nvim"
+export EDITOR="zed"
+
+# Aliases - lightweight and frequently used
+alias g='git' gs='git status' gch='git checkout' add='git add'
+alias rb='reboot' pw='poweroff' c='clear' e='exit' .='cd'
+alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
+alias bd='bun run dev' ff='fastfetch'
 alias ls='eza --all --icons --group-directories-first --color=always'
 
-autoload -Uz compinit
-compinit
-
-# Source nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-autoload -U add-zsh-hook
-
-# Load the node version of the .nvmrc when loaded into the directory for fast switching
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(cat "$nvmrc_path" | tr -d '\n\r')
-
-    if [ "$nvmrc_node_version" != "$node_version" ]; then
-      if ! nvm ls "$nvmrc_node_version" >/dev/null 2>&1; then
-        echo "Node version $nvmrc_node_version not installed. Installing..."
-        nvm install "$nvmrc_node_version"
-      fi
-      nvm use "$nvmrc_node_version"
-    fi
-  fi
-}
-
-# Add the hook and load the function
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
-# Set autosuggestions styling
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#1e3a5f'
-typeset -A ZSH_HIGHLIGHT_STYLES
-
-# Load custom USB script
-source ~/dotfiles/.zsh/usb
-
-# Zinit Bootstrap
+# Zinit setup - defer heavy loading
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-  echo "Installing Zinit..."
-  git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
+    print "Installing Zinit..."
+    git clone --depth=1 https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
 fi
-
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Snippets
-zinit light Aloxaf/fzf-tab
-zinit snippet OMZP::command-not-found
-zinit cdreplay -q
-zinit snippet OMZL::git.zsh
-zinit snippet OMZP::git
-zinit snippet OMZP::sudo
+# Essential completions - load synchronously
+autoload -Uz compinit
+# Speed up compinit by checking once per day
+for dump in ~/.zcompdump(N.mh+24); do
+    compinit
+    break
+done
+[[ -z "$dump" ]] && compinit -C
 
-# Keybinds
-bindkey '^I' expand-or-complete
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-
-# Completetions
+# Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-zinit light-mode for \
-  zdharma-continuum/zinit-annex-as-monitor \
-  zdharma-continuum/zinit-annex-bin-gem-node \
-  zdharma-continuum/zinit-annex-patch-dl \
-  zdharma-continuum/zinit-annex-rust
+# Key bindings
+bindkey '^I' expand-or-complete
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
 
-# Load syntax highlighting and autosuggestions
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-autosuggestions
+# Autosuggestions styling
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#1e3a5f'
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
-# Export path so it is available in my shell
-export PATH=$HOME/.local/bin:$PATH
-export PATH="$HOME/.cargo/bin:$PATH"
-export FILEMANAGER="kitty -e yazi"
-export XDG_UTILS_FILE_MANAGER="$FILEMANAGER"
-export XDG_CURRENT_DESKTOP=Hyprland
-export XDG_SESSION_TYPE=wayland
-export GTK_THEME="Adwaita:dark"
+# Load plugins asynchronously for speed
+zinit wait lucid for \
+    atload"_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions \
+    atinit"zicompinit; zicdreplay" \
+        zdharma-continuum/fast-syntax-highlighting \
+    OMZP::command-not-found \
+    OMZP::sudo
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Load fzf-tab synchronously (needed for completions)
+zinit light Aloxaf/fzf-tab
+
+# Git plugins - load together
+zinit wait lucid for \
+    OMZL::git.zsh \
+    OMZP::git
+
+# Load nvmrc on startup if in a project directory (only after nvm loads)
+load-nvmrc() {
+    # Only run if nvm is loaded
+    [[ ! $+functions[nvm] ]] && return
+
+    local nvmrc_path="$(nvm_find_nvmrc 2>/dev/null)"
+
+    # Skip if same directory or no .nvmrc
+    [[ "$nvmrc_path" == "$__current_nvmrc_path" ]] && return
+    __current_nvmrc_path="$nvmrc_path"
+
+    if [[ -n "$nvmrc_path" ]]; then
+        local nvmrc_version="$(cat "$nvmrc_path" 2>/dev/null | tr -d '\n\r')"
+        local current_version="$(nvm version 2>/dev/null || echo "none")"
+
+        if [[ "$nvmrc_version" != "$current_version" ]]; then
+            if nvm ls "$nvmrc_version" >/dev/null 2>&1; then
+                nvm use "$nvmrc_version" >/dev/null 2>&1
+            else
+                print "Node $nvmrc_version not installed. Run: nvm install"
+            fi
+        fi
+    fi
+}
+
+# Lazy load nvm when needed, then try to load nvmrc
+lazy_load_nvm() {
+    if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+        source "$NVM_DIR/nvm.sh"
+        source "$NVM_DIR/bash_completion" 2>/dev/null
+        # Remove lazy loader and replace with actual nvm
+        unset -f nvm node npm npx
+        source "$NVM_DIR/nvm.sh"
+        # Now try to load nvmrc for current directory
+        load-nvmrc
+    fi
+}
+
+# Create placeholder functions that trigger lazy loading
+nvm() { lazy_load_nvm; nvm "$@"; }
+node() { lazy_load_nvm; node "$@"; }
+npm() { lazy_load_nvm; npm "$@"; }
+npx() { lazy_load_nvm; npx "$@"; }
+
+# Add hook for directory changes
+autoload -U add-zsh-hook
+add-zsh-hook chpwd load-nvmrc
+
+# Init starship and zoxide - check if installed first
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
+
+# Load custom scripts if they exist
+[[ -f ~/dotfiles/.zsh/usb ]] && source ~/dotfiles/.zsh/usb

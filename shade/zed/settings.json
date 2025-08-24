@@ -13,7 +13,7 @@
   "icon_theme": "Colored Zed Icons Theme Dark",
   "agent": {
     "always_allow_tool_actions": true,
-    "default_profile": "ask",
+    "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
       "model": "claude-sonnet-4"
@@ -31,5 +31,12 @@
     "mode": "system",
     "light": "One Dark Pro",
     "dark": "One Dark"
+  },
+  "lsp": {
+    "rust-analyzer": {
+      "binary": {
+        "path": "/usr/bin/rust-analyzer"
+      }
+    }
   }
 }
