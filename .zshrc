@@ -19,6 +19,9 @@ export XDG_SESSION_TYPE=wayland
 export GTK_THEME="Adwaita:dark"
 export editor="nvim"
 export EDITOR="zed"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Aliases - lightweight and frequently used
 alias g='git' gs='git status' gch='git checkout' add='git add'
@@ -26,6 +29,7 @@ alias rb='reboot' pw='poweroff' c='clear' e='exit' .='cd'
 alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
 alias b='bun' bd='bun run dev' bi='bun install' ff='fastfetch'
 alias ls='eza --all --icons --group-directories-first --color=always'
+alias s='~/dotfiles/scripts/setup-workspaces.sh mamabloemetjes'
 
 # Zinit setup - defer heavy loading
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -139,7 +143,3 @@ fi
 
 # bun completions
 [ -s "/home/monky/.bun/_bun" ] && source "/home/monky/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
