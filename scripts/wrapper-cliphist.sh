@@ -38,4 +38,4 @@ echo "$TARGET_WINDOW" > /tmp/clipboard-target
 echo "$TARGET_CLASS" >> /tmp/clipboard-target
 
 # Launch the clipboard selector
-kitty --class=floating-clipmenu -e ~/.config/clipmenu-fzf.sh
+kitty --class=floating-clipmenu -e ~/dotfiles/scripts/clipmenu-fzf.sh
