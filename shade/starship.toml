@@ -1,46 +1,46 @@
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-# ████ BRUTAL VOID - STARSHIP PROMPT CONFIGURATION ████
+# ████ FLOW VOID - STARSHIP PROMPT CONFIGURATION ████
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 #
-# Industrial command interface • Raw system diagnostics
-# No decoration • No comfort • Pure machine precision
-# Cold steel typography • Binary status indicators
+# Fluid command interface • Elegant system diagnostics
+# Curved precision • Flowing steel • Liquid metal typography
+# Deep void blacks • Silvery-blue accents
 #
-# "Every prompt is a system status report."
-# "The machine acknowledges. The machine executes."
+# "Every prompt flows like liquid metal through the void."
+# "The system breathes. The interface flows."
 # ─────────────────────────────────────────────────────────
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# ▓▓▓ GLOBAL CONFIGURATION - FACTORY SETTINGS ▓▓▓
+# ▓▓▓ GLOBAL CONFIGURATION - FLOW SETTINGS ▓▓▓
 add_newline = false
 command_timeout = 1000
 scan_timeout = 30
 
-# ▓▓▓ PROMPT FORMAT - INDUSTRIAL READOUT ▓▓▓
+# ▓▓▓ PROMPT FORMAT - FLUID READOUT ▓▓▓
 format = """
 $fill\
 $time\
 $line_break\
 $all\
 $line_break\
-=\
+~\
 $character"""
 
 right_format = """
 $status\
 $cmd_duration"""
 
-# ▓▓▓ FILL CHARACTER - STRUCTURAL SEPARATOR ▓▓▓
+# ▓▓▓ FILL CHARACTER - FLOWING SEPARATOR ▓▓▓
 [fill]
-symbol = '─'
-style = '#333333'
+symbol = '~'
+style = '#2a2a3a'
 
-# ▓▓▓ SYSTEM TIME - MACHINE CLOCK ▓▓▓
+# ▓▓▓ SYSTEM TIME - LIQUID CLOCK ▓▓▓
 [time]
 disabled = false
 format = '[$time]($style)'
-style = 'bold white'
+style = 'bold #7aa2d9'
 time_format = '%H:%M:%S'
 utc_time_offset = 'local'
 
@@ -51,46 +51,45 @@ utc_time_offset = 'local'
 [character]
 format = '''
 $symbol '''
-success_symbol = '[](bold white)'
-error_symbol = '[](bold white)'
-vimcmd_replace_one_symbol = '[](bold white)'
-vimcmd_replace_symbol = '[](bold white)'
-vimcmd_visual_symbol = '[](bold white)'
+success_symbol = '[◦](bold #b8c5d1)'
+error_symbol = '[◦](bold #d97aa2)'
+vimcmd_replace_one_symbol = '[◦](bold #b8c5d1)'
+vimcmd_replace_symbol = '[◦](bold #b8c5d1)'
+vimcmd_visual_symbol = '[◦](bold #b8c5d1)'
 
-# ▓▓▓ SYSTEM USER - OPERATOR IDENTIFICATION ▓▓▓
+# ▓▓▓ SYSTEM USER - OPERATOR FLOW ▓▓▓
 [username]
-style_user = 'bold white'
-style_root = 'bold white'
-format = '[$user]($style)[@](white)'
+style_user = 'bold #b8c5d1'
+style_root = 'bold #d97aa2'
+format = '[$user]($style)[◊](#4a4a5a)'
 disabled = false
 show_always = true
 
-# ▓▓▓ MACHINE HOSTNAME - SYSTEM IDENTIFIER ▓▓▓
+# ▓▓▓ MACHINE HOSTNAME - SYSTEM FLOW ▓▓▓
 [hostname]
 ssh_only = false
-format = '[$hostname]($style)[|](white)'
-style = 'bold white'
+format = '[$hostname]($style)[∿](#4a4a5a)'
+style = 'bold #7aa2d9'
 disabled = false
 
-# ▓▓▓ DIRECTORY PATH - FILESYSTEM LOCATION ▓▓▓
+# ▓▓▓ DIRECTORY PATH - FILESYSTEM FLOW ▓▓▓
 [directory]
-style = 'bold white'
+style = 'bold #9fb8d1'
 format = ' [$path]($style)[$read_only]($read_only_style)'
 truncation_length = 1
 truncate_to_repo = false
 truncation_symbol = ''
-read_only = '[▓RO▓]'
-read_only_style = 'bold white'
+read_only = '[◈RO◈]'
+read_only_style = 'bold #d97aa2'
 home_symbol = '~'
 use_os_path_sep = true
 
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-# ████████████ VERSION CONTROL SYSTEM ████████████
+# ████████████ VERSION CONTROL FLOW ████████████
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 [git_branch]
-style = 'bold white'
-symbol = ''
+style = 'bold #7aa2d9'
 format = ' [$symbol$branch(:$remote_branch)]($style) '
 truncation_length = 20
 truncation_symbol = '…'
@@ -99,64 +98,64 @@ always_show_remote = false
 ignore_branches = []
 
 [git_commit]
-style = 'bold white'
-format = '[\($hash$tag\)]($style)'
+style = 'bold #9fb8d1'
+format = '[◈$hash$tag◈]($style)'
 commit_hash_length = 7
-tag_symbol = '▓TAG▓'
+tag_symbol = '◊TAG◊'
 tag_disabled = false
 only_detached = true
 
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-# ████████████ SYSTEM DIAGNOSTICS ████████████
+# ████████████ SYSTEM FLOW DIAGNOSTICS ████████████
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 [cmd_duration]
-style = 'bold white'
+style = 'bold #7aa2d9'
 min_time = 500
-format = '[▓$duration▓]($style)'
+format = '[◈$duration◈]($style)'
 show_milliseconds = true
 show_notifications = false
 min_time_to_notify = 45000
 
 [status]
-style = 'bold white'
-symbol = '| ERR | '
+style = 'bold #d97aa2'
+symbol = '∿ ERR ∿ '
 success_symbol = ''
-not_executable_symbol = '▓NOEXEC▓'
-not_found_symbol = '▓404▓'
-sigint_symbol = '▓SIGINT▓'
-signal_symbol = '▓SIG▓'
+not_executable_symbol = '◈NOEXEC◈'
+not_found_symbol = '◈404◈'
+sigint_symbol = '◈SIGINT◈'
+signal_symbol = '◈SIG◈'
 format = '[$symbol$status]($style)'
 map_symbol = false
 disabled = false
 pipestatus = true
-pipestatus_separator = '|'
+pipestatus_separator = '∿'
 pipestatus_format = '\[$pipestatus\] => [$symbol$common_meaning$signal_name$maybe_int]($style)'
 
 [jobs]
-style = 'bold white'
-symbol = '▓JOBS▓'
+style = 'bold #9fb8d1'
+symbol = '◈JOBS◈'
 number_threshold = 1
 symbol_threshold = 1
 format = '[$symbol$number]($style)'
 
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-# ████████████ DEVELOPMENT ENVIRONMENT ████████████
+# ████████████ DEVELOPMENT FLOW ████████████
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
 [nodejs]
-style = 'bold white'
-symbol = '| NODE | '
+style = 'bold #7aa2d9'
+symbol = '∿ NODE ∿ '
 format = '[$symbol($version)]($style)'
 version_format = 'v${raw}'
 detect_extensions = ['js', 'mjs', 'cjs', 'ts', 'tsx']
 detect_files = ['package.json', '.node-version', '.nvmrc']
 detect_folders = ['node_modules']
-not_capable_style = 'bold white'
+not_capable_style = 'bold #d97aa2'
 
 [golang]
-style = 'bold white'
-symbol = '| GO | '
+style = 'bold #9fb8d1'
+symbol = '∿ GO ∿ '
 format = '[$symbol($version)]($style)'
 version_format = 'v${raw}'
 detect_extensions = ['go']
@@ -172,8 +171,8 @@ detect_files = [
 detect_folders = ['Godeps']
 
 [python]
-style = 'bold white'
-symbol = '| PY | '
+style = 'bold #b8c5d1'
+symbol = '∿ PY ∿ '
 format = '[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)'
 version_format = 'v${raw}'
 detect_extensions = ['py']
@@ -192,8 +191,8 @@ pyenv_prefix = 'pyenv '
 python_binary = ['python', 'python3', 'python2']
 
 [rust]
-style = 'bold white'
-symbol = '| RUST | '
+style = 'bold #d97aa2'
+symbol = '∿ RUST ∿ '
 format = '[$symbol($version)]($style)'
 version_format = 'v${raw}'
 detect_extensions = ['rs']
@@ -201,8 +200,8 @@ detect_files = ['Cargo.toml']
 detect_folders = []
 
 [docker_context]
-style = 'bold white'
-symbol = '▓DOCKER▓'
+style = 'bold #7aa2d9'
+symbol = '◈DOCKER◈'
 format = '[$symbol$context]($style)'
 only_with_files = true
 detect_extensions = []
@@ -210,8 +209,8 @@ detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
 detect_folders = []
 
 [kubernetes]
-style = 'bold white'
-symbol = '▓K8S▓'
+style = 'bold #9fb8d1'
+symbol = '◈K8S◈'
 format = '[$symbol$context( \($namespace\))]($status)'
 disabled = false
 detect_extensions = []
@@ -237,6 +236,6 @@ disabled = true
 disabled = false
 
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-# END BRUTAL VOID CONFIGURATION
-# System prompt configured. Machine interface operational.
+# END FLOW VOID CONFIGURATION
+# System prompt configured. Interface flows like liquid metal.
 # ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
