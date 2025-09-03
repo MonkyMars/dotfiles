@@ -10,7 +10,7 @@ setopt hist_save_no_dups hist_ignore_dups hist_find_no_dups
 setopt NO_BG_NICE NO_CLOBBER AUTO_CD CORRECT
 
 # Environment variables - set early
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH:$HOME/go/bin"
 export NVM_DIR="$HOME/.nvm"
 export XDG_CURRENT_DESKTOP=Hyprland
 export FILE_MANAGER=thunar
