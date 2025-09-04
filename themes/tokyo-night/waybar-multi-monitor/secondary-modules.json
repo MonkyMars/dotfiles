@@ -1,0 +1,47 @@
+{
+  "custom/workspaces-left": {
+    "exec": "~/.config/waybar/scripts/secondary.sh",
+    "return-type": "html",
+    "interval": 0.1,
+    "restart-interval": 1
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 50,
+    "rewrite": {
+      "(.*) - Brave": "BROWSER @ $1",
+      "(.*) - Firefox": "BROWSER @ $1",
+      "(.*) - Chromium": "BROWSER @ $1",
+      "(.*) - Zed": "EDITOR @ $1",
+      "(.*) - Discord": "CHAT @ $1",
+      "(.*) - Spotify": "AUDIO @ $1",
+      "": "@"
+    },
+    "separate-outputs": true
+  },
+
+  "clock": {
+    "description": "System time and date",
+    "actions": {
+      "on-click": "mode",
+      "on-scroll-up": "tz_up",
+      "on-scroll-down": "tz_down"
+    }
+  },
+
+  "memory": {
+    "description": "RAM usage percentage",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    },
+    "on-click": "kitty -e btop"
+  },
+
+  "pulseaudio": {
+    "description": "Audio control and volume",
+    "on-click": "GTK_THEME=Adwaita-dark pavucontrol",
+    "on-scroll-up": "pamixer -i 5",
+    "on-scroll-down": "pamixer -d 5"
+  }
+}

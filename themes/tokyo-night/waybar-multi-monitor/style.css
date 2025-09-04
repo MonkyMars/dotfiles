@@ -1,0 +1,129 @@
+/* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ */
+/* ████ MINIMAL CYBERPUNK MULTI-MONITOR WAYBAR ████ */
+/* ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ */
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "Fira Code", monospace;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #e4e9e8;
+}
+
+/* Container styling - simple rounded rectangles */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: rgba(11, 12, 13, 0.9);
+    border-radius: 8px;
+    margin: 0 4px;
+    padding: 4px 8px;
+    border: 1px solid rgba(77, 125, 130, 0.3);
+}
+
+/* Secondary monitor distinction - subtle red accent */
+window#waybar.HDMI-A-1 .modules-left {
+    border: 1px solid rgba(255, 46, 46, 0.4);
+}
+
+/* Workspaces - minimal and clean */
+#workspaces {
+    padding: 0;
+    margin: 0;
+}
+
+#workspaces button {
+    padding: 4px 8px;
+    margin: 0 2px;
+    background: transparent;
+    color: #9ba7a6;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    min-width: 20px;
+}
+
+#workspaces button:hover {
+    background: rgba(77, 125, 130, 0.2);
+    color: #e4e9e8;
+    border: 1px solid rgba(77, 125, 130, 0.4);
+}
+
+#workspaces button.active {
+    background: rgba(77, 125, 130, 0.6);
+    color: #0b0c0d;
+    border: 1px solid rgba(77, 125, 130, 0.8);
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    background: rgba(255, 46, 46, 0.6);
+    color: #0b0c0d;
+    border: 1px solid rgba(255, 46, 46, 0.8);
+}
+
+/* Window title - simple text */
+#window {
+    color: #9ba7a6;
+    font-weight: 400;
+    padding: 0 4px;
+}
+
+/* Clock - clean time display */
+#clock {
+    color: #e4e9e8;
+    font-weight: 500;
+    padding: 0 4px;
+}
+
+/* Memory - simple text indicator */
+#memory {
+    color: #4d7d82;
+    font-weight: 400;
+    padding: 0 4px;
+}
+
+#memory.warning {
+    color: #ff2e2e;
+}
+
+#memory.critical {
+    color: #ff2e2e;
+    font-weight: bold;
+}
+
+/* Audio - clean volume display */
+#pulseaudio {
+    color: #4d7d82;
+    font-weight: 400;
+    padding: 0 4px;
+}
+
+#pulseaudio.muted {
+    color: #7a1a1a;
+}
+
+/* Minimal hover effects */
+#clock:hover,
+#memory:hover,
+#pulseaudio:hover {
+    color: #e4e9e8;
+}
+
+/* Tooltip - simple dark box */
+tooltip {
+    background: rgba(11, 12, 13, 0.95);
+    color: #e4e9e8;
+    border-radius: 4px;
+    border: 1px solid rgba(77, 125, 130, 0.3);
+}
+
+tooltip label {
+    color: #e4e9e8;
+    padding: 4px 8px;
+}

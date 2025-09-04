@@ -1,0 +1,266 @@
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+# ████ TOKYO NIGHT - STARSHIP PROMPT CONFIGURATION ████
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+#
+# Cyberpunk cityscape inspired • Neon glow aesthetics
+# Electric blues • Vibrant purples • Midnight depths
+# Clean typography • Modern interface flows
+#
+# "The night sky glows with electric dreams."
+# "Code flows like neon through digital streets."
+# ─────────────────────────────────────────────────────────
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# ▓▓▓ GLOBAL CONFIGURATION - TOKYO NIGHT SETTINGS ▓▓▓
+add_newline = false
+command_timeout = 1000
+scan_timeout = 30
+
+# ▓▓▓ PROMPT FORMAT - NEON READOUT ▓▓▓
+format = """
+$fill\
+$time\
+$line_break\
+$all\
+$line_break\
+$character"""
+
+right_format = """
+$status\
+$cmd_duration"""
+
+# ▓▓▓ FILL CHARACTER - ELECTRIC SEPARATOR ▓▓▓
+[fill]
+symbol = '─'
+style = '#414868'
+
+# ▓▓▓ SYSTEM TIME - NEON CLOCK ▓▓▓
+[time]
+disabled = false
+format = '[$time]($style)'
+style = 'bold #7dcfff'
+time_format = '%H:%M:%S'
+utc_time_offset = 'local'
+
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+# ████████████ COMMAND INTERFACE ████████████
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+[character]
+format = '''
+$symbol '''
+success_symbol = '[❯](bold #7aa2f7)'
+error_symbol = '[❯](bold #f7768e)'
+vimcmd_replace_one_symbol = '[❮](bold #bb9af7)'
+vimcmd_replace_symbol = '[❮](bold #bb9af7)'
+vimcmd_visual_symbol = '[❮](bold #bb9af7)'
+
+# ▓▓▓ SYSTEM USER - DIGITAL IDENTITY ▓▓▓
+[username]
+style_user = 'bold #c0caf5'
+style_root = 'bold #f7768e'
+format = '[$user]($style)[@](#565f89)'
+disabled = false
+show_always = true
+
+# ▓▓▓ MACHINE HOSTNAME - SYSTEM NODE ▓▓▓
+[hostname]
+ssh_only = false
+format = '[$hostname]($style)[∿](#565f89)'
+style = 'bold #7aa2f7'
+disabled = false
+
+# ▓▓▓ DIRECTORY PATH - DIGITAL NAVIGATION ▓▓▓
+[directory]
+style = 'bold #4D7D82'
+format = ' [$path]($style)[$read_only]($read_only_style)'
+truncation_length = 3
+truncate_to_repo = false
+truncation_symbol = '…/'
+read_only = '[🔒]'
+read_only_style = 'bold #f7768e'
+home_symbol = '~'
+use_os_path_sep = true
+
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+# ████████████ VERSION CONTROL FLOW ████████████
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+[git_branch]
+style = 'bold #bb9af7'
+format = ' [$symbol$branch(:$remote_branch)]($style) '
+symbol = ' '
+truncation_length = 25
+truncation_symbol = '…'
+only_attached = false
+always_show_remote = false
+
+[git_commit]
+style = 'bold #7dcfff'
+format = '[◉$hash$tag]($style)'
+commit_hash_length = 7
+tag_symbol = ' 🏷 '
+tag_disabled = false
+only_detached = true
+
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+# ████████████ SYSTEM DIAGNOSTICS ████████████
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+[cmd_duration]
+style = 'bold #ff9e64'
+min_time = 500
+format = '[⏱ $duration]($style)'
+show_milliseconds = true
+show_notifications = false
+min_time_to_notify = 45000
+
+[status]
+style = 'bold #f7768e'
+symbol = '✘ '
+success_symbol = ''
+not_executable_symbol = '🚫'
+not_found_symbol = '❓'
+sigint_symbol = '🛑'
+signal_symbol = '⚡'
+format = '[$symbol$status]($style)'
+map_symbol = false
+disabled = false
+pipestatus = true
+pipestatus_separator = '|'
+
+[jobs]
+style = 'bold #e0af68'
+symbol = '⚙ '
+number_threshold = 1
+symbol_threshold = 1
+format = '[$symbol$number]($style)'
+
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+# ████████████ DEVELOPMENT ENVIRONMENT ████████████
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+[nodejs]
+style = 'bold #9ece6a'
+symbol = ' '
+format = '[$symbol($version)]($style)'
+version_format = 'v${raw}'
+detect_extensions = ['js', 'mjs', 'cjs', 'ts', 'tsx']
+detect_files = ['package.json', '.node-version', '.nvmrc']
+detect_folders = ['node_modules']
+
+[python]
+style = 'bold #7aa2f7'
+symbol = ' '
+format = '[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)'
+version_format = 'v${raw}'
+detect_extensions = ['py']
+detect_files = [
+    '.python-version',
+    'Pipfile',
+    '__init__.py',
+    'pyproject.toml',
+    'requirements.txt',
+    'setup.py',
+    'tox.ini',
+]
+pyenv_version_name = false
+pyenv_prefix = 'pyenv '
+
+[rust]
+style = 'bold #ff9e64'
+symbol = ' '
+format = '[$symbol($version)]($style)'
+version_format = 'v${raw}'
+detect_extensions = ['rs']
+detect_files = ['Cargo.toml']
+
+[golang]
+style = 'bold #7dcfff'
+symbol = ' '
+format = '[$symbol($version)]($style)'
+version_format = 'v${raw}'
+detect_extensions = ['go']
+detect_files = [
+    'go.mod',
+    'go.sum',
+    'go.work',
+    'glide.yaml',
+    'Gopkg.yml',
+    'Gopkg.lock',
+    '.go-version',
+]
+detect_folders = ['Godeps']
+
+[docker_context]
+style = 'bold #bb9af7'
+symbol = ' '
+format = '[$symbol$context]($style)'
+only_with_files = true
+detect_extensions = []
+detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+detect_folders = []
+
+[kubernetes]
+style = 'bold #7dcfff'
+symbol = '☸ '
+format = '[$symbol$context( \($namespace\))]($style)'
+disabled = false
+detect_extensions = []
+detect_files = []
+detect_folders = []
+
+# ▓▓▓ CLOUD & INFRASTRUCTURE ▓▓▓
+[aws]
+style = 'bold #ff9e64'
+symbol = ' '
+format = '[$symbol($profile)(\($region\))(\[$duration\])]($style)'
+
+[azure]
+style = 'bold #7aa2f7'
+symbol = '󰠅 '
+format = '[$symbol($subscription)]($style)'
+
+[gcloud]
+style = 'bold #9ece6a'
+symbol = '󱇶 '
+format = '[$symbol$account(@$domain)(\($region\))]($style)'
+
+# ▓▓▓ PACKAGE MANAGERS ▓▓▓
+[package]
+style = 'bold #e0af68'
+symbol = '📦 '
+format = '[$symbol$version]($style)'
+
+# ▓▓▓ SYSTEM INFORMATION ▓▓▓
+[memory_usage]
+disabled = false
+threshold = 75
+style = 'bold #f7768e'
+symbol = '🧠 '
+format = '[$symbol${ram}( | ${swap})]($style)'
+
+[battery]
+format = '[$symbol$percentage]($style)'
+[[battery.display]]
+threshold = 20
+style = 'bold #f7768e'
+[[battery.display]]
+threshold = 50
+style = 'bold #e0af68'
+[[battery.display]]
+threshold = 100
+style = 'bold #9ece6a'
+
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+# ████████████ DISABLED MODULES ████████████
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+[line_break]
+disabled = false
+
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+# END TOKYO NIGHT CONFIGURATION
+# Neon prompt configured. Digital streets illuminated.
+# ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
