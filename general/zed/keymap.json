@@ -41,5 +41,11 @@
     "bindings": {
       "ctrl-home": "editor::OpenSelectedFilename"
     }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-x": "file_finder::Toggle"
+    }
   }
 ]

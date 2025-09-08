@@ -29,7 +29,10 @@ alias rb='reboot' pw='poweroff' c='clear' e='exit' .='cd'
 alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
 alias b='bun' bd='bun run dev' bi='bun install' ff='fastfetch'
 alias ls='eza --all --icons --group-directories-first --color=always'
+# https://github.com/MonkyMars/ccheck
 alias check='~/releases/ccheck'
+# https://github.com/MonkyMars/path-resolver
+alias x='source ~/releases/path-resolver/wrapper.sh' alias ..='x ..'
 
 # Zinit setup - defer heavy loading
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
