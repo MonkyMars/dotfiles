@@ -25,7 +25,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Aliases - lightweight and frequently used
 alias g='git' gs='git status' gch='git checkout' add='git add' gc='git commit -m'
-alias gp='git push' gl='git pull' gst='git stash'
+alias gp='git push -u origin' gl='git pull' gst='git stash'
 alias rb='reboot' pw='poweroff' c='clear' e='exit' .='cd'
 alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
 alias b='bun' bd='bun run dev' bi='bun install' ff='fastfetch'
