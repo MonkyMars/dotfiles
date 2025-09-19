@@ -24,7 +24,7 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Aliases - lightweight and frequently used
-alias g='git' gs='git status' gch='git checkout' add='git add'
+alias g='git' gs='git status' gch='git checkout' add='git add' gc='git commit -m'
 alias rb='reboot' pw='poweroff' c='clear' e='exit' .='cd'
 alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
 alias b='bun' bd='bun run dev' bi='bun install' ff='fastfetch'
@@ -76,11 +76,6 @@ zinit wait lucid for \
 
 # Load fzf-tab synchronously (needed for completions)
 zinit light Aloxaf/fzf-tab
-
-# Git plugins - load together
-zinit wait lucid for \
-    OMZL::git.zsh \
-    OMZP::git
 
 # Load nvmrc on startup if in a project directory (only after nvm loads)
 load-nvmrc() {
