@@ -9,7 +9,7 @@
     "format": "{}",
     "max-length": 50,
     "rewrite": {
-      "(.*) - Brave": "BROWSER @ $1",
+      "(.*) - Zen Browser$": "BROWSER @ $1",
       "(.*) - Firefox": "BROWSER @ $1",
       "(.*) - Chromium": "BROWSER @ $1",
       "(.*) - Zed": "EDITOR @ $1",

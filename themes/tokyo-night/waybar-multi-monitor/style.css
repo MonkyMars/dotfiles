@@ -108,10 +108,26 @@ window#waybar.HDMI-A-1 .modules-left {
     color: #7a1a1a;
 }
 
+/* MPRIS - media player display */
+#mpris {
+    color: #4d7d82;
+    font-weight: 400;
+    padding: 0 4px;
+}
+
+#mpris.paused {
+    color: #9ba7a6;
+}
+
+#mpris.stopped {
+    color: #7a1a1a;
+}
+
 /* Minimal hover effects */
 #clock:hover,
 #memory:hover,
-#pulseaudio:hover {
+#pulseaudio:hover,
+#mpris:hover {
     color: #e4e9e8;
 }
 
