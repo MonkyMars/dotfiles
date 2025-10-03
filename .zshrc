@@ -31,6 +31,7 @@ alias gr='go run' gb='go build' gt='go test' gfmt='gofmt -w .'
 alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
 alias b='bun' bd='bun run dev' bi='bun install' ff='fastfetch'
 alias ls='eza --all --icons --group-directories-first --color=always'
+alias dc='docker-compose up --build'
 # https://github.com/MonkyMars/ccheck
 alias check='~/releases/ccheck'
 
