@@ -22,6 +22,7 @@ cover_img_scale = 1.0
 cover_img_pixels = 128
 enable_media_control = true
 enable_streaming = "Always"
+enable_notify = false
 enable_cover_image_cache = true
 default_device = "monky"
 seek_duration_secs = 5
