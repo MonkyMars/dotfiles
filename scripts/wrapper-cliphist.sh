@@ -28,11 +28,6 @@ else
     TARGET_CLASS=$(echo "$current_info" | jq -r '.class')
 fi
 
-# Debug: show what we captured
-echo "Captured target: $TARGET_CLASS ($TARGET_WINDOW)" >> /tmp/clipboard-debug.log
-echo "Available windows:" >> /tmp/clipboard-debug.log
-hyprctl clients -j | jq -r '.[] | select(.class != "floating-clipmenu" and .class != "kitty") | "\(.class): \(.address) (mapped: \(.mapped), hidden: \(.hidden))"' >> /tmp/clipboard-debug.log
-
 # Write target info to a temp file
 echo "$TARGET_WINDOW" > /tmp/clipboard-target
 echo "$TARGET_CLASS" >> /tmp/clipboard-target

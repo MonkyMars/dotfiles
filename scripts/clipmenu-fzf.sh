@@ -31,13 +31,7 @@ else
 fi
 
 # Wait for focus to restore
-sleep 0.2
-
-# Debug: log what we're targeting
-echo "Target class: $target_class" >> /tmp/clipboard-debug.log
-echo "Target window address: $target_window" >> /tmp/clipboard-debug.log
-echo "Actually focused: $(hyprctl activewindow -j | jq -r '.class')" >> /tmp/clipboard-debug.log
-echo "---" >> /tmp/clipboard-debug.log
+sleep 0.1
 
 # Type the content
 wtype -M ctrl -k v
