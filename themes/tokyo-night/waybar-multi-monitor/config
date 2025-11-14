@@ -75,7 +75,7 @@
 },
 {
   "layer": "top",
-  "output": "HDMI-A-1",
+  "output": "DP-2",
   "position": "top",
   "height": 40,
   "spacing": 8,
