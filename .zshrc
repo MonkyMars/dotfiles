@@ -34,8 +34,10 @@ alias ls='eza --all --icons --group-directories-first --color=always'
 alias dc='docker-compose up --build'
 alias vpn='sudo openvpn /etc/openvpn/client/proton_los_angelos.ovpn'
 alias py='python3' pyr='python3 main.py'
+alias obs='~/obs-mic-to-discord.sh && obs'
+
 # https://github.com/MonkyMars/ccheck
-alias check='~/releases/ccheck'
+alias check='ccheck'
 
 # Zinit setup - defer heavy loading
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then

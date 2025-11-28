@@ -1,6 +1,6 @@
 #!/bin/bash
 
-launcher=$(printf "Prism Launcher\nHeroic Games Launcher" | fzf --prompt="🎮 Choose a launcher: ")
+launcher=$(printf "Heroic Games Launcher\nPrism Launcher\nSteam" | fzf --prompt="Choose a launcher: ")
 
 if [ -z "$launcher" ]; then
   exit 0
@@ -13,6 +13,9 @@ case "$launcher" in
     ;;
   "Heroic Games Launcher")
     setsid gtk-launch com.heroicgameslauncher.hgl >/dev/null 2>&1 &
+    ;;
+  "Steam")
+    setsid steam >/dev/null 2>&1 &
     ;;
 esac
 
