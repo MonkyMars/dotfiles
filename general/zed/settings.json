@@ -21,7 +21,7 @@
   "buffer_font_size": 15,
   "theme": {
     "mode": "system",
-    "light": "One Dark Pro",
+    "light": "Tokyo Night",
     "dark": "Tokyo Night"
   },
   "lsp": {

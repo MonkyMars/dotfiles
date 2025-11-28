@@ -6,7 +6,6 @@ input {
         repeat-rate 35
         xkb {
         }
-        numlock
     }
 
     touchpad {
@@ -216,6 +215,11 @@ window-rule {
     max-height 400
 }
 
+gestures {
+    hot-corners {
+        off
+    }
+}
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
