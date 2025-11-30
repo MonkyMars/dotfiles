@@ -22,7 +22,7 @@
   "theme": {
     "mode": "system",
     "light": "Tokyo Night",
-    "dark": "Tokyo Night"
+    "dark": "One Dark"
   },
   "lsp": {
     "rust-analyzer": {

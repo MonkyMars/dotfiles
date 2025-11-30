@@ -8,7 +8,7 @@
         ],
         "position": "center",
         "sortByMostUsed": true,
-        "terminalCommand": "xterm -e",
+        "terminalCommand": "kitty -e",
         "useApp2Unit": false,
         "viewMode": "list"
     },
@@ -28,7 +28,7 @@
         "capsuleOpacity": 1,
         "density": "comfortable",
         "exclusive": true,
-        "floating": false,
+        "floating": true,
         "marginHorizontal": 0.25,
         "marginVertical": 0.25,
         "monitors": [
@@ -48,11 +48,11 @@
             ],
             "left": [
                 {
-                    "colorizeDistroLogo": true,
-                    "customIconPath": "",
-                    "icon": "",
+                    "colorizeDistroLogo": false,
+                    "customIconPath": "/home/monky/face.png",
+                    "icon": "alien",
                     "id": "ControlCenter",
-                    "useDistroLogo": true
+                    "useDistroLogo": false
                 },
                 {
                     "diskPath": "/",
@@ -132,7 +132,27 @@
     "brightness": {
         "brightnessStep": 5,
         "enableDdcSupport": true,
-        "enforceMinimum": false
+        "enforceMinimum": true
+    },
+    "calendar": {
+        "cards": [
+            {
+                "enabled": true,
+                "id": "banner-card"
+            },
+            {
+                "enabled": true,
+                "id": "calendar-card"
+            },
+            {
+                "enabled": true,
+                "id": "timer-card"
+            },
+            {
+                "enabled": true,
+                "id": "weather-card"
+            }
+        ]
     },
     "changelog": {
         "lastSeenVersion": ""
@@ -206,7 +226,7 @@
         "backgroundOpacity": 0.7,
         "colorizeIcons": true,
         "displayMode": "auto_hide",
-        "enabled": true,
+        "enabled": false,
         "floatingRatio": 1,
         "monitors": [
             "DP-1"
@@ -221,7 +241,7 @@
         "allowPanelsOnScreenWithoutBar": true,
         "animationDisabled": false,
         "animationSpeed": 1.1,
-        "avatarImage": "/home/monky/.face",
+        "avatarImage": "/home/monky/face.png",
         "compactLockScreen": false,
         "dimmerOpacity": 0.6,
         "enableShadows": true,
@@ -255,7 +275,7 @@
         "weatherShowEffects": true
     },
     "network": {
-        "wifiEnabled": false
+        "wifiEnabled": true
     },
     "nightLight": {
         "autoSchedule": true,
@@ -283,6 +303,8 @@
         "autoHideMs": 2000,
         "backgroundOpacity": 1,
         "enabled": true,
+        "enabledTypes": [
+        ],
         "location": "top_right",
         "monitors": [
         ],
@@ -337,8 +359,7 @@
         ],
         "showHeader": true
     },
-    "settingsVersion": 23,
-    "setupCompleted": true,
+    "settingsVersion": 25,
     "systemMonitor": {
         "cpuCriticalThreshold": 90,
         "cpuWarningThreshold": 80,
@@ -373,7 +394,7 @@
         "wezterm": false
     },
     "ui": {
-        "fontDefault": "Roboto",
+        "fontDefault": "DejaVu Sans",
         "fontDefaultScale": 1,
         "fontFixed": "DejaVu Sans Mono",
         "fontFixedScale": 1,
@@ -392,7 +413,7 @@
         "hideWallpaperFilenames": false,
         "monitors": [
         ],
-        "overviewEnabled": false,
+        "overviewEnabled": true,
         "panelPosition": "follow_bar",
         "randomEnabled": false,
         "randomIntervalSec": 300,

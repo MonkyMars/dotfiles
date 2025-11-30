@@ -146,3 +146,5 @@ fi
 
 # bun completions
 [ -s "/home/monky/.bun/_bun" ] && source "/home/monky/.bun/_bun"
+
+source /usr/share/nvm/init-nvm.sh

@@ -40,7 +40,8 @@ input {
 output "DP-1" {
     mode "2560x1440@239.992"
     position x=1920 y=-450
-    scale 1.0
+    focus-at-startup
+    scale 1.1
 }
 
 output "DP-2" {
@@ -195,7 +196,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="discord"
+    match app-id="vesktop"
     open-on-workspace "5"
 }
 
@@ -213,6 +214,12 @@ window-rule {
     default-column-width { fixed 400; }
     min-height 400
     max-height 400
+}
+
+// Set the overview wallpaper on the backdrop.
+layer-rule {
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
 }
 
 gestures {
@@ -239,7 +246,7 @@ binds {
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn-sh "rofi -show drun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
-    Mod+D hotkey-overlay-title="Open Discord" { spawn-sh "flatpak run com.discordapp.Discord"; }
+    Mod+D hotkey-overlay-title="Open Discord" { spawn "vesktop"; }
     Mod+S hotkey-overlay-title="Open Spotify: spotify_player" { spawn-sh "kitty --class spotify_player -e spotify_player"; }
     Mod+B hotkey-overlay-title="Open Browser: Zen" { spawn-sh "flatpak run app.zen_browser.zen --ozone-platform=wayland"; }
     Mod+G hotkey-overlay-title="Open Game Launcher" { spawn-sh "kitty --class=floating-game-launcher -e ~/dotfiles/scripts/game-launcher.sh"; }
