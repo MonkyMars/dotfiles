@@ -2,7 +2,7 @@
   "features": {
     "edit_prediction_provider": "copilot"
   },
-  "icon_theme": "Colored Zed Icons Theme Dark",
+  "icon_theme": "VSCode Icons for Zed (Dark Angular)",
   "agent": {
     "always_allow_tool_actions": true,
     "default_profile": "write",

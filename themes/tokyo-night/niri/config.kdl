@@ -97,6 +97,7 @@ layout {
 }
 
 spawn-at-startup "qs" "-c" "noctalia-shell"
+spawn-at-startup "openrgb" "--device" "0" "--mode" "static" "--color" "008080"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
