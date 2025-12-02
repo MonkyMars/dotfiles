@@ -27,7 +27,7 @@ input {
 
     trackpoint {
     }
-    focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse
 }
 
 // You can configure outputs by their name, which you can find
@@ -69,9 +69,9 @@ layout {
     focus-ring {
         width 1.5
 
-        active-color "#7fc8ff"
+        active-color "#7aa2f7"
 
-        inactive-color "#505050"
+        inactive-color "#3b4261"
     }
 
     border {
@@ -133,16 +133,6 @@ animations {
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
-
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
-window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
-}
 
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
@@ -247,7 +237,7 @@ binds {
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn-sh "rofi -show drun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
-    Mod+D hotkey-overlay-title="Open Discord" { spawn "vesktop"; }
+    Mod+D hotkey-overlay-title="Open Discord" { spawn-sh "/usr/lib/vesktop/vesktop --disable-features=WebRtcAllowInputVolumeAdjustment"; }
     Mod+S hotkey-overlay-title="Open Spotify: spotify_player" { spawn-sh "kitty --class spotify_player -e spotify_player"; }
     Mod+B hotkey-overlay-title="Open Browser: Zen" { spawn-sh "flatpak run app.zen_browser.zen --ozone-platform=wayland"; }
     Mod+G hotkey-overlay-title="Open Game Launcher" { spawn-sh "kitty --class=floating-game-launcher -e ~/dotfiles/scripts/game-launcher.sh"; }
@@ -394,23 +384,23 @@ binds {
     //
     // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
     // will all refer to the 3rd workspace.
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
-    Mod+4 { focus-workspace 4; }
-    Mod+5 { focus-workspace 5; }
-    Mod+6 { focus-workspace 6; }
-    Mod+7 { focus-workspace 7; }
-    Mod+8 { focus-workspace 8; }
+    Mod+1 { focus-workspace "1"; }
+    Mod+2 { focus-workspace "2"; }
+    Mod+3 { focus-workspace "3"; }
+    Mod+4 { focus-workspace "4"; }
+    Mod+5 { focus-workspace "5"; }
+    Mod+6 { focus-workspace "6"; }
+    Mod+7 { focus-workspace "7"; }
+    Mod+8 { focus-workspace "8"; }
     Mod+9 { focus-workspace 9; }
-    Mod+Shift+1 { move-column-to-workspace 1; }
-    Mod+Shift+2 { move-column-to-workspace 2; }
-    Mod+Shift+3 { move-column-to-workspace 3; }
-    Mod+Shift+4 { move-column-to-workspace 4; }
-    Mod+Shift+5 { move-column-to-workspace 5; }
-    Mod+Shift+6 { move-column-to-workspace 6; }
-    Mod+Shift+7 { move-column-to-workspace 7; }
-    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+1 { move-column-to-workspace "1"; }
+    Mod+Shift+2 { move-column-to-workspace "2"; }
+    Mod+Shift+3 { move-column-to-workspace "3"; }
+    Mod+Shift+4 { move-column-to-workspace "4"; }
+    Mod+Shift+5 { move-column-to-workspace "5"; }
+    Mod+Shift+6 { move-column-to-workspace "6"; }
+    Mod+Shift+7 { move-column-to-workspace "7"; }
+    Mod+Shift+8 { move-column-to-workspace "8"; }
     Mod+Shift+9 { move-column-to-workspace 9; }
 
     // Alternatively, there are commands to move just a single window:
