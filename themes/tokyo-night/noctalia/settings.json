@@ -134,7 +134,7 @@
     "brightness": {
         "brightnessStep": 5,
         "enableDdcSupport": true,
-        "enforceMinimum": true
+        "enforceMinimum": false
     },
     "calendar": {
         "cards": [
@@ -225,18 +225,17 @@
         }
     },
     "dock": {
-        "backgroundOpacity": 0.7,
-        "colorizeIcons": true,
-        "displayMode": "auto_hide",
+        "backgroundOpacity": 0.7000000000000001,
+        "colorizeIcons": false,
+        "displayMode": "always_visible",
         "enabled": false,
         "floatingRatio": 1,
         "monitors": [
-            "DP-1"
         ],
-        "onlySameOutput": true,
+        "onlySameOutput": false,
         "pinnedApps": [
         ],
-        "size": 1
+        "size": 0.99
     },
     "general": {
         "allowPanelsOnScreenWithoutBar": true,

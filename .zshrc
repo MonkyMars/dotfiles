@@ -32,9 +32,8 @@ alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
 alias b='bun' bd='bun run dev' bi='bun install' ff='fastfetch'
 alias ls='eza --all --icons --group-directories-first --color=always'
 alias dc='docker-compose up --build'
-alias vpn='sudo openvpn /etc/openvpn/client/proton_los_angelos.ovpn'
 alias py='python3' pyr='python3 main.py'
-alias obs='~/obs-mic-to-discord.sh && obs'
+alias co='cd ~/data/Coding'
 
 # https://github.com/MonkyMars/ccheck
 alias check='ccheck'
@@ -83,6 +82,12 @@ zinit wait lucid for \
 
 # Load fzf-tab synchronously (needed for completions)
 zinit light Aloxaf/fzf-tab
+
+# Load fzf history search plugin
+zinit light joshskidmore/zsh-fzf-history-search
+
+# Load zsh-you-should-use plugin - Warns if you use a command that has an alias
+zinit light MichaelAquilina/zsh-you-should-use
 
 # Load nvmrc on startup if in a project directory (only after nvm loads)
 load-nvmrc() {
@@ -141,10 +146,14 @@ if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh)"
 fi
 
+if command -v atuin >/dev/null 2>&1; then
+    eval "$(atuin init zsh)"
+fi
+
 # Load custom scripts if they exist
 [[ -f ~/dotfiles/.zsh/usb ]] && source ~/dotfiles/.zsh/usb
 
 # bun completions
 [ -s "/home/monky/.bun/_bun" ] && source "/home/monky/.bun/_bun"
 
-source /usr/share/nvm/init-nvm.sh
+[[ -f ~/.zshrc.zwc ]] || zcompile ~/.zshrc
