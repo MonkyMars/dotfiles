@@ -1,2 +1,5 @@
 spawn-at-startup "qs" "-c" "noctalia-shell"
 spawn-at-startup "openrgb" "--device" "0" "--mode" "static" "--color" "008080"
+spawn-at-startup "swayidle" \
+  "timeout" "600" "exec" "niri msg output dpms off" \
+  "resume" "exec" "niri msg output dpms on"

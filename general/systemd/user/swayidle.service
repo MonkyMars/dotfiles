@@ -1,0 +1,12 @@
+[Unit]
+Description=Idle management daemon for Wayland (swayidle)
+
+[Service]
+ExecStart=/usr/bin/swayidle -w \
+    timeout 300 'niri msg output DP-1 off; niri msg output DP-2 off' \
+    resume 'niri msg output DP-1 on; niri msg output DP-2 on'
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
