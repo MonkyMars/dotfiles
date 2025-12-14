@@ -419,7 +419,7 @@
         "tooltipsEnabled": true
     },
     "wallpaper": {
-        "directory": "/home/monky/dotfiles",
+        "directory": "/home/monky/dotfiles/",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "fillColor": "#000000",
@@ -437,7 +437,7 @@
         "transitionEdgeSmoothness": 0.05,
         "transitionType": "random",
         "useWallhaven": false,
-        "wallhavenCategories": "111",
+        "wallhavenCategories": "100",
         "wallhavenOrder": "desc",
         "wallhavenPurity": "100",
         "wallhavenQuery": "",
