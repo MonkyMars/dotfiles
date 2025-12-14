@@ -185,13 +185,8 @@ detect_extensions = ['go']
 detect_files = [
     'go.mod',
     'go.sum',
-    'go.work',
-    'glide.yaml',
-    'Gopkg.yml',
-    'Gopkg.lock',
-    '.go-version',
 ]
-detect_folders = ['Godeps']
+detect_folders = []
 
 [docker_context]
 style = 'bold #bb9af7'
