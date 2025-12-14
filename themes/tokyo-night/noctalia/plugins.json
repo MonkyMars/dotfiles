@@ -7,6 +7,15 @@
         }
     ],
     "states": {
+        "catwalk": {
+            "enabled": true
+        },
+        "mini-docker": {
+            "enabled": true
+        },
+        "privacy-indicator": {
+            "enabled": true
+        }
     },
     "version": 1
 }
