@@ -2,7 +2,12 @@
 
 action="$1"
 
-node_id=$(pw-dump | jq -r '.[] | select(.info.props."application.name" == "PipeWire ALSA [spotify_player]" and .info.props."media.class" == "Stream/Output/Audio") | .id')
+#node_id=$(pw-dump | jq -r '.[] | select(.info.props."application.name" == "PipeWire ALSA [spotify_player]" and .info.props."media.class" == "Stream/Output/Audio") | .id')
+node_id=$(wpctl status \
+  | awk '/Streams:/,0' \
+  | awk '/spotify/ {print $1}' \
+  | tr -d '.')
+
 
 if [ -z "$node_id" ]; then
     notify-send --urgency=low --app-name=Volume --hint=string:x-canonical-private-synchronous:spotify_volume "spotify_player not running"

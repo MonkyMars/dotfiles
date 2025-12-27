@@ -4,6 +4,7 @@
         "customLaunchPrefixEnabled": false,
         "enableClipPreview": true,
         "enableClipboardHistory": false,
+        "iconMode": "tabler",
         "pinnedExecs": [
         ],
         "position": "center",
@@ -19,13 +20,11 @@
         "mprisBlacklist": [
         ],
         "preferredPlayer": "spotify_player",
-        "visualizerQuality": "high",
         "visualizerType": "linear",
         "volumeOverdrive": false,
         "volumeStep": 5
     },
     "bar": {
-        "backgroundOpacity": 1,
         "capsuleOpacity": 1,
         "density": "comfortable",
         "exclusive": true,
@@ -37,14 +36,20 @@
         "outerCorners": false,
         "position": "bottom",
         "showCapsule": true,
+        "showOutline": false,
+        "transparent": false,
         "widgets": {
             "center": [
                 {
                     "characterCount": 1,
+                    "colorizeIcons": false,
+                    "enableScrollWheel": true,
                     "followFocusedScreen": false,
                     "hideUnoccupied": false,
                     "id": "Workspace",
-                    "labelMode": "none"
+                    "labelMode": "none",
+                    "showApplications": false,
+                    "showLabelsOnlyWhenOccupied": true
                 }
             ],
             "left": [
@@ -90,6 +95,7 @@
                     ],
                     "colorizeIcons": true,
                     "drawerEnabled": true,
+                    "hidePassive": false,
                     "id": "Tray",
                     "pinned": [
                     ]
@@ -177,6 +183,10 @@
             {
                 "enabled": true,
                 "id": "media-sysmon-card"
+            },
+            {
+                "enabled": true,
+                "id": "brightness-card"
             }
         ],
         "position": "close_to_bar_button",
@@ -211,11 +221,52 @@
             ]
         }
     },
+    "desktopWidgets": {
+        "enabled": true,
+        "gridSnap": true,
+        "monitorWidgets": [
+            {
+                "name": "DP-1",
+                "widgets": [
+                    {
+                        "clockStyle": "digital",
+                        "customFont": "",
+                        "format": "HH:mm\\nd MMMM yyyy",
+                        "id": "Clock",
+                        "showBackground": false,
+                        "useCustomFont": false,
+                        "usePrimaryColor": true,
+                        "x": 27,
+                        "y": 27
+                    },
+                    {
+                        "id": "Weather",
+                        "scale": 0.6951522718087684,
+                        "showBackground": false,
+                        "x": 2106,
+                        "y": 1188
+                    },
+                    {
+                        "hideMode": "hidden",
+                        "id": "MediaPlayer",
+                        "scale": 1,
+                        "showBackground": false,
+                        "showButtons": false,
+                        "visualizerType": "linear",
+                        "visualizerVisibility": "always",
+                        "x": 27,
+                        "y": 1161
+                    }
+                ]
+            }
+        ]
+    },
     "dock": {
+        "animationSpeed": 1,
         "backgroundOpacity": 0.7000000000000001,
         "colorizeIcons": false,
         "deadOpacity": 0.6,
-        "displayMode": "always_visible",
+        "displayMode": "exclusive",
         "enabled": false,
         "floatingRatio": 1,
         "inactiveIndicators": false,
@@ -223,6 +274,7 @@
         ],
         "onlySameOutput": false,
         "pinnedApps": [
+            "dev.zed.Zed"
         ],
         "pinnedStatic": false,
         "size": 0.99
@@ -234,7 +286,7 @@
         "avatarImage": "/home/monky/face.png",
         "boxRadiusRatio": 1,
         "compactLockScreen": false,
-        "dimmerOpacity": 0.6,
+        "dimmerOpacity": 0.3,
         "enableShadows": true,
         "forceBlackScreenCorners": false,
         "iRadiusRatio": 1,
@@ -253,6 +305,10 @@
     "hooks": {
         "darkModeChange": "",
         "enabled": false,
+        "performanceModeDisabled": "",
+        "performanceModeEnabled": "",
+        "screenLock": "",
+        "screenUnlock": "",
         "wallpaperChange": ""
     },
     "location": {
@@ -326,6 +382,7 @@
     "sessionMenu": {
         "countdownDuration": 3000,
         "enableCountdown": true,
+        "largeButtonsStyle": false,
         "position": "top_right",
         "powerOptions": [
             {
@@ -367,7 +424,7 @@
         ],
         "showHeader": true
     },
-    "settingsVersion": 26,
+    "settingsVersion": 32,
     "systemMonitor": {
         "cpuCriticalThreshold": 90,
         "cpuPollingInterval": 3000,
@@ -376,6 +433,10 @@
         "diskCriticalThreshold": 90,
         "diskPollingInterval": 3000,
         "diskWarningThreshold": 80,
+        "enableDgpuMonitoring": false,
+        "gpuCriticalThreshold": 90,
+        "gpuPollingInterval": 3000,
+        "gpuWarningThreshold": 80,
         "memCriticalThreshold": 90,
         "memPollingInterval": 3000,
         "memWarningThreshold": 80,
@@ -390,15 +451,18 @@
         "alacritty": false,
         "cava": false,
         "code": false,
-        "discord": false,
+        "discord": true,
         "emacs": false,
         "enableUserTemplates": false,
         "foot": false,
         "fuzzel": false,
         "ghostty": false,
         "gtk": true,
+        "helix": false,
+        "hyprland": false,
         "kcolorscheme": true,
-        "kitty": false,
+        "kitty": true,
+        "mango": false,
         "niri": false,
         "pywalfox": false,
         "qt": true,
@@ -406,17 +470,22 @@
         "telegram": false,
         "vicinae": false,
         "walker": false,
-        "wezterm": false
+        "wezterm": false,
+        "yazi": false,
+        "zed": false
     },
     "ui": {
+        "bluetoothDetailsViewMode": "grid",
+        "bluetoothHideUnnamedDevices": false,
         "fontDefault": "DejaVu Sans",
         "fontDefaultScale": 1,
         "fontFixed": "DejaVu Sans Mono",
         "fontFixedScale": 1,
         "panelBackgroundOpacity": 1,
         "panelsAttachedToBar": true,
-        "settingsPanelAttachToBar": false,
-        "tooltipsEnabled": true
+        "settingsPanelMode": "centered",
+        "tooltipsEnabled": true,
+        "wifiDetailsViewMode": "grid"
     },
     "wallpaper": {
         "directory": "/home/monky/dotfiles/",
@@ -427,7 +496,7 @@
         "hideWallpaperFilenames": false,
         "monitorDirectories": [
         ],
-        "overviewEnabled": true,
+        "overviewEnabled": false,
         "panelPosition": "follow_bar",
         "randomEnabled": false,
         "randomIntervalSec": 7200,
@@ -441,6 +510,7 @@
         "wallhavenOrder": "desc",
         "wallhavenPurity": "100",
         "wallhavenQuery": "",
+        "wallhavenRatios": "",
         "wallhavenResolutionHeight": "",
         "wallhavenResolutionMode": "atleast",
         "wallhavenResolutionWidth": "",

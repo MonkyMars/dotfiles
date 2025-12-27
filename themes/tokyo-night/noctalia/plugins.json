@@ -10,6 +10,9 @@
         "catwalk": {
             "enabled": true
         },
+        "fancy-audiovisualizer": {
+            "enabled": true
+        },
         "mini-docker": {
             "enabled": true
         },

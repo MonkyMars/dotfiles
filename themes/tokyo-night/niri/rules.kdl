@@ -50,6 +50,12 @@ window-rule {
 }
 
 window-rule {
+    match app-id="spotify"
+    open-on-workspace "5"
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
     match app-id="pavucontrolrs"
     open-on-workspace "5"
     default-column-width { fixed 600; }
@@ -58,7 +64,13 @@ window-rule {
 window-rule {
     match app-id="vesktop"
     open-on-workspace "5"
-    default-column-width { proportion 0.6667; }
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id="Ferdium"
+    open-on-workspace "8"
+    default-column-width { proportion 1.0; }
 }
 
 window-rule {

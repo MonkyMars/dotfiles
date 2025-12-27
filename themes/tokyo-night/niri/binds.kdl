@@ -10,11 +10,12 @@ binds {
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     Mod+D hotkey-overlay-title="Open Discord" { spawn-sh "/usr/lib/vesktop/vesktop --disable-features=WebRtcAllowInputVolumeAdjustment"; }
-    Mod+S hotkey-overlay-title="Open Spotify: spotify_player" { spawn-sh "kitty --class spotify_player -e spotify_player"; }
+    //Mod+S hotkey-overlay-title="Open Spotify: spotify_player" { spawn-sh "kitty --class spotify_player -e spotify_player"; }
+    Mod+S hotkey-overlay-title="Open Spotify: spotify_player" { spawn "spotify-launcher"; }
     Mod+B hotkey-overlay-title="Open Browser: Zen" { spawn-sh "flatpak run app.zen_browser.zen --ozone-platform=wayland"; }
     Mod+G hotkey-overlay-title="Open Game Launcher" { spawn-sh "kitty --class=floating-game-launcher -e ~/dotfiles/scripts/game-launcher.sh"; }
     Mod+V hotkey-overlay-title="Open Volume Control: pavucontrolrs" { spawn-sh "kitty --class pavucontrolrs -e pavucontrolrs"; }
-    Mod+Z hotkey-overlay-title="Open Zed Editor" { spawn-sh "kitty -e zed"; }
+    Mod+Z hotkey-overlay-title="Open Zed Editor" { spawn-sh "gtk-launch dev.zed.Zed"; }
     Mod+C hotkey-overlay-title="Open Clipboard History: cliphist" { spawn-sh "~/dotfiles/scripts/wrapper-cliphist.sh"; }
 
     // Song controls using playerctl.
