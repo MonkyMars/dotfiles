@@ -9,10 +9,10 @@ fi
 # Fully detach the launcher process so it survives after this terminal closes
 case "$launcher" in
   "Prism Launcher")
-    setsid gtk-launch org.prismlauncher.PrismLauncher >/dev/null 2>&1 &
+    setsid prismlauncher >/dev/null 2>&1 &
     ;;
   "Heroic Games Launcher")
-    setsid gtk-launch com.heroicgameslauncher.hgl >/dev/null 2>&1 &
+    setsid heroic >/dev/null 2>&1 &
     ;;
   "Steam")
     setsid steam >/dev/null 2>&1 &

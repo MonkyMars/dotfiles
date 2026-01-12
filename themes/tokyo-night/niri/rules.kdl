@@ -82,6 +82,14 @@ window-rule {
 }
 
 window-rule {
+    match app-id="open-zed"
+    open-floating true
+    default-column-width { fixed 800; }
+    min-height 400
+    max-height 400
+}
+
+window-rule {
     match app-id="floating-clipmenu"
     open-floating true
     default-column-width { fixed 400; }

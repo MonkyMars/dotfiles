@@ -1,9 +1,9 @@
 {
   "edit_predictions": {
-    "disabled_globs": ["*.env*"]
+    "disabled_globs": ["*.env*"],
   },
   "features": {
-    "edit_prediction_provider": "copilot"
+    "edit_prediction_provider": "copilot",
   },
   "icon_theme": "Colored Zed Icons Theme Dark",
   "agent": {
@@ -11,27 +11,41 @@
     "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5"
-    }
+      "model": "claude-sonnet-4.5",
+    },
   },
   "vim_mode": false,
   "base_keymap": "VSCode",
   "telemetry": {
     "metrics": false,
-    "diagnostics": false
+    "diagnostics": false,
   },
   "ui_font_size": 16,
   "buffer_font_size": 15,
   "theme": {
     "mode": "dark",
     "light": "Tokyo Night",
-    "dark": "Tokyo Night"
+    "dark": "Tokyo Night",
   },
   "lsp": {
     "rust-analyzer": {
       "binary": {
-        "path": "/usr/bin/rust-analyzer"
-      }
-    }
-  }
+        "path": "/usr/bin/rust-analyzer",
+      },
+    },
+  },
+  "language_models": {
+    "openai_compatible": {
+      "api_url": {
+        "api_url": "http://localhost:1234/v1",
+        "available_models": [
+          {
+            "name": "DeepSeekCoderLocal",
+            "display_name": "DeepSeek Coder V2 Lite (local)",
+            "max_tokens": 16384,
+          },
+        ],
+      },
+    },
+  },
 }

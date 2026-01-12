@@ -2,15 +2,16 @@
 
 action="$1"
 
-#node_id=$(pw-dump | jq -r '.[] | select(.info.props."application.name" == "PipeWire ALSA [spotify_player]" and .info.props."media.class" == "Stream/Output/Audio") | .id')
-node_id=$(wpctl status \
-  | awk '/Streams:/,0' \
-  | awk '/spotify/ {print $1}' \
-  | tr -d '.')
+# Try to find VLC first (case-insensitive), if not found then try Spotify
+node_id=$(wpctl status | awk '/Streams:/,0 {if(tolower($0) ~ /vlc/) {gsub("\\.","",$1); print $1; exit}}')
+if [ -z "$node_id" ]; then
+    node_id=$(wpctl status | awk '/Streams:/,0 {if($0 ~ /spotify/) {gsub("\\.","",$1); print $1; exit}}')
+    node_id=$(wpctl status | awk '/Streams:/,0 {if(tolower($0) ~ /spotify/) {gsub("\\.","",$1); print $1; exit}}')
+fi
 
 
 if [ -z "$node_id" ]; then
-    notify-send --urgency=low --app-name=Volume --hint=string:x-canonical-private-synchronous:spotify_volume "spotify_player not running"
+    notify-send --urgency=low --app-name=Volume --hint=string:x-canonical-private-synchronous:spotify_volume "Spotify or VLC not running"
     exit 1op
 fi
 

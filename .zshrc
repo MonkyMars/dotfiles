@@ -10,8 +10,6 @@ setopt hist_save_no_dups hist_ignore_dups hist_find_no_dups
 setopt NO_BG_NICE NO_CLOBBER AUTO_CD CORRECT
 
 # Environment variables - set early
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH:$HOME/go/bin"
-export NVM_DIR="$HOME/.nvm"
 export XDG_CURRENT_DESKTOP=Hyprland
 export FILE_MANAGER=thunar
 export file_manager=thunar
@@ -19,9 +17,12 @@ export XDG_SESSION_TYPE=wayland
 export GTK_THEME="Adwaita:dark"
 export editor="nvim"
 export EDITOR="zed"
-# bun
+export GOENV_AUTOMATICALLY_DETECT_VERSION=1
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+export VOLTA_HOME="$HOME/.volta"
+export GOENV_ROOT="$HOME/.goenv"
+export CARGO_ROOT="$HOME/.cargo"
+export PATH="$BUN_INSTALL/bin:$VOLTA_HOME/bin:$HOME/.local/bin:$CARGO_ROOT/bin:$GOENV_ROOT/bin:$PATH"
 
 # Aliases - lightweight and frequently used
 alias g='git' gs='git status' gsw='git switch' add='git add' gc='git commit -m'
@@ -91,53 +92,8 @@ zinit light joshskidmore/zsh-fzf-history-search
 # Load zsh-you-should-use plugin - Warns if you use a command that has an alias
 zinit light MichaelAquilina/zsh-you-should-use
 
-# Load nvmrc on startup if in a project directory (only after nvm loads)
-load-nvmrc() {
-    # Only run if nvm is loaded
-    [[ ! $+functions[nvm] ]] && return
-
-    local nvmrc_path="$(nvm_find_nvmrc 2>/dev/null)"
-
-    # Skip if same directory or no .nvmrc
-    [[ "$nvmrc_path" == "$__current_nvmrc_path" ]] && return
-    __current_nvmrc_path="$nvmrc_path"
-
-    if [[ -n "$nvmrc_path" ]]; then
-        local nvmrc_version="$(cat "$nvmrc_path" 2>/dev/null | tr -d '\n\r')"
-        local current_version="$(nvm version 2>/dev/null || echo "none")"
-
-        if [[ "$nvmrc_version" != "$current_version" ]]; then
-            if nvm ls "$nvmrc_version" >/dev/null 2>&1; then
-                nvm use "$nvmrc_version" >/dev/null 2>&1
-            else
-                print "Node $nvmrc_version not installed. Run: nvm install"
-            fi
-        fi
-    fi
-}
-
-# Lazy load nvm when needed, then try to load nvmrc
-lazy_load_nvm() {
-    if [[ -s "$NVM_DIR/nvm.sh" ]]; then
-        source "$NVM_DIR/nvm.sh"
-        source "$NVM_DIR/bash_completion" 2>/dev/null
-        # Remove lazy loader and replace with actual nvm
-        unset -f nvm node npm npx
-        source "$NVM_DIR/nvm.sh"
-        # Now try to load nvmrc for current directory
-        load-nvmrc
-    fi
-}
-
-# Create placeholder functions that trigger lazy loading
-nvm() { lazy_load_nvm; nvm "$@"; }
-node() { lazy_load_nvm; node "$@"; }
-npm() { lazy_load_nvm; npm "$@"; }
-npx() { lazy_load_nvm; npx "$@"; }
-
 # Add hook for directory changes
 autoload -U add-zsh-hook
-add-zsh-hook chpwd load-nvmrc
 
 # Init starship and zoxide - check if installed first
 if command -v starship >/dev/null 2>&1; then
@@ -150,6 +106,10 @@ fi
 
 if command -v atuin >/dev/null 2>&1; then
     eval "$(atuin init zsh)"
+fi
+
+if command -v goenv >/dev/null 2>&1; then
+    eval "$(goenv init - zsh)"
 fi
 
 # Load custom scripts if they exist
