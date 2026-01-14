@@ -37,6 +37,10 @@ alias dp='docker ps -sa'
 alias dr='docker run -t'
 alias py='python3' pyr='python3 main.py'
 
+zedf () {
+    dir="$(zoxide query -i)"
+    zed "$dir"
+}
 
 # https://github.com/MonkyMars/ccheck
 alias check='ccheck'

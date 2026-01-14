@@ -15,8 +15,7 @@ binds {
     Mod+B hotkey-overlay-title="Open Browser: Zen" { spawn "zen-browser"; }
     Mod+G hotkey-overlay-title="Open Game Launcher" { spawn-sh "kitty --class=floating-game-launcher -e ~/dotfiles/scripts/game-launcher.sh"; }
     Mod+V hotkey-overlay-title="Open Volume Control: pavucontrolrs" { spawn-sh "kitty --class pavucontrolrs -e pavucontrolrs"; }
-    Mod+Z hotkey-overlay-title="Open Zed Editor" { spawn-sh "kitty --class=open-zed -e ~/dotfiles/scripts/open-zed.sh"; }
-    Mod+C hotkey-overlay-title="Open Clipboard History: cliphist" { spawn-sh "~/dotfiles/scripts/wrapper-cliphist.sh"; }
+    Mod+Z hotkey-overlay-title="Open Zed Editor" { spawn-sh "kitty --class=open-zed -e zsh -c 'source ~/.zshrc && zedf'"; }
 
     // Song controls using playerctl.
     Alt+Period hotkey-overlay-title="Next song" { spawn-sh "playerctl next"; }
