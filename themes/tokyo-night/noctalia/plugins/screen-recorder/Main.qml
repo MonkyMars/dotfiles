@@ -54,6 +54,7 @@ Item {
     }
 
     // Settings shortcuts
+    readonly property bool hideInactive: pluginApi?.pluginSettings?.hideInactive ?? false
     readonly property string directory: pluginApi?.pluginSettings?.directory || ""
     readonly property string filenamePattern: pluginApi?.pluginSettings?.filenamePattern || "recording_yyyyMMdd_HHmmss"
     readonly property string frameRate: pluginApi?.pluginSettings?.frameRate || "60"
@@ -65,6 +66,7 @@ Item {
     readonly property bool copyToClipboard: pluginApi?.pluginSettings?.copyToClipboard ?? false
     readonly property string audioSource: pluginApi?.pluginSettings?.audioSource || "default_output"
     readonly property string videoSource: pluginApi?.pluginSettings?.videoSource || "portal"
+    readonly property string resolution: pluginApi?.pluginSettings?.resolution || "original"
 
     function buildTooltip() {
         if (!isAvailable) {
@@ -86,6 +88,14 @@ Item {
     // Start or Stop recording
     function toggleRecording() {
         (isRecording || isPending) ? stopRecording() : startRecording()
+    }
+
+    // Open recording file
+    function openFile(path) {
+        if (!path) {
+            return
+        }
+        Quickshell.execDetached(["xdg-open", path])
     }
 
     // Copy file to clipboard as file reference
@@ -215,7 +225,8 @@ Item {
             return `-ac ${audioCodec} -a ${audioSource}`
         })()
 
-        var flags = `-w ${videoSource} -f ${frameRate} -k ${videoCodec} ${audioFlags} -q ${quality} -cursor ${showCursor ? "yes" : "no"} -cr ${colorRange} -o "${outputPath}"`
+        var resolutionFlag = (resolution !== "original") ? `-s ${resolution}` : ""
+        var flags = `-w ${videoSource} -f ${frameRate} -k ${videoCodec} ${audioFlags} -q ${quality} -cursor ${showCursor ? "yes" : "no"} -cr ${colorRange} ${resolutionFlag} -o "${outputPath}"`
         var command = `
     _gpuscreenrecorder_flatpak_installed() {
     flatpak list --app | grep -q "com.dec05eba.gpu_screen_recorder"
@@ -307,7 +318,9 @@ Item {
                 isRecording = false
                 monitorTimer.running = false
                 if (exitCode === 0) {
-                    ToastService.showNotice(pluginApi.tr("messages.saved"), outputPath, "video")
+                    // ToastService.showNotice(pluginApi.tr("messages.saved"), outputPath, "video")
+                    ToastService.showNotice(pluginApi.tr("messages.saved"), outputPath, "video", 3000, pluginApi.tr("messages.open-file"), () => openFile(outputPath))
+
                     if (copyToClipboard) {
                         copyFileToClipboard(outputPath)
                     }
@@ -325,7 +338,9 @@ Item {
                 hasActiveRecording = false
             } else if (!isPending && exitCode === 0 && outputPath) {
                 // Fallback: if process exited successfully with an outputPath, handle it
-                ToastService.showNotice(pluginApi.tr("messages.saved"), outputPath, "video")
+                // ToastService.showNotice(pluginApi.tr("messages.saved"), outputPath, "video")
+                ToastService.showNotice(pluginApi.tr("messages.saved"), outputPath, "video", 3000, pluginApi.tr("messages.open-file"), () => openFile(outputPath))
+    
                 if (copyToClipboard) {
                     copyFileToClipboard(outputPath)
                 }

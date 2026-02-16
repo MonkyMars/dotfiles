@@ -67,11 +67,6 @@
     "break",
     { "type": "custom", "format": "\u001b[38;2;80;200;255m╭─  Desktop" },
     {
-      "type": "de",
-      "key": "\u001b[38;2;80;200;255m├─ \u001b[38;2;120;255;180m DE  ",
-      "keyColor": "default",
-    },
-    {
       "type": "wm",
       "key": "\u001b[38;2;80;200;255m├─ \u001b[38;2;120;255;180m WM  ",
       "keyColor": "default",

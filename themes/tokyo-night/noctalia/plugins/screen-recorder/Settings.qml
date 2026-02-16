@@ -11,6 +11,16 @@ ColumnLayout {
 
     property var pluginApi: null
 
+    property bool editHideInactive:
+        pluginApi?.pluginSettings?.hideInactive ??
+        pluginApi?.manifest?.metadata?.defaultSettings?.hideInactive ??
+        false
+
+    property string editIconColor:
+        pluginApi?.pluginSettings?.iconColor ??
+        pluginApi?.manifest?.metadata?.defaultSettings?.iconColor ??
+        "none"
+
     property string editDirectory: 
         pluginApi?.pluginSettings?.directory || 
         pluginApi?.manifest?.metadata?.defaultSettings?.directory || 
@@ -66,12 +76,19 @@ ColumnLayout {
         pluginApi?.manifest?.metadata?.defaultSettings?.videoSource || 
         "portal"
 
+    property string editResolution:
+        pluginApi?.pluginSettings?.resolution ||
+        pluginApi?.manifest?.metadata?.defaultSettings?.resolution ||
+        "original"
+
     function saveSettings() {
         if (!pluginApi) {
             Logger.e("ScreenRecorder", "Cannot save: pluginApi is null")
             return
         }
 
+        pluginApi.pluginSettings.hideInactive = root.editHideInactive
+        pluginApi.pluginSettings.iconColor = root.editIconColor
         pluginApi.pluginSettings.directory = root.editDirectory
         pluginApi.pluginSettings.filenamePattern = root.editFilenamePattern
         pluginApi.pluginSettings.frameRate = root.editFrameRate
@@ -83,11 +100,22 @@ ColumnLayout {
         pluginApi.pluginSettings.copyToClipboard = root.editCopyToClipboard
         pluginApi.pluginSettings.audioSource = root.editAudioSource
         pluginApi.pluginSettings.videoSource = root.editVideoSource
+        pluginApi.pluginSettings.resolution = root.editResolution
 
         pluginApi.saveSettings()
 
         Logger.i("ScreenRecorder", "Settings saved successfully")
     }
+    // Icon Color
+    NComboBox {
+        label: I18n.tr("common.select-icon-color")
+        description: I18n.tr("common.select-color-description")
+        model: Color.colorKeyModel
+        currentKey: root.editIconColor
+        onSelected: key => root.editIconColor = key
+        minimumWidth: 200
+    }
+
     NTextInputButton {
         label: pluginApi.tr("settings.general.output-folder")
         description: pluginApi.tr("settings.general.output-folder-description")
@@ -129,6 +157,15 @@ ColumnLayout {
         checked: root.editCopyToClipboard
         onToggled: root.editCopyToClipboard = checked
         defaultValue: pluginApi?.manifest?.metadata?.defaultSettings?.copyToClipboard ?? false
+    }
+
+    // Hide When Inactive Toggle
+    NToggle {
+        label: pluginApi.tr("settings.general.hide-when-inactive")
+        description: pluginApi.tr("settings.general.hide-when-inactive-description")
+        checked: root.editHideInactive
+        onToggled: root.editHideInactive = checked
+        defaultValue: pluginApi?.manifest?.metadata?.defaultSettings?.hideInactive ?? false
     }
 
     NDivider {
@@ -281,6 +318,37 @@ ColumnLayout {
             currentKey: root.editColorRange
             onSelected: key => root.editColorRange = key
             defaultValue: pluginApi?.manifest?.metadata?.defaultSettings?.colorRange || "limited"
+        }
+
+        // Resolution
+        NComboBox {
+            label: pluginApi.tr("settings.video.resolution")
+            description: pluginApi.tr("settings.video.resolution-desc")
+            model: [
+                {
+                    "key": "original",
+                    "name": pluginApi.tr("settings.video.resolution-original")
+                },
+                {
+                    "key": "1920x1080",
+                    "name": "1920x1080 (Full HD)"
+                },
+                {
+                    "key": "2560x1440",
+                    "name": "2560x1440 (QHD)"
+                },
+                {
+                    "key": "3840x2160",
+                    "name": "3840x2160 (4K)"
+                },
+                {
+                    "key": "1280x720",
+                    "name": "1280x720 (HD)"
+                }
+            ]
+            currentKey: root.editResolution
+            onSelected: key => root.editResolution = key
+            defaultValue: pluginApi?.manifest?.metadata?.defaultSettings?.resolution || "original"
         }
     }
 
