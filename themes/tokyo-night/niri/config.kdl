@@ -6,3 +6,6 @@ include "general.kdl"
 include "animations.kdl"
 include "rules.kdl"
 include "binds.kdl"
+
+include "./noctalia.kdl"
+
