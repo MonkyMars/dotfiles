@@ -12,9 +12,9 @@ binds {
     Mod+D hotkey-overlay-title="Open Discord" { spawn-sh "/usr/lib/vesktop/vesktop --disable-features=WebRtcAllowInputVolumeAdjustment"; }
     //Mod+S hotkey-overlay-title="Open Spotify" { spawn-sh "kitty --class spotify_player -e spotify_player"; }
     Mod+S hotkey-overlay-title="Open Spotify" { spawn-sh "gtk-launch spotify-launcher"; }
-    Mod+B hotkey-overlay-title="Open Browser: Zen" { spawn "zen-browser"; }
+    Mod+B hotkey-overlay-title="Open Default Browser" { spawn-sh "gtk-launch $(xdg-settings get default-web-browser)"; }
     Mod+G hotkey-overlay-title="Open Game Launcher" { spawn-sh "kitty --class=floating-game-launcher -e ~/dotfiles/scripts/game-launcher.sh"; }
-    Mod+V hotkey-overlay-title="Open Volume Control: pavucontrolrs" { spawn-sh "kitty --class pavucontrolrs -e pavucontrolrs"; }
+    Mod+V hotkey-overlay-title="Open Volume Control: pavucontrol" { spawn "pavucontrol"; }
     Mod+Z hotkey-overlay-title="Open Zed Editor" { spawn-sh "kitty --class=open-zed -e zsh -c 'source ~/.zshrc && zedf'"; }
 
     // Song controls using playerctl.

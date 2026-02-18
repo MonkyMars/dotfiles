@@ -123,3 +123,5 @@ fi
 [ -s "/home/monky/.bun/_bun" ] && source "/home/monky/.bun/_bun"
 
 [[ -f ~/.zshrc.zwc ]] || zcompile ~/.zshrc
+
+export PATH=$PATH:/home/monky/.spicetify
