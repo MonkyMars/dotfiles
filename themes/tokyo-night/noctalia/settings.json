@@ -642,7 +642,11 @@
             },
             {
                 "enabled": true,
-                "id": "spicetify"
+                "id": "btop"
+            },
+            {
+                "enabled": true,
+                "id": "fuzzel"
             }
         ],
         "enableUserTheming": false

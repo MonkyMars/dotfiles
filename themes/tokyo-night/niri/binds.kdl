@@ -6,7 +6,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn-sh "rofi -show drun"; }
+    Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn-sh "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     Mod+D hotkey-overlay-title="Open Discord" { spawn-sh "/usr/lib/vesktop/vesktop --disable-features=WebRtcAllowInputVolumeAdjustment"; }
