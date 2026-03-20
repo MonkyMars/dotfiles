@@ -6,9 +6,11 @@
         "clipboardWrapText": true,
         "customLaunchPrefix": "",
         "customLaunchPrefixEnabled": false,
-        "density": "default",
+        "density": "comfortable",
         "enableClipPreview": true,
-        "enableClipboardHistory": false,
+        "enableClipboardChips": true,
+        "enableClipboardHistory": true,
+        "enableClipboardSmartIcons": true,
         "enableSessionSearch": true,
         "enableSettingsSearch": true,
         "enableWindowsSearch": true,
@@ -23,7 +25,6 @@
         "showIconBackground": true,
         "sortByMostUsed": true,
         "terminalCommand": "kitty -e",
-        "useApp2Unit": false,
         "viewMode": "list"
     },
     "audio": {
@@ -100,6 +101,20 @@
                 }
             ],
             "left": [
+                {
+                    "commandPrefix": "auto-tile",
+                    "defaultSettings": {
+                        "debounceMs": 300,
+                        "enabled": true,
+                        "maxEventsPerSecond": 20,
+                        "maxVisible": 4,
+                        "onlyAtMax": true,
+                        "perWorkspace": false,
+                        "workspaceMaxVisible": {
+                        }
+                    },
+                    "id": "plugin:niri-auto-tile"
+                },
                 {
                     "defaultSettings": {
                         "hideBackground": false,
@@ -288,25 +303,6 @@
                 },
                 {
                     "id": "NightLight"
-                },
-                {
-                    "defaultSettings": {
-                        "audioCodec": "opus",
-                        "audioSource": "default_output",
-                        "colorRange": "limited",
-                        "copyToClipboard": false,
-                        "directory": "",
-                        "filenamePattern": "recording_yyyyMMdd_HHmmss",
-                        "frameRate": "60",
-                        "hideInactive": false,
-                        "iconColor": "none",
-                        "quality": "very_high",
-                        "resolution": "original",
-                        "showCursor": true,
-                        "videoCodec": "h264",
-                        "videoSource": "portal"
-                    },
-                    "id": "plugin:screen-recorder"
                 }
             ]
         }
@@ -346,7 +342,7 @@
                         "showAlbumArt": true,
                         "showBackground": false,
                         "showButtons": false,
-                        "showVisualizer": true,
+                        "showVisualizer": false,
                         "visualizerType": "linear",
                         "visualizerVisibility": "always",
                         "x": 27,
@@ -379,8 +375,10 @@
         "indicatorColor": "primary",
         "indicatorOpacity": 0.6,
         "indicatorThickness": 3,
+        "launcherIcon": "",
         "launcherIconColor": "none",
         "launcherPosition": "end",
+        "launcherUseDistroLogo": false,
         "monitors": [
         ],
         "onlySameOutput": false,
@@ -459,6 +457,7 @@
         "telemetryEnabled": false
     },
     "hooks": {
+        "colorGeneration": "",
         "darkModeChange": "",
         "enabled": false,
         "performanceModeDisabled": "",
@@ -505,7 +504,7 @@
         "bluetoothRssiPollIntervalMs": 10000,
         "bluetoothRssiPollingEnabled": false,
         "disableDiscoverability": false,
-        "networkPanelView": "wifi",
+        "networkPanelView": "ethernet",
         "wifiDetailsViewMode": "grid",
         "wifiEnabled": true
     },
@@ -568,7 +567,8 @@
         "overlayLayer": true
     },
     "plugins": {
-        "autoUpdate": false
+        "autoUpdate": false,
+        "notifyUpdates": true
     },
     "sessionMenu": {
         "countdownDuration": 3000,
@@ -630,7 +630,7 @@
         "showHeader": true,
         "showKeybinds": true
     },
-    "settingsVersion": 57,
+    "settingsVersion": 59,
     "systemMonitor": {
         "batteryCriticalThreshold": 5,
         "batteryWarningThreshold": 20,
@@ -727,7 +727,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/monky/dotfiles/wallpapers",
+        "directory": "/home/monky/Pictures/Wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [
@@ -736,6 +736,16 @@
         "fillMode": "fit",
         "hideWallpaperFilenames": false,
         "monitorDirectories": [
+            {
+                "directory": "/home/monky/Pictures/Wallpapers",
+                "name": "DP-1",
+                "wallpaper": ""
+            },
+            {
+                "directory": "/home/monky/Pictures/Wallpapers",
+                "name": "DP-2",
+                "wallpaper": ""
+            }
         ],
         "overviewBlur": 0.4,
         "overviewEnabled": false,
@@ -749,7 +759,14 @@
         "sortOrder": "date_desc",
         "transitionDuration": 1500,
         "transitionEdgeSmoothness": 0.05,
-        "transitionType": "random",
+        "transitionType": [
+            "fade",
+            "disc",
+            "stripes",
+            "wipe",
+            "pixelate",
+            "honeycomb"
+        ],
         "useSolidColor": false,
         "useWallhaven": false,
         "viewMode": "recursive",
