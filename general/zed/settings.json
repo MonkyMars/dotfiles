@@ -10,6 +10,11 @@
   },
   "icon_theme": "Colored Zed Icons Theme Dark",
   "agent": {
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5.1",
+      "enable_thinking": false
+    },
     "tool_permissions": {
       "default": "allow",
     },
