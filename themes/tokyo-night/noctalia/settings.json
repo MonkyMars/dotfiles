@@ -56,7 +56,7 @@
         "hideOnOverview": false,
         "marginHorizontal": 5,
         "marginVertical": 5,
-        "middleClickAction": "none",
+        "middleClickAction": "launcherPanel",
         "middleClickCommand": "",
         "middleClickFollowMouse": false,
         "monitors": [
@@ -359,11 +359,11 @@
     },
     "dock": {
         "animationSpeed": 1,
-        "backgroundOpacity": 0.7000000000000001,
+        "backgroundOpacity": 0,
         "colorizeIcons": false,
-        "deadOpacity": 0.6,
+        "deadOpacity": 0,
         "displayMode": "always_visible",
-        "dockType": "floating",
+        "dockType": "attached",
         "enabled": false,
         "floatingRatio": 0,
         "groupApps": false,
@@ -385,11 +385,11 @@
             "dev.zed.Zed"
         ],
         "pinnedStatic": false,
-        "position": "bottom",
+        "position": "top",
         "showDockIndicator": false,
         "showLauncherIcon": false,
         "sitOnFrame": false,
-        "size": 0.99
+        "size": 0
     },
     "general": {
         "allowPanelsOnScreenWithoutBar": true,
@@ -472,14 +472,14 @@
         "enabled": false,
         "fadeDuration": 5,
         "lockCommand": "",
-        "lockTimeout": 660,
+        "lockTimeout": 0,
         "resumeLockCommand": "",
         "resumeScreenOffCommand": "",
         "resumeSuspendCommand": "",
         "screenOffCommand": "",
         "screenOffTimeout": 600,
         "suspendCommand": "",
-        "suspendTimeout": 1800
+        "suspendTimeout": 0
     },
     "location": {
         "analogClockInCalendar": false,
