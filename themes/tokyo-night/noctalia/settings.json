@@ -66,7 +66,7 @@
         "mouseWheelAction": "none",
         "mouseWheelWrap": true,
         "outerCorners": false,
-        "position": "left",
+        "position": "bottom",
         "reverseScroll": false,
         "rightClickAction": "controlCenter",
         "rightClickCommand": "",
@@ -311,21 +311,21 @@
                         "showBackground": false,
                         "useCustomFont": false,
                         "usePrimaryColor": true,
-                        "x": 27,
-                        "y": 27
+                        "x": 0,
+                        "y": 0
                     },
                     {
                         "hideMode": "hidden",
                         "id": "MediaPlayer",
                         "roundedCorners": true,
-                        "scale": 1,
+                        "scale": 1.1922814846132792,
                         "showAlbumArt": true,
                         "showBackground": false,
                         "showButtons": false,
                         "showVisualizer": false,
                         "visualizerType": "linear",
                         "visualizerVisibility": "always",
-                        "x": 27,
+                        "x": -135,
                         "y": 1161
                     },
                     {
@@ -352,7 +352,7 @@
         "deadOpacity": 0,
         "displayMode": "always_visible",
         "dockType": "attached",
-        "enabled": true,
+        "enabled": false,
         "floatingRatio": 0,
         "groupApps": false,
         "groupClickAction": "cycle",
