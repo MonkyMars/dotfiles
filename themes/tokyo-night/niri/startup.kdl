@@ -4,3 +4,5 @@ spawn-at-startup "ferdium" "--start-in-tray"
 spawn-at-startup "swayidle" \
   "timeout" "600" "exec" "niri msg output dpms off" \
   "resume" "exec" "niri msg output dpms on"
+spawn-at-startup "zsh" "-c" "~/dotfiles/scripts/clip_daemon.sh"
+spawn-at-startup "wayscriber" "--daemon"

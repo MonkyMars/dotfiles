@@ -13,8 +13,10 @@ ffmpeg \
   -qp 20 \
   -c:a aac \
   -b:a 192k \
+  -c:s copy \
   -map 0:v:0 \
   -map 0:a:0 \
+  -map 0:s? \
   "$output_file"
 
 echo "Done: $output_file"

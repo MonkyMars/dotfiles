@@ -16,7 +16,9 @@ binds {
     Mod+G hotkey-overlay-title="Open Game Launcher" { spawn-sh "kitty --class=floating-game-launcher -e ~/dotfiles/scripts/game-launcher.sh"; }
     Mod+V hotkey-overlay-title="Open Volume Control: pavucontrol" { spawn "pavucontrol"; }
     Mod+C hotkey-overlay-title="Open Calendar: gnome-calendar" { spawn-sh "qs -c noctalia-shell ipc call plugin:clipper toggle"; }
-    Mod+Z { spawn-sh "qs -c noctalia-shell ipc call plugin:zed-provider toggle"; }
+    Mod+Z hotkey-overlay-title="Open Zed Provider: "{ spawn-sh "qs -c noctalia-shell ipc call plugin:zed-provider toggle"; }
+    Mod+A hotkey-overlay-title="Open Wayscriber" { spawn-sh "wayscriber --daemon-toggle"; }
+
     // Song controls using playerctl.
     Alt+Period hotkey-overlay-title="Next song" { spawn-sh "playerctl next"; }
     Alt+Comma hotkey-overlay-title="Previous song" { spawn-sh "playerctl previous"; }
@@ -26,7 +28,7 @@ binds {
     Alt+O hotkey-overlay-title="Decrease volume by 5%" { spawn-sh "~/dotfiles/scripts/volume.sh down"; }
     Alt+M hotkey-overlay-title="Mute/Unmute song" { spawn-sh "wpctl set-mute -p $(pidof spotify_player) toggle"; }
     Alt+C hotkey-overlay-title="Play cd if inserted" { spawn-sh "~/dotfiles/scripts/cd_management.sh"; }
-
+    Alt+S hotkey-overlay-title="Save 30s of display" { spawn-sh "~/dotfiles/scripts/clip.sh"; }
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
