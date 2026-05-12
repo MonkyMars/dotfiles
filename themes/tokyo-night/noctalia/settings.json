@@ -318,14 +318,14 @@
                         "hideMode": "hidden",
                         "id": "MediaPlayer",
                         "roundedCorners": true,
-                        "scale": 1.1922814846132792,
+                        "scale": 0.9355869916512878,
                         "showAlbumArt": true,
                         "showBackground": false,
                         "showButtons": false,
                         "showVisualizer": false,
                         "visualizerType": "linear",
                         "visualizerVisibility": "always",
-                        "x": -135,
+                        "x": -27,
                         "y": 1161
                     },
                     {
