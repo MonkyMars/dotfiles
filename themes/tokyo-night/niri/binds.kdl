@@ -7,7 +7,6 @@ binds {
 
     Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+Space hotkey-overlay-title="Run an Application: Launcher" { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     Mod+D hotkey-overlay-title="Open Discord" { spawn-sh "/usr/lib/vesktop/vesktop --disable-features=WebRtcAllowInputVolumeAdjustment"; }
     //Mod+S hotkey-overlay-title="Open Spotify" { spawn-sh "kitty --class spotify_player -e spotify_player"; }

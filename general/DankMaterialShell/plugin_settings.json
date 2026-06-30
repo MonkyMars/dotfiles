@@ -1,0 +1,25 @@
+{
+  "discordVoice": {
+    "enabled": true
+  },
+  "niriWindows": {
+    "enabled": true
+  },
+  "dankKDEConnect": {
+    "enabled": true,
+    "selectedDeviceId": "2d6af74388e148549b88cbd6ee7e7866"
+  },
+  "dockerManager": {
+    "enabled": true
+  },
+  "calculator": {
+    "enabled": false,
+    "trigger": "="
+  },
+  "niriScreenshot": {
+    "enabled": true
+  },
+  "dms-niri-screenshot": {
+    "mode": "interactive"
+  }
+}

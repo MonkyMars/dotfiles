@@ -6,7 +6,9 @@ include "general.kdl"
 include "animations.kdl"
 include "rules.kdl"
 include "binds.kdl"
-include optional=true "noctalia.kdl"
 
-include "./noctalia.kdl"
-
+// DMS
+include "dms/cursor.kdl"
+include "dms/outputs.kdl"
+include "dms/windowrules.kdl"
+include "dms/binds.kdl"

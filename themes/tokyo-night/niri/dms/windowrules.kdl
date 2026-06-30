@@ -1,0 +1,14 @@
+// DMS Window Rules - Managed by DankMaterialShell
+// Do not edit manually - changes may be overwritten
+
+// @id=wr_1782771520971086730 @name=spotify
+window-rule {
+    match app-id="^spotify$"
+    open-on-workspace "5"
+}
+
+// @id=wr_1782771531091488282 @name=vesktop
+window-rule {
+    match app-id="^vesktop$"
+    open-on-workspace "5"
+}

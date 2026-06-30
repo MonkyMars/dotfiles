@@ -21,7 +21,7 @@
     "provider": "copilot",
     "disabled_globs": ["*.env*"],
   },
-  "icon_theme": "Colored Zed Icons Theme Dark",
+  "icon_theme": "VSCode Icons for Zed (Dark)",
   "agent": {
     "dock": "right",
     "inline_assistant_model": {
@@ -34,8 +34,9 @@
     },
     "default_profile": "write",
     "default_model": {
+      "enable_thinking": true,
       "provider": "copilot_chat",
-      "model": "gpt-5.1-codex-max",
+      "model": "claude-haiku-4.5",
     },
   },
   "vim_mode": false,
@@ -46,11 +47,7 @@
   },
   "ui_font_size": 16,
   "buffer_font_size": 15,
-  "theme": {
-    "mode": "dark",
-    "light": "Tokyo Night",
-    "dark": "Noctalia Dark",
-  },
+  "theme": "Noctalia Dark",
   "lsp": {
     "rust-analyzer": {
       "binary": {
