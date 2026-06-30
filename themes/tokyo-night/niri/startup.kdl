@@ -1,4 +1,5 @@
-spawn-at-startup "qs" "-c" "noctalia-shell"
+// DMS is started by systemctl
+
 spawn-at-startup "openrgb" "--device" "0" "--mode" "static" "--color" "008080"
 spawn-at-startup "ferdium" "--start-in-tray"
 spawn-at-startup "swayidle" \
@@ -6,3 +7,4 @@ spawn-at-startup "swayidle" \
   "resume" "exec" "niri msg output dpms on"
 spawn-at-startup "zsh" "-c" "~/dotfiles/scripts/clip_daemon.sh"
 spawn-at-startup "wayscriber" "--daemon"
+spawn-at-startup "dsearch" "serve"

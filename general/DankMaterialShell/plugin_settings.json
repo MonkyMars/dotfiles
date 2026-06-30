@@ -21,5 +21,20 @@
   },
   "dms-niri-screenshot": {
     "mode": "interactive"
+  },
+  "vscodeLauncher": {
+    "enabled": true,
+    "editorMode": "Custom",
+    "customConfigDir": "~/Coding",
+    "customExecutable": "zeditor",
+    "trigger": "zed",
+    "maxResults": "200"
+  },
+  "dankLauncherKeys": {
+    "enabled": true,
+    "noTrigger": false
+  },
+  "wallpaperDiscovery": {
+    "enabled": true
   }
 }

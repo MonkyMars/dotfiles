@@ -162,11 +162,11 @@
   "barMaxVisibleRunningApps": 0,
   "barShowOverflowBadge": true,
   "appsDockHideIndicators": false,
-  "appsDockColorizeActive": false,
+  "appsDockColorizeActive": true,
   "appsDockActiveColorMode": "primary",
   "appsDockEnlargeOnHover": false,
   "appsDockEnlargePercentage": 125,
-  "appsDockIconSizePercentage": 100,
+  "appsDockIconSizePercentage": 95,
   "keyboardLayoutNameCompactMode": false,
   "runningAppsCurrentWorkspace": true,
   "runningAppsGroupByApp": false,
@@ -216,7 +216,9 @@
   "sortAppsAlphabetically": false,
   "appLauncherGridColumns": 4,
   "spotlightCloseNiriOverview": true,
-  "spotlightSectionViewModes": {},
+  "spotlightSectionViewModes": {
+    "plugin_vscodeLauncher": "list"
+  },
   "appDrawerSectionViewModes": {},
   "niriOverviewOverlayEnabled": true,
   "dankLauncherV2Size": "compact",
@@ -457,7 +459,11 @@
       ],
       "showOnLastDisplay": true,
       "leftWidgets": [
-        "workspaceSwitcher"
+        "workspaceSwitcher",
+        {
+          "id": "appsDock",
+          "enabled": true
+        }
       ],
       "centerWidgets": [
         {
@@ -484,10 +490,10 @@
           "id": "controlCenterButton",
           "enabled": true,
           "showNetworkIcon": true,
-          "showAudioPercent": false,
+          "showAudioPercent": true,
           "showVpnIcon": true,
           "showMicIcon": false,
-          "showMicPercent": true,
+          "showMicPercent": false,
           "showBatteryIcon": false
         }
       ],
