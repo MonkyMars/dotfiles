@@ -36,5 +36,8 @@
   },
   "wallpaperDiscovery": {
     "enabled": true
+  },
+  "dankClight": {
+    "enabled": true
   }
 }

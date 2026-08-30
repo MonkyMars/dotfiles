@@ -3,7 +3,7 @@
 
 // @id=wr_1782771520971086730 @name=spotify
 window-rule {
-    match app-id="^spotify$"
+    match app-id="^kitty$" title="^spotify_player$"
     open-on-workspace "5"
 }
 

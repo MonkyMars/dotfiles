@@ -21,7 +21,7 @@
     "provider": "copilot",
     "disabled_globs": ["*.env*"],
   },
-  "icon_theme": "VSCode Icons for Zed (Dark)",
+  "icon_theme": "VSCode Icons for Zed (Dark Official Icons)",
   "agent": {
     "dock": "right",
     "inline_assistant_model": {
@@ -47,7 +47,7 @@
   },
   "ui_font_size": 16,
   "buffer_font_size": 15,
-  "theme": "Noctalia Dark",
+  "theme": "DankShell Dark",
   "lsp": {
     "rust-analyzer": {
       "binary": {
