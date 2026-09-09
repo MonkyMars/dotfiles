@@ -10,7 +10,9 @@
     "selectedDeviceId": "2d6af74388e148549b88cbd6ee7e7866"
   },
   "dockerManager": {
-    "enabled": true
+    "enabled": true,
+    "groupByCompose": false,
+    "terminalApp": "alacritty --hold"
   },
   "calculator": {
     "enabled": false,
@@ -43,5 +45,16 @@
   "dmsThemeSync": {
     "enabled": true,
     "qtSyncMode": "auto"
+  },
+  "batteryPlus": {
+    "enabled": true,
+    "timespanHours": 12
+  },
+  "tailscale": {
+    "enabled": true
+  },
+  "dankscale": {
+    "enabled": true,
+    "lastAccount": "MonkyMars@github"
   }
 }

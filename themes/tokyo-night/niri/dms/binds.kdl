@@ -13,5 +13,6 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true hotkey-overlay-title="Brightness Up (5%)" { spawn "dms" "ipc" "call" "brightness" "increment" "5" ""; }
     Print { screenshot-screen; }
     Mod+S repeat=false { spawn "sh" "-c" "spotify-launcher"; }
+    Ctrl+H hotkey-overlay-title="Toggle Shortcuts Inhibit" { toggle-keyboard-shortcuts-inhibit; }
     Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
 }

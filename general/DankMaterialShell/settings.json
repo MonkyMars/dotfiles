@@ -16,7 +16,7 @@
   "controlCenterTileColorMode": "primary",
   "buttonColorMode": "primary",
   "cornerRadius": 12,
-  "niriLayoutGapsOverride": 0,
+  "niriLayoutGapsOverride": 6,
   "niriLayoutRadiusOverride": -1,
   "niriLayoutBorderSize": -1,
   "hyprlandLayoutGapsOverride": -1,
@@ -30,7 +30,7 @@
   "mangoLayoutBorderSize": -1,
   "mangoTrackpadNaturalScrolling": true,
   "firstDayOfWeek": -1,
-  "showWeekNumber": false,
+  "showWeekNumber": true,
   "calendarBackend": "auto",
   "clockFormat": "24h",
   "showSeconds": false,
@@ -382,16 +382,16 @@
   "acMonitorTimeout": 180,
   "acLockTimeout": 300,
   "acSuspendTimeout": 1800,
-  "acSuspendBehavior": 2,
+  "acSuspendBehavior": 1,
   "acProfileName": "2",
   "acPostLockMonitorTimeout": 0,
   "batteryMonitorTimeout": 180,
   "batteryLockTimeout": 300,
   "batterySuspendTimeout": 1800,
-  "batterySuspendBehavior": 2,
+  "batterySuspendBehavior": 1,
   "batteryProfileName": "0",
   "batteryPostLockMonitorTimeout": 0,
-  "batteryChargeLimit": 90,
+  "batteryChargeLimit": 100,
   "batteryNotifyChargeLimit": true,
   "batteryCriticalThreshold": 10,
   "batteryNotifyCritical": true,
@@ -550,7 +550,8 @@
     "poweroff",
     "lock",
     "suspend",
-    "restart"
+    "restart",
+    "hibernate"
   ],
   "powerMenuDefaultAction": "logout",
   "powerMenuGridLayout": true,
@@ -595,7 +596,7 @@
       "id": "default",
       "name": "Main Bar",
       "enabled": true,
-      "position": 1,
+      "position": 0,
       "screenPreferences": [
         "all"
       ],
@@ -625,14 +626,8 @@
           "enabled": true
         },
         {
-          "id": "battery",
-          "enabled": true,
-          "showBatteryPercent": true,
-          "showBatteryPercentOnlyOnBattery": false,
-          "showBatteryTime": true,
-          "showBatteryTimeOnlyOnBattery": false,
-          "batteryPillStyle": false,
-          "batteryPillPercentSign": false
+          "id": "batteryPlus",
+          "enabled": true
         },
         {
           "id": "controlCenterButton",
@@ -643,6 +638,14 @@
           "showMicIcon": false,
           "showMicPercent": false,
           "showBatteryIcon": false
+        },
+        {
+          "id": "dockerManager",
+          "enabled": true
+        },
+        {
+          "id": "dankscale",
+          "enabled": true
         }
       ],
       "spacing": 6,
