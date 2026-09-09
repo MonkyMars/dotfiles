@@ -7,12 +7,11 @@ binds {
     Mod+Z hotkey-overlay-title="Spotlight Bar: Toggle" { spawn "dms" "ipc" "call" "spotlight-bar" "toggle"; }
     XF86AudioLowerVolume hotkey-overlay-title="Volume Down (5%)" allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "decrement" "5"; }
     XF86AudioMute allow-when-locked=true hotkey-overlay-title="Volume Mute Toggle" { spawn "dms" "ipc" "call" "audio" "mute"; }
-    XF86AudioRaiseVolume allow-when-locked=true hotkey-overlay-title="Volume Up (5%)" { spawn "dms" "ipc" "call" "audio" "increment" "5"; }
-    XF86Launch6 allow-when-locked=true hotkey-overlay-title="Microphone Mute Toggle" { spawn "dms" "ipc" "call" "mic" "mute"; }
+    XF86AudioRaiseVolume hotkey-overlay-title="Volume Up (5%)" allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "5"; }
+    XF86Launch6 hotkey-overlay-title="Microphone Mute Toggle" allow-when-locked=true { spawn "dms" "ipc" "call" "mic" "mute"; }
     XF86MonBrightnessDown allow-when-locked=true hotkey-overlay-title="Brightness Down (5%)" { spawn "dms" "ipc" "call" "brightness" "decrement" "5" ""; }
     XF86MonBrightnessUp allow-when-locked=true hotkey-overlay-title="Brightness Up (5%)" { spawn "dms" "ipc" "call" "brightness" "increment" "5" ""; }
     Print { screenshot-screen; }
     Mod+S repeat=false { spawn "sh" "-c" "spotify-launcher"; }
-    Ctrl+H hotkey-overlay-title="Toggle Shortcuts Inhibit" { toggle-keyboard-shortcuts-inhibit; }
     Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
 }

@@ -132,6 +132,72 @@
           }
         }
       }
+    },
+    {
+      "id": "auto_7b1f70ac",
+      "name": "",
+      "outputs": {
+        "DP-1": {
+          "mode": "2560x1440@239.992",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1.09765625,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "DP-2": {
+          "mode": "1920x1080@165.003",
+          "position": {
+            "x": 0,
+            "y": 180
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
+    },
+    {
+      "id": "auto_201b30",
+      "name": "",
+      "outputs": {
+        "DP-1": {
+          "mode": "2560x1440@239.992",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1.09765625,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
+    },
+    {
+      "id": "auto_201b31",
+      "name": "",
+      "outputs": {
+        "DP-2": {
+          "mode": "1920x1080@165.003",
+          "position": {
+            "x": 0,
+            "y": 180
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
     }
   ]
 }
