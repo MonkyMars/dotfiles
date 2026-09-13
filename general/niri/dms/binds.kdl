@@ -3,6 +3,7 @@ binds {
     Mod+C hotkey-overlay-title="Clipboard: Toggle" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
     Mod+L hotkey-overlay-title="Power Menu: Open" { spawn "dms" "ipc" "call" "powermenu" "open"; }
     Mod+Shift+S hotkey-overlay-title="Screenshot: Region" { spawn "dms" "screenshot"; }
+    Mod+Z hotkey-overlay-title="Spotlight Bar: Toggle" { spawn "dms" "ipc" "call" "spotlight-bar" "toggle"; }
     Mod+space hotkey-overlay-title="Default Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Print hotkey-overlay-title="Screenshot: Window" { spawn "dms" "screenshot" "window"; }
     XF86AudioLowerVolume hotkey-overlay-title="Volume Down (5%)" { spawn "dms" "ipc" "call" "audio" "decrement" "5"; }
