@@ -1,8 +1,5 @@
-plugins/
-
-general/zed/themes/noctalia.json
-themes/tokyo-night/kitty/current-theme.conf
-themes/tokyo-night/kitty/themes/noctalia.conf
-themes/tokyo-night/niri/noctalia.kdl
-themes/tokyo-night/noctalia/colors.json
-themes/tokyo-night/fuzzel/themes/noctalia
+general/DankMaterialShell/zen.css
+general/DankMaterialShell/plugin_settings.json
+general/DankMaterialShell/firefox.css
+general/DankMaterialShell/plugins
+general/zed/themes

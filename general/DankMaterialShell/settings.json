@@ -74,6 +74,7 @@
   "notificationFocusedMonitor": true,
   "osdPowerProfileEnabled": true,
   "powerMenuDefaultAction": "lock",
+  "displaySnapToEdge": false,
   "barConfigs": [
     {
       "id": "default",
