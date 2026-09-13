@@ -2,7 +2,6 @@
   "currentThemeName": "dynamic",
   "currentThemeCategory": "dynamic",
   "matugenScheme": "scheme-vibrant",
-  "matugenSmartMode": true,
   "popupTransparency": 0.85,
   "dockTransparency": 0.7,
   "floatingWindowForegroundTransparency": 0.15,
@@ -74,6 +73,11 @@
   "notificationFocusedMonitor": true,
   "osdPowerProfileEnabled": true,
   "powerMenuDefaultAction": "lock",
+  "screenPreferences": {
+    "wallpaper": [
+      "all"
+    ]
+  },
   "barConfigs": [
     {
       "id": "default",
