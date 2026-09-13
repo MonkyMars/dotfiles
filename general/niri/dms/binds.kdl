@@ -1,0 +1,43 @@
+binds {
+    Mod+B hotkey-overlay-title="Default Web Browser: Open" { spawn "dms" "ipc" "call" "defaultApp" "browser"; }
+    Mod+C hotkey-overlay-title="Clipboard: Toggle" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    Mod+L hotkey-overlay-title="Power Menu: Open" { spawn "dms" "ipc" "call" "powermenu" "open"; }
+    Mod+Shift+S hotkey-overlay-title="Screenshot: Region" { spawn "dms" "screenshot"; }
+    Mod+space hotkey-overlay-title="Default Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Print hotkey-overlay-title="Screenshot: Window" { spawn "dms" "screenshot" "window"; }
+    XF86AudioLowerVolume hotkey-overlay-title="Volume Down (5%)" { spawn "dms" "ipc" "call" "audio" "decrement" "5"; }
+    XF86AudioMute hotkey-overlay-title="Volume Mute Toggle" { spawn "dms" "ipc" "call" "audio" "mute"; }
+    XF86AudioRaiseVolume hotkey-overlay-title="Volume Up (5%)" { spawn "dms" "ipc" "call" "audio" "increment" "5"; }
+    XF86Launch6 hotkey-overlay-title="Microphone Mute Toggle" { spawn "dms" "ipc" "call" "mic" "mute"; }
+    XF86Launch7 hotkey-overlay-title="DankIsland: Toggle" { spawn "dms" "ipc" "call" "island" "toggle" "home"; }
+    XF86MonBrightnessDown hotkey-overlay-title="Brightness Down (5%)" { spawn "dms" "ipc" "call" "brightness" "decrement" "5" ""; }
+    XF86MonBrightnessUp hotkey-overlay-title="Brightness Up (5%)" { spawn "dms" "ipc" "call" "brightness" "increment" "5" ""; }
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+F hotkey-overlay-title="Maximize Column" { maximize-column; }
+    Mod+Left hotkey-overlay-title="Focus Left" { focus-column-left; }
+    Mod+Q hotkey-overlay-title="Close Window" { close-window; }
+    Mod+Right hotkey-overlay-title="Focus Right" { focus-column-right; }
+    Mod+Shift+F hotkey-overlay-title="Fullscreen" { fullscreen-window; }
+    Mod+D { spawn "gtk-launch" "vesktop"; }
+    Mod+Return { spawn "gtk-launch" "kitty"; }
+    Mod+S { spawn "gtk-launch" "spotify-launcher"; }
+    Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
+    Mod+X hotkey-overlay-title="Toggle Overview" { toggle-overview; }
+}

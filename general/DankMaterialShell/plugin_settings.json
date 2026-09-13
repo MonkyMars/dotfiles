@@ -1,60 +1,12 @@
 {
-  "discordVoice": {
-    "enabled": true
-  },
-  "niriWindows": {
-    "enabled": true
-  },
-  "dankKDEConnect": {
-    "enabled": true,
-    "selectedDeviceId": "2d6af74388e148549b88cbd6ee7e7866"
-  },
-  "dockerManager": {
-    "enabled": true,
-    "groupByCompose": false,
-    "terminalApp": "alacritty --hold"
-  },
-  "calculator": {
-    "enabled": false,
-    "trigger": "="
-  },
-  "niriScreenshot": {
-    "enabled": true
-  },
-  "dms-niri-screenshot": {
-    "mode": "interactive"
-  },
-  "vscodeLauncher": {
-    "enabled": true,
-    "editorMode": "Custom",
-    "customConfigDir": "~/Coding",
-    "customExecutable": "zeditor",
-    "trigger": "zed",
-    "maxResults": "200"
-  },
-  "dankLauncherKeys": {
-    "enabled": true,
-    "noTrigger": false
-  },
-  "wallpaperDiscovery": {
-    "enabled": true
-  },
-  "dankClight": {
-    "enabled": true
-  },
-  "dmsThemeSync": {
-    "enabled": true,
-    "qtSyncMode": "auto"
-  },
-  "batteryPlus": {
-    "enabled": true,
-    "timespanHours": 12
-  },
-  "tailscale": {
-    "enabled": true
-  },
   "dankscale": {
     "enabled": true,
     "lastAccount": "MonkyMars@github"
+  },
+  "dockerManager": {
+    "enabled": true
+  },
+  "batteryPlus": {
+    "enabled": true
   }
 }

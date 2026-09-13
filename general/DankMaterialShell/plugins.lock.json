@@ -1,0 +1,17 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "batteryPlus": {
+      "repo": "https://github.com/arcatva/dms-battery-plus",
+      "commit": "4e653d09174e1edc260f279c42ec2477b6fb2e24"
+    },
+    "dankscale": {
+      "repo": "https://github.com/dwright134/dms-dankscale",
+      "commit": "bddebf0e2935ba23b0614ff9af5bf8f4ed6d3d9f"
+    },
+    "dockerManager": {
+      "repo": "https://github.com/LuckShiba/DmsDockerManager",
+      "commit": "9e6a01283e169c46eff7a157202b1b8ab48577b1"
+    }
+  }
+}

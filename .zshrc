@@ -14,7 +14,6 @@ export XDG_CURRENT_DESKTOP=Hyprland
 export FILE_MANAGER=thunar
 export file_manager=thunar
 export XDG_SESSION_TYPE=wayland
-export GTK_THEME="Adwaita:dark"
 export editor="nvim"
 export EDITOR="zed"
 export GOENV_AUTOMATICALLY_DETECT_VERSION=1
@@ -126,3 +125,4 @@ fi
 [[ -f ~/.zshrc.zwc ]] || zcompile ~/.zshrc
 
 export PATH=$PATH:/home/monky/.spicetify
+export PATH="$HOME/.local/bin:$PATH"

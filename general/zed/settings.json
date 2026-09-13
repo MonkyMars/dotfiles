@@ -13,6 +13,12 @@
     "dock": "left"
   },
   "agent_servers": {
+    "github-copilot-cli": {
+      "default_config_options": {
+        "allow_all": "on"
+      },
+      "type": "registry"
+    },
     "claude-acp": {
       "type": "registry",
     },
@@ -47,7 +53,7 @@
   },
   "ui_font_size": 16,
   "buffer_font_size": 15,
-  "theme": "DankShell Dark",
+  "theme": "DankShell Light Transparent",
   "lsp": {
     "rust-analyzer": {
       "binary": {
