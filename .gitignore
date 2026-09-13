@@ -3,3 +3,9 @@ general/DankMaterialShell/plugin_settings.json
 general/DankMaterialShell/firefox.css
 general/DankMaterialShell/plugins
 general/zed/themes
+
+
+general/kitty/dank-tabs.conf
+general/kitty/dank-theme.conf
+general/niri/dms/colors.kdl
+general/niri/dms/cursor.kdl

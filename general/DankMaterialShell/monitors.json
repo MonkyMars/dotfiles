@@ -32,6 +32,30 @@
           "niri": {}
         }
       }
+    },
+    {
+      "id": "profile_1789308153027_rmu8r05",
+      "name": "laptop",
+      "outputs": {
+        "eDP-1": {
+          "mode": "2048x1280@120.001",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": true,
+          "disabled": false,
+          "niri": {
+            "focusAtStartup": true,
+            "hotCorners": {
+              "off": true
+            },
+            "vrrOnDemand": null
+          }
+        }
+      }
     }
   ]
 }
