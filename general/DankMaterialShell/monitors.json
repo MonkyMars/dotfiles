@@ -5,20 +5,6 @@
       "id": "profile_1789307404694_89wz7i8",
       "name": "void",
       "outputs": {
-        "DP-1": {
-          "mode": "2560x1440@239.992",
-          "position": {
-            "x": 3840,
-            "y": 0
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "focusAtStartup": true
-          }
-        },
         "DP-2": {
           "mode": "1920x1080@165.003",
           "position": {
@@ -27,9 +13,31 @@
           },
           "scale": 1,
           "transform": "Normal",
+          "vrr": true,
+          "disabled": false,
+          "niri": {
+            "hotCorners": {
+              "off": true
+            },
+            "vrrOnDemand": null
+          }
+        },
+        "DP-1": {
+          "mode": "2560x1440@239.992",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
           "vrr": false,
           "disabled": false,
-          "niri": {}
+          "niri": {
+            "focusAtStartup": true,
+            "hotCorners": {
+              "off": true
+            }
+          }
         }
       }
     },

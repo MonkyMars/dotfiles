@@ -3,12 +3,22 @@
 
 // @id=wr_1789254265853804538 @name=Spotify
 window-rule {
-    match app-id="^spotify$"
+    match app-id="Spotify"
+    open-floating false
     open-on-workspace "5"
 }
 
 // @id=wr_1789251587713484181 @name=Vesktop
 window-rule {
-    match app-id="^vesktop$"
+    match app-id="vesktop"
+    open-floating false
     open-on-workspace "5"
+}
+
+// @id=wr_1789310318488590391 @name=Game launcher
+window-rule {
+    match app-id="kitty" title="game-launcher.sh"
+    open-floating true
+    default-column-width { fixed 400; }
+    default-window-height { fixed 300; }
 }

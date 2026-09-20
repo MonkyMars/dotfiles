@@ -1,4 +1,5 @@
 binds {
+    Ctrl+Home hotkey-overlay-title="Screenshot: Window" { spawn "dms" "screenshot" "window"; }
     Mod+B hotkey-overlay-title="Default Web Browser: Open" { spawn "dms" "ipc" "call" "defaultApp" "browser"; }
     Mod+C hotkey-overlay-title="Clipboard: Toggle" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
     Mod+L hotkey-overlay-title="Power Menu: Open" { spawn "dms" "ipc" "call" "powermenu" "open"; }
@@ -38,7 +39,9 @@ binds {
     Mod+Q hotkey-overlay-title="Close Window" { close-window; }
     Mod+Right hotkey-overlay-title="Focus Right" { focus-column-right; }
     Mod+Shift+F hotkey-overlay-title="Fullscreen" { fullscreen-window; }
+    Mod+Shift+E hotkey-overlay-title="Quit Niri" { quit; }
     Mod+D { spawn "gtk-launch" "vesktop"; }
+    Mod+G { spawn "kitty" "-e" "/home/monky/dotfiles/scripts/game-launcher.sh" "--title" "gamelauncher"; }
     Mod+Return { spawn "gtk-launch" "kitty"; }
     Mod+S { spawn "gtk-launch" "spotify-launcher"; }
     Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
