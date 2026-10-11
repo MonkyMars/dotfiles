@@ -13,8 +13,16 @@
     "dock": "left"
   },
   "agent_servers": {
+    "mistral-vibe": {
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    },
     "github-copilot-cli": {
       "default_config_options": {
+        "mode": "https://agentclientprotocol.com/protocol/session-modes#agent",
+        "model": "auto",
         "allow_all": "on"
       },
       "type": "registry"
