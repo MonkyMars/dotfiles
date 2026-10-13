@@ -9,19 +9,19 @@ setopt hist_save_no_dups hist_ignore_dups hist_find_no_dups
 # Shell options
 setopt NO_BG_NICE NO_CLOBBER AUTO_CD CORRECT
 
-# Environment variables - set early
-export XDG_CURRENT_DESKTOP=Hyprland
 export FILE_MANAGER=thunar
 export file_manager=thunar
-export XDG_SESSION_TYPE=wayland
 export editor="nvim"
-export EDITOR="zed"
+export EDITOR="zeditor --wait"
 export GOENV_AUTOMATICALLY_DETECT_VERSION=1
 export BUN_INSTALL="$HOME/.bun"
 export VOLTA_HOME="$HOME/.volta"
 export GOENV_ROOT="$HOME/.goenv"
 export CARGO_ROOT="$HOME/.cargo"
-export PATH="$BUN_INSTALL/bin:$VOLTA_HOME/bin:$HOME/.local/bin:$CARGO_ROOT/bin:$GOENV_ROOT/bin:$PATH"
+
+
+typeset -U path PATH
+export PATH="$BUN_INSTALL/bin:$VOLTA_HOME/bin:$HOME/.local/bin:$CARGO_ROOT/bin:$GOENV_ROOT/bin:$HOME/go/bin:$PATH:$HOME/.spicetify"
 
 # Aliases - lightweight and frequently used
 alias g='git' gs='git status' gsw='git switch' add='git add' gc='git commit -m'
@@ -30,16 +30,18 @@ alias rb='reboot' pw='poweroff' c='clear' e='exit' m='mkdir'
 alias gr='go run' gb='go build' gt='go test' gfmt='gofmt -w .'
 alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
 alias b='bun' bd='bun run dev' bi='bun install' ff='fastfetch'
-alias ls='eza --all --icons --group-directories-first --color=always'
-alias dc='docker-compose up --build' ddev='docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build' dprod='docker compose up -d --build'
+# color/icons only when writing to a terminal, so `ls | grep ...` stays clean
+alias ls='eza --all --icons=auto --group-directories-first --color=auto'
+alias dc='docker compose up --build' ddev='docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build' dprod='docker compose up -d --build'
 alias dp='docker ps -sa'
 alias dr='docker run -t'
 alias py='python3' pyr='python3 main.py'
 alias zed='zeditor'
 
 f () {
-    dir="$(zoxide query -i)"
-    zeditor "$dir"
+    local dir
+    dir="$(zoxide query -i)" || return
+    [[ -n $dir ]] && zeditor "$dir"
 }
 
 # https://github.com/MonkyMars/ccheck
@@ -60,6 +62,14 @@ for dump in ~/.zcompdump(N.mh+24); do
     break
 done
 [[ -z "$dump" ]] && compinit -C
+
+# Carapace - multi-shell completion engine.
+# Must come AFTER compinit and BEFORE your own zstyles so yours take precedence.
+# Bridges are fallbacks for commands carapace has no completer for.
+if command -v carapace >/dev/null 2>&1; then
+    export CARAPACE_BRIDGES='zsh,fish,bash'
+    source <(carapace _carapace)
+fi
 
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -90,8 +100,7 @@ zinit wait lucid for \
 # Load fzf-tab synchronously (needed for completions)
 zinit light Aloxaf/fzf-tab
 
-# Load fzf history search plugin
-zinit light joshskidmore/zsh-fzf-history-search
+# zsh-fzf-history-search removed: atuin (below) owns Ctrl+R, so it was redundant
 
 # Load zsh-you-should-use plugin - Warns if you use a command that has an alias
 zinit light MichaelAquilina/zsh-you-should-use
@@ -108,6 +117,7 @@ if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh)"
 fi
 
+# atuin binds Ctrl+R (and Up) - keep this after the plugins
 if command -v atuin >/dev/null 2>&1; then
     eval "$(atuin init zsh)"
 fi
@@ -120,9 +130,7 @@ fi
 [[ -f ~/dotfiles/.zsh/usb ]] && source ~/dotfiles/.zsh/usb
 
 # bun completions
-[ -s "/home/monky/.bun/_bun" ] && source "/home/monky/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-[[ -f ~/.zshrc.zwc ]] || zcompile ~/.zshrc
-
-export PATH=$PATH:/home/monky/.spicetify
-export PATH="$HOME/.local/bin:$PATH"
+# Recompile when the .zwc is missing or older than .zshrc (zsh ignores a stale .zwc)
+[[ ~/.zshrc.zwc -nt ~/.zshrc ]] || zcompile ~/.zshrc
