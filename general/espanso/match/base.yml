@@ -1,0 +1,14 @@
+matches:
+  - trigger: ":espanso"
+    replace: "Hi there!"
+  - trigger: ":192.42"
+    replace: "192.168.178.42"
+  - trigger: ":@.me"
+    replace: "levinoppers@proton.me"
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+    - name: mydate
+      type: date
+      params:
+      format: "%Y-%m-%d"

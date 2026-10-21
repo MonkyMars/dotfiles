@@ -1,139 +1,145 @@
-# History configuration - load early for immediate availability
-HISTSIZE=5000
-HISTFILE=~/.zsh_history
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt appendhistory sharehistory hist_ignore_space hist_ignore_all_dups
-setopt hist_save_no_dups hist_ignore_dups hist_find_no_dups
 
-# Shell options
+# ── History ──────────────────────────────────────────────────────
+HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
+HISTSIZE=5000
+SAVEHIST=5000
+
+setopt APPEND_HISTORY SHARE_HISTORY HIST_IGNORE_SPACE
+setopt HIST_IGNORE_ALL_DUPS HIST_SAVE_NO_DUPS HIST_FIND_NO_DUPS
+
+# ── Shell options ────────────────────────────────────────────────
 setopt NO_BG_NICE NO_CLOBBER AUTO_CD CORRECT
 
+# ── Environment ──────────────────────────────────────────────────
 export FILE_MANAGER=thunar
 export file_manager=thunar
-export editor="nvim"
 export EDITOR="zeditor --wait"
-export GOENV_AUTOMATICALLY_DETECT_VERSION=1
+export VISUAL="$EDITOR"
+
 export BUN_INSTALL="$HOME/.bun"
 export VOLTA_HOME="$HOME/.volta"
 export GOENV_ROOT="$HOME/.goenv"
-export CARGO_ROOT="$HOME/.cargo"
-
+export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
 
 typeset -U path PATH
-export PATH="$BUN_INSTALL/bin:$VOLTA_HOME/bin:$HOME/.local/bin:$CARGO_ROOT/bin:$GOENV_ROOT/bin:$HOME/go/bin:$PATH:$HOME/.spicetify"
+path=(
+    "$BUN_INSTALL/bin"
+    "$VOLTA_HOME/bin"
+    "$HOME/.local/bin"
+    "$CARGO_HOME/bin"
+    "$GOENV_ROOT/bin"
+    "$HOME/go/bin"
+    "$HOME/.spicetify"
+    "$HOME/.opencode/bin"
+    $path
+)
 
-# Aliases - lightweight and frequently used
-alias g='git' gs='git status' gsw='git switch' add='git add' gc='git commit -m'
+# ── Aliases ──────────────────────────────────────────────────────
+alias g='git' gs='git status' gsw='git switch'
+alias add='git add' gc='git commit -m'
 alias gp='git push -u origin' gl='git pull' gst='git stash'
+
 alias rb='reboot' pw='poweroff' c='clear' e='exit' m='mkdir'
 alias gr='go run' gb='go build' gt='go test' gfmt='gofmt -w .'
 alias cr='cargo run' cc='cargo check' ct='cargo test' cb='cargo build'
+
 alias b='bun' bd='bun run dev' bi='bun install' ff='fastfetch'
-# color/icons only when writing to a terminal, so `ls | grep ...` stays clean
 alias ls='eza --all --icons=auto --group-directories-first --color=auto'
-alias dc='docker compose up --build' ddev='docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build' dprod='docker compose up -d --build'
+
+alias dc='docker compose up --build'
+alias ddev='docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build'
+alias dprod='docker compose up -d --build'
 alias dp='docker ps -sa'
 alias dr='docker run -t'
+
 alias py='python3' pyr='python3 main.py'
 alias zed='zeditor'
-
-f () {
-    local dir
-    dir="$(zoxide query -i)" || return
-    [[ -n $dir ]] && zeditor "$dir"
-}
-
-# https://github.com/MonkyMars/ccheck
 alias check='ccheck'
 
-# Zinit setup - defer heavy loading
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print "Installing Zinit..."
-    git clone --depth=1 https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
+# ── Directory picker ─────────────────────────────────────────────
+f() {
+    local dir
+    dir="$(zoxide query -i)" || return
+    [[ -n "$dir" ]] && zeditor "$dir"
+}
+
+# ── Zinit ────────────────────────────────────────────────────────
+ZINIT_HOME="${ZDOTDIR:-$HOME}/.local/share/zinit/zinit.git"
+
+if [[ ! -r "$ZINIT_HOME/zinit.zsh" ]]; then
+    if (( $+commands[git] )); then
+        command git clone --depth=1 \
+            https://github.com/zdharma-continuum/zinit.git \
+            "$ZINIT_HOME" || return 1
+    else
+        print -u2 "Zinit requires git."
+        return 1
+    fi
 fi
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 
-# Essential completions - load synchronously
+source "$ZINIT_HOME/zinit.zsh"
+
+# ── Completion cache ────────────────────────────────────────────
 autoload -Uz compinit
-# Speed up compinit by checking once per day
-for dump in ~/.zcompdump(N.mh+24); do
-    compinit
-    break
-done
-[[ -z "$dump" ]] && compinit -C
 
-# Carapace - multi-shell completion engine.
-# Must come AFTER compinit and BEFORE your own zstyles so yours take precedence.
-# Bridges are fallbacks for commands carapace has no completer for.
-if command -v carapace >/dev/null 2>&1; then
+# Rebuild at most once per day; use the fast cached path otherwise.
+if [[ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ||
+      "${ZDOTDIR:-$HOME}/.zcompdump"(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
+
+# ── Carapace ─────────────────────────────────────────────────────
+if (( $+commands[carapace] )); then
     export CARAPACE_BRIDGES='zsh,fish,bash'
     source <(carapace _carapace)
 fi
 
-# Completion styling
+# ── Completion styling ──────────────────────────────────────────
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# Key bindings
+# ── Key bindings ─────────────────────────────────────────────────
 bindkey '^I' expand-or-complete
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
+bindkey '^P' history-search-backward
+bindkey '^N' history-search-forward
 
-# Autosuggestions styling
+# ── Plugins ──────────────────────────────────────────────────────
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#1e3a5f'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
-# Load plugins asynchronously for speed
+# Defer plugins that aren't needed to initialize the prompt.
 zinit wait lucid for \
-    atload"_zsh_autosuggest_start" \
+    atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions \
-    atinit"zicompinit; zicdreplay" \
-        zdharma-continuum/fast-syntax-highlighting \
     OMZP::command-not-found \
     OMZP::sudo
 
-# Load fzf-tab synchronously (needed for completions)
+# Completion widget integration must follow compinit.
 zinit light Aloxaf/fzf-tab
-
-# zsh-fzf-history-search removed: atuin (below) owns Ctrl+R, so it was redundant
-
-# Load zsh-you-should-use plugin - Warns if you use a command that has an alias
 zinit light MichaelAquilina/zsh-you-should-use
 
-# Add hook for directory changes
-autoload -U add-zsh-hook
+# Load highlighting after widgets and other plugins.
+zinit light zdharma-continuum/fast-syntax-highlighting
 
-# Init starship and zoxide - check if installed first
-if command -v starship >/dev/null 2>&1; then
-    eval "$(starship init zsh)"
-fi
+# ── Prompt and navigation ────────────────────────────────────────
+(( $+commands[starship] )) && eval "$(starship init zsh)"
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 
-if command -v zoxide >/dev/null 2>&1; then
-    eval "$(zoxide init zsh)"
-fi
+# ── History search ───────────────────────────────────────────────
+(( $+commands[atuin] )) && eval "$(atuin init zsh)"
 
-# atuin binds Ctrl+R (and Up) - keep this after the plugins
-if command -v atuin >/dev/null 2>&1; then
-    eval "$(atuin init zsh)"
-fi
+# ── Go environment ───────────────────────────────────────────────
+(( $+commands[goenv] )) && eval "$(goenv init - zsh)"
 
-if command -v goenv >/dev/null 2>&1; then
-    eval "$(goenv init - zsh)"
-fi
+# ── Optional scripts ─────────────────────────────────────────────
+[[ -f "$HOME/dotfiles/.zsh/usb" ]] &&
+    source "$HOME/dotfiles/.zsh/usb"
 
-# Load custom scripts if they exist
-[[ -f ~/dotfiles/.zsh/usb ]] && source ~/dotfiles/.zsh/usb
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# Recompile when the .zwc is missing or older than .zshrc (zsh ignores a stale .zwc)
-[[ ~/.zshrc.zwc -nt ~/.zshrc ]] || zcompile ~/.zshrc
-
-# opencode
-export PATH=/home/monky/.opencode/bin:$PATH
+[[ -s "$BUN_INSTALL/_bun" ]] &&
+    source "$BUN_INSTALL/_bun"
