@@ -39,11 +39,13 @@ binds {
     Mod+Q hotkey-overlay-title="Close Window" { close-window; }
     Mod+Right hotkey-overlay-title="Focus Right" { focus-column-right; }
     Mod+Shift+F hotkey-overlay-title="Fullscreen" { fullscreen-window; }
+    Mod+T hotkey-overlay-title="Toggle Floating" { toggle-window-floating; }
     Mod+Shift+E hotkey-overlay-title="Quit Niri" { quit; }
     Mod+D { spawn "gtk-launch" "vesktop"; }
-    Mod+G { spawn "kitty" "-e" "/home/monky/dotfiles/scripts/game-launcher.sh" "--title" "gamelauncher"; }
+    Mod+G hotkey-overlay-title="Game launcher" { spawn "kitty" "--class" "game-launcher" "--title" "game-launcher.sh" "-e" "/home/monky/dotfiles/scripts/game-launcher.sh"; }
     Mod+Return { spawn "gtk-launch" "kitty"; }
-    Mod+S { spawn "gtk-launch" "spotify-launcher"; }
+    Mod+S hotkey-overlay-title="Open Spotify" { spawn "gtk-launch" "spotify-launcher"; }
+    Mod+Shift+X hotkey-overlay-title="Package helper" { spawn "kitty" "--class" "package-helper" "-e" "/home/monky/dotfiles/scripts/package-helper.sh"; }
     Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
     Mod+X hotkey-overlay-title="Toggle Overview" { toggle-overview; }
 }

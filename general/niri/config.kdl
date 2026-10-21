@@ -33,6 +33,21 @@ workspace "9" {
     open-on-output "DP-2"
 }
 
+window-rule {
+    match app-id="game-launcher"
+    open-floating true
+    default-column-width { fixed 800; }
+    default-window-height { fixed 600; }
+}
+
+window-rule {
+    match app-id="package-helper"
+    open-floating true
+    default-column-width { fixed 800; }
+    default-window-height { fixed 600; }
+}
+
+
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
 include optional=true "dms/colors.kdl"

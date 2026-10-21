@@ -134,3 +134,6 @@ fi
 
 # Recompile when the .zwc is missing or older than .zshrc (zsh ignores a stale .zwc)
 [[ ~/.zshrc.zwc -nt ~/.zshrc ]] || zcompile ~/.zshrc
+
+# opencode
+export PATH=/home/monky/.opencode/bin:$PATH

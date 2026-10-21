@@ -14,11 +14,3 @@ window-rule {
     open-floating false
     open-on-workspace "5"
 }
-
-// @id=wr_1789310318488590391 @name=Game launcher
-window-rule {
-    match app-id="kitty" title="game-launcher.sh"
-    open-floating true
-    default-column-width { fixed 400; }
-    default-window-height { fixed 300; }
-}
