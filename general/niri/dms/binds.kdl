@@ -43,8 +43,9 @@ binds {
     Mod+Shift+E hotkey-overlay-title="Quit Niri" { quit; }
     Mod+D { spawn "gtk-launch" "vesktop"; }
     Mod+G hotkey-overlay-title="Game launcher" { spawn "kitty" "--class" "game-launcher" "--title" "game-launcher.sh" "-e" "/home/monky/dotfiles/scripts/game-launcher.sh"; }
+    Mod+J hotkey-overlay-title="Open Jellyfin Desktop" { spawn "flatpak" "run" "org.jellyfin.JellyfinDesktop"; }
     Mod+Return { spawn "gtk-launch" "kitty"; }
-    Mod+S hotkey-overlay-title="Open Spotify" { spawn "gtk-launch" "spotify-launcher"; }
+    Mod+S { spawn "flatpak" "run" "org.jeffvli.feishin"; }
     Mod+Shift+X hotkey-overlay-title="Package helper" { spawn "kitty" "--class" "package-helper" "-e" "/home/monky/dotfiles/scripts/package-helper.sh"; }
     Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
     Mod+X hotkey-overlay-title="Toggle Overview" { toggle-overview; }

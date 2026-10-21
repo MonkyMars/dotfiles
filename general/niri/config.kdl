@@ -47,6 +47,9 @@ window-rule {
     default-window-height { fixed 600; }
 }
 
+hotkey-overlay {
+    skip-at-startup
+}
 
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
