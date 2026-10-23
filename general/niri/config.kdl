@@ -55,8 +55,8 @@ binds {
     Mod+TouchpadScrollDown cooldown-ms=100 { focus-workspace-down; }
     Mod+TouchpadScrollUp   cooldown-ms=100 { focus-workspace-up; }
 
-    Mod+Ctrl+TouchpadScrollDown cooldown-ms=100 { move-column-to-workspace-down; }
-    Mod+Ctrl+TouchpadScrollUp   cooldown-ms=100 { move-column-to-workspace-up; }
+    Mod+Shift+TouchpadScrollDown cooldown-ms=100 { move-column-to-workspace-down; }
+    Mod+Shift+TouchpadScrollUp   cooldown-ms=100 { move-column-to-workspace-up; }
 
     TouchpadScrollRight cooldown-ms=150 { focus-column-right; }
     TouchpadScrollLeft  cooldown-ms=150 { focus-column-left; }
