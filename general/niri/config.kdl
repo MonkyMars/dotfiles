@@ -55,18 +55,15 @@ binds {
     Mod+TouchpadScrollDown cooldown-ms=100 { focus-workspace-down; }
     Mod+TouchpadScrollUp   cooldown-ms=100 { focus-workspace-up; }
 
-    // optional: move the focused column to another workspace
     Mod+Ctrl+TouchpadScrollDown cooldown-ms=100 { move-column-to-workspace-down; }
     Mod+Ctrl+TouchpadScrollUp   cooldown-ms=100 { move-column-to-workspace-up; }
 
-    // optional: scroll columns horizontally
-    Mod+TouchpadScrollRight cooldown-ms=100 { focus-column-right; }
-    Mod+TouchpadScrollLeft  cooldown-ms=100 { focus-column-left; }
+    TouchpadScrollRight cooldown-ms=150 { focus-column-right; }
+    TouchpadScrollLeft  cooldown-ms=150 { focus-column-left; }
 
     Mod+WheelScrollDown      cooldown-ms=100 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=100 { focus-workspace-up; }
 
-    // optional: move the focused column to another workspace
     Mod+Ctrl+WheelScrollDown cooldown-ms=100 { move-column-to-workspace-down; }
     Mod+Ctrl+WheelScrollUp   cooldown-ms=100 { move-column-to-workspace-up; }
 }
