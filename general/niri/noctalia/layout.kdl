@@ -1,0 +1,49 @@
+layout {
+    gaps 4
+
+    // Transparent so Noctalia's backdrop shows through in the overview
+    background-color "transparent"
+
+    border {
+        width 1
+    }
+
+    focus-ring {
+        width 1
+    }
+
+    always-center-single-column
+    struts
+}
+
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+window-rule { draw-border-with-background false; clip-to-geometry true; }
+
+
+layer-rule {
+    match namespace="^noctalia-backdrop"
+    place-within-backdrop true
+}
+
+// Noctalia surfaces: blur what's actually behind them, not just the wallpaper
+layer-rule {
+    match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+    background-effect {
+        xray false
+        // blur false   // uncomment for plain transparency with no blur
+    }
+}
+
+// Noctalia's window switcher doesn't get blur by default
+layer-rule {
+    match namespace="noctalia-window-switcher"
+    background-effect {
+        blur true
+        xray false
+    }
+}

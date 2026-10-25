@@ -1,79 +1,23 @@
 prefer-no-csd
+animations {
+    window-resize {
+        duration-ms 200
+        curve "cubic-bezier" 0.25 0.1 0.25 1.0
+    }
+    workspace-switch {
+        duration-ms 200
+        curve "cubic-bezier" 0.25 0.1 0.25 1.0
+    }
+}
+environment
 
-input {
-    focus-follows-mouse max-scroll-amount="0%"
-}
+include "noctalia.kdl"
 
-workspace "1" {
-    open-on-output "DP-1"
-}
-workspace "2" {
-    open-on-output "DP-1"
-}
-workspace "3" {
-    open-on-output "DP-1"
-}
-workspace "4" {
-    open-on-output "DP-1"
-}
+spawn-at-startup "noctalia"
 
-workspace "5" {
-    open-on-output "DP-2"
-}
-workspace "6" {
-    open-on-output "DP-2"
-}
-workspace "7" {
-    open-on-output "DP-2"
-}
-workspace "8" {
-    open-on-output "DP-2"
-}
-workspace "9" {
-    open-on-output "DP-2"
-}
-
-window-rule {
-    match app-id="game-launcher"
-    open-floating true
-    default-column-width { fixed 800; }
-    default-window-height { fixed 600; }
-}
-
-window-rule {
-    match app-id="package-helper"
-    open-floating true
-    default-column-width { fixed 800; }
-    default-window-height { fixed 600; }
-}
-
-hotkey-overlay {
-    skip-at-startup
-}
-
-binds {
-    Mod+TouchpadScrollDown cooldown-ms=100 { focus-workspace-down; }
-    Mod+TouchpadScrollUp   cooldown-ms=100 { focus-workspace-up; }
-
-    Mod+Shift+TouchpadScrollDown cooldown-ms=100 { move-column-to-workspace-down; }
-    Mod+Shift+TouchpadScrollUp   cooldown-ms=100 { move-column-to-workspace-up; }
-
-    TouchpadScrollRight cooldown-ms=150 { focus-column-right; }
-    TouchpadScrollLeft  cooldown-ms=150 { focus-column-left; }
-
-    Mod+WheelScrollDown      cooldown-ms=100 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=100 { focus-workspace-up; }
-
-    Mod+Ctrl+WheelScrollDown cooldown-ms=100 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=100 { move-column-to-workspace-up; }
-}
-
-include "dms/alttab.kdl"
-include "dms/binds.kdl"
-include optional=true "dms/colors.kdl"
-include optional=true  "dms/cursor.kdl"
-include "dms/input.kdl"
-include "dms/layout.kdl"
-include "dms/outputs.kdl"
-include "dms/windowrules.kdl"
-include "dms/wpblur.kdl"
+include "noctalia/alttab.kdl"
+include "noctalia/binds.kdl"
+include "noctalia/input.kdl"
+include "noctalia/layout.kdl"
+include "noctalia/outputs.kdl"
+include "noctalia/windowrules.kdl"

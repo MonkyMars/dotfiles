@@ -56,13 +56,6 @@ alias py='python3' pyr='python3 main.py'
 alias zed='zeditor'
 alias check='ccheck'
 
-# ── Directory picker ─────────────────────────────────────────────
-f() {
-    local dir
-    dir="$(zoxide query -i)" || return
-    [[ -n "$dir" ]] && zeditor "$dir"
-}
-
 # ── Zinit ────────────────────────────────────────────────────────
 ZINIT_HOME="${ZDOTDIR:-$HOME}/.local/share/zinit/zinit.git"
 

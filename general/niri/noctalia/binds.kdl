@@ -1,0 +1,77 @@
+binds {
+    // System: screenshots, audio, brightness, and session controls
+    Ctrl+Home hotkey-overlay-title="Screenshot: Window" { spawn "noctalia" "msg" "screenshot-window"; }
+    Mod+Shift+S hotkey-overlay-title="Screenshot: Region" { spawn "noctalia" "msg" "screenshot-region"; }
+    Print hotkey-overlay-title="Screenshot: Window" { spawn "noctalia" "msg" "screenshot-window"; }
+    XF86AudioLowerVolume hotkey-overlay-title="Volume Down (5%)" { spawn "noctalia" "msg" "volume-down" "5"; }
+    XF86AudioMute hotkey-overlay-title="Volume Mute Toggle" { spawn "noctalia" "msg" "volume-mute"; }
+    XF86AudioRaiseVolume hotkey-overlay-title="Volume Up (5%)" { spawn "noctalia" "msg" "volume-up" "5"; }
+    XF86Launch6 hotkey-overlay-title="Microphone Mute Toggle" { spawn "noctalia" "msg" "mic-mute"; }
+    XF86MonBrightnessDown hotkey-overlay-title="Brightness Down (5%)" { spawn "noctalia" "msg" "brightness-down" "5"; }
+    XF86MonBrightnessUp hotkey-overlay-title="Brightness Up (5%)" { spawn "noctalia" "msg" "brightness-up" "5"; }
+
+    // Workspaces
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    // Navigation
+    Mod+Ctrl+WheelScrollDown cooldown-ms=100 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp cooldown-ms=100 { move-column-to-workspace-up; }
+    Mod+Shift+TouchpadScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Shift+TouchpadScrollUp cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+TouchpadScrollDown cooldown-ms=100 { focus-workspace-down; }
+    Mod+TouchpadScrollLeft cooldown-ms=150 { focus-column-left; }
+    Mod+TouchpadScrollRight cooldown-ms=150 { focus-column-right; }
+    Mod+TouchpadScrollUp cooldown-ms=100 { focus-workspace-up; }
+    Mod+WheelScrollDown cooldown-ms=100 { focus-workspace-down; }
+    Mod+WheelScrollUp cooldown-ms=100 { focus-workspace-up; }
+
+    // Window and column management
+    Mod+A hotkey-overlay-title="Set Column Width" { set-column-width "-10%"; }
+    Alt+Tab { spawn-sh "noctalia msg window-switcher hold"; }
+    Mod+BracketLeft hotkey-overlay-title="Consume/Expel Left" { consume-or-expel-window-left; }
+    Mod+BracketRight hotkey-overlay-title="Consume/Expel Right" { consume-or-expel-window-right; }
+    Mod+E hotkey-overlay-title="Set Column Width" { set-column-width "+10%"; }
+    Mod+F hotkey-overlay-title="Maximize Column" { maximize-column; }
+    Mod+Left hotkey-overlay-title="Focus Left" { focus-column-left; }
+    Mod+Q hotkey-overlay-title="Close Window" { close-window; }
+    Mod+Right hotkey-overlay-title="Focus Right" { focus-column-right; }
+    Mod+Shift+F hotkey-overlay-title="Fullscreen" { fullscreen-window; }
+    Mod+T hotkey-overlay-title="Toggle Floating" { toggle-window-floating; }
+    Mod+Shift+E hotkey-overlay-title="Quit Niri" { quit; }
+
+    // Noctalia controls
+    Mod+B hotkey-overlay-title="Default Web Browser: Open" { spawn-sh "chromium"; }
+    Mod+C hotkey-overlay-title="Clipboard: Toggle" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
+    Mod+L hotkey-overlay-title="Power Menu: Open" { spawn-sh "noctalia msg session lock"; }
+    Mod+Tab { spawn-sh "noctalia msg window-switcher hold"; }
+    Mod+Z { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+    Mod+space hotkey-overlay-title="Default Launcher: Toggle" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+
+    // Applications
+    Mod+D { spawn "gtk-launch" "vesktop"; }
+    Mod+G hotkey-overlay-title="Game launcher" { spawn "kitty" "--class" "game-launcher" "--title" "game-launcher.sh" "-e" "/home/monky/dotfiles/scripts/game-launcher.sh"; }
+    Mod+J hotkey-overlay-title="Open Jellyfin Desktop" { spawn "flatpak" "run" "org.jellyfin.JellyfinDesktop"; }
+    Mod+O hotkey-overlay-title="Launch Obsidian" { spawn "gtk-launch" "obsidian"; }
+    Mod+Return { spawn "gtk-launch" "kitty"; }
+    Mod+S { spawn "flatpak" "run" "org.jeffvli.feishin"; }
+    Mod+Shift+X hotkey-overlay-title="Package helper" { spawn "kitty" "--class" "package-helper" "-e" "/home/monky/dotfiles/scripts/package-helper.sh"; }
+    Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
+    Mod+X hotkey-overlay-title="Toggle Overview" { toggle-overview; }
+}

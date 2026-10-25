@@ -1,0 +1,243 @@
+[backdrop]
+enabled = true
+
+[bar.default]
+background_opacity = 0.44999998994171619
+capsule_fill = "shadow"
+capsule_opacity = 0.22999999485909939
+center = [ "clock", "date" ]
+end = [ "status", "mini-docker", "network", "battery", "session" ]
+margin_ends = 0
+radius = 0
+start = [ "workspaces", "active_window", "lrc" ]
+widget_spacing = 12
+
+    [bar.default.dead_zone.actions]
+    left = "panel-toggle control-center home"
+
+[battery]
+warning_threshold = 30
+
+    [battery.device."/org/freedesktop/UPower/devices/headset_dev_3C_B0_ED_B3_56_8B"]
+    warning_threshold = 50
+
+[brightness]
+sync_all_monitors = true
+
+[[control_center.shortcuts]]
+type = "wifi"
+
+[[control_center.shortcuts]]
+type = "bluetooth"
+
+[[control_center.shortcuts]]
+type = "nightlight"
+
+[[control_center.shortcuts]]
+type = "notification"
+
+[[control_center.shortcuts]]
+type = "power_profile"
+
+[[control_center.shortcuts]]
+type = "audio"
+
+[desktop_widgets]
+schema_version = 2
+widget_order = [ "desktop-widget-0000000000000001" ]
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget.desktop-widget-0000000000000001]
+    box_height = 144.0
+    box_width = 384.0
+    cx = 1024.0
+    cy = 1080.0
+    output = "eDP-1"
+    placement_height = 1280.0
+    placement_width = 2048.0
+    rotation = 0.0
+    type = "media_player"
+
+        [desktop_widgets.widget.desktop-widget-0000000000000001.settings]
+        album_art_background = false
+        audio_visualizer = true
+        background = false
+        color = "on_surface_variant"
+        layout = "horizontal"
+
+[dock]
+active_scale = 1.1000000163912773
+background_opacity = 0.44999998994171619
+border_width = 0.5
+concave_edge_corners = false
+enabled = true
+icon_size = 28
+magnification_scale = 1.2500000037252903
+pinned = [ "chromium", "dev.zed.Zed", "vesktop", "feishin" ]
+radius = 0
+shadow = false
+show_dots = true
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 400.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = false
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 660.0
+
+[lockscreen]
+transition = [ "disc", "fade", "wipe", "zoom" ]
+transition_duration = 1000
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@eDP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1024.0
+    cy = 1098.0
+    output = "eDP-1"
+    placement_height = 1280.0
+    placement_width = 2048.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[notification]
+background_opacity = 0.44999998994171619
+position = "bottom_right"
+
+[osd]
+background_opacity = 0.44999998994171619
+orientation = "vertical"
+position = "center_right"
+position_vertical = "center_right"
+
+[plugins]
+enabled = [ "8bury/mini-docker", "davemhammer/tailscale" ]
+
+[shell]
+app_icon_color = "primary"
+app_icon_colorize = true
+avatar_path = "/home/monky/monky.webp"
+corner_radius_scale = 0.0
+niri_overview_type_to_launch_enabled = true
+panel_anchor_bar = "default"
+polkit_agent = true
+settings_window_translucent = true
+
+    [shell.greeter_sync]
+    auto_sync = true
+
+    [shell.launcher]
+    categories = false
+    compact = true
+    fetch_exchange_rates = false
+    layout = "simple"
+
+    [shell.panel]
+    clipboard_placement = "attached"
+    launcher_placement = "attached"
+    polkit_placement = "attached"
+
+    [shell.screenshot]
+    confirm_region = true
+    remember_last_region = true
+
+[system.monitor]
+enabled = false
+
+[theme]
+community_palette = "Oxocarbon"
+source = "wallpaper"
+wallpaper_scheme = "soft"
+
+    [theme.templates]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "kitty", "niri", "qt", "starship" ]
+    community_ids = [
+        "feishin",
+        "ungoogled-chromium",
+        "discord",
+        "neovim",
+        "zed",
+        "heroiclauncher",
+        "prismlauncher",
+        "steam",
+        "obs",
+        "zellij",
+        "starship"
+    ]
+
+[wallpaper]
+directory = "/home/monky/dotfiles/wallpapers"
+fill_color = "primary"
+
+    [wallpaper.default]
+    path = "/home/monky/dotfiles/wallpapers/powerlines.png"
+
+    [wallpaper.last]
+    path = "/home/monky/dotfiles/wallpapers/powerlines.png"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/monky/dotfiles/wallpapers/powerlines.png"
+
+[weather]
+enabled = false
+
+[widget.clock.actions]
+left = "panel-toggle control-center"
+
+[widget.lrc]
+type = "shin/lrc:lrc"
+
+[widget.mini-docker]
+type = "8bury/mini-docker:mini-docker"
+
+[widget.network]
+show_vpn_label = true
+
+[widget.status]
+type = "davemhammer/tailscale:status"
+
+[widget.workspaces]
+active_pill_size = 2.25
+hide_when_empty = true
+scale = 1.1000000000000001

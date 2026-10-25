@@ -61,7 +61,7 @@
   },
   "ui_font_size": 16,
   "buffer_font_size": 15,
-  "theme": "DankShell Dark Transparent",
+  "theme": "Noctalia Dark Transparent",
   "lsp": {
     "rust-analyzer": {
       "binary": {
