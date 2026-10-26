@@ -1,8 +1,8 @@
 binds {
     // System: screenshots, audio, brightness, and session controls
-    Ctrl+Home hotkey-overlay-title="Screenshot: Window" { spawn "noctalia" "msg" "screenshot-window"; }
+    Ctrl+Home hotkey-overlay-title="Screenshot: Window" { spawn "noctalia" "msg" "screenshot-fullscreen"; }
     Mod+Shift+S hotkey-overlay-title="Screenshot: Region" { spawn "noctalia" "msg" "screenshot-region"; }
-    Print hotkey-overlay-title="Screenshot: Window" { spawn "noctalia" "msg" "screenshot-window"; }
+    Print hotkey-overlay-title="Screenshot: Window" { spawn "noctalia" "msg" "screenshot-fullscreen"; }
     XF86AudioLowerVolume hotkey-overlay-title="Volume Down (5%)" { spawn "noctalia" "msg" "volume-down" "5"; }
     XF86AudioMute hotkey-overlay-title="Volume Mute Toggle" { spawn "noctalia" "msg" "volume-mute"; }
     XF86AudioRaiseVolume hotkey-overlay-title="Volume Up (5%)" { spawn "noctalia" "msg" "volume-up" "5"; }

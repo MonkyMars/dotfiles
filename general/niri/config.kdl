@@ -11,7 +11,7 @@ animations {
 }
 environment
 
-include "noctalia.kdl"
+include optional=true "noctalia.kdl"
 
 spawn-at-startup "noctalia"
 
