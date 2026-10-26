@@ -57,7 +57,7 @@ binds {
     Mod+Shift+E hotkey-overlay-title="Quit Niri" { quit; }
 
     // Noctalia controls
-    Mod+B hotkey-overlay-title="Default Web Browser: Open" { spawn-sh "chromium"; }
+    Mod+B hotkey-overlay-title="Default Web Browser: Open" { spawn-sh "gtk-launch $(xdg-settings get default-web-browser)"; }
     Mod+C hotkey-overlay-title="Clipboard: Toggle" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
     Mod+L hotkey-overlay-title="Power Menu: Open" { spawn-sh "noctalia msg session lock"; }
     Mod+Tab { spawn-sh "noctalia msg window-switcher hold"; }
@@ -74,4 +74,5 @@ binds {
     Mod+Shift+X hotkey-overlay-title="Package helper" { spawn "kitty" "--class" "package-helper" "-e" "/home/monky/dotfiles/scripts/package-helper.sh"; }
     Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
     Mod+X hotkey-overlay-title="Toggle Overview" { toggle-overview; }
+    Mod+Alt+A hotkey-overlay-title="Wayscriber" { spawn-sh "wayscriber --daemon-toggle"; }
 }

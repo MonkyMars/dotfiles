@@ -1,13 +1,4 @@
-general/DankMaterialShell/zen.css
-general/DankMaterialShell/plugin_settings.json
-general/DankMaterialShell/firefox.css
-general/DankMaterialShell/plugins
-general/DankMaterialShell/plugins.lock.json
 general/zed/themes
-
-
-general/kitty/dank-tabs.conf
-general/kitty/dank-theme.conf
-general/niri/dms/colors.kdl
-general/niri/dms/cursor.kdl
+general/kitty/themes/noctalia.conf
+general/fastfetch/themes/noctalia.jsonc
 general/niri/noctalia.kdl

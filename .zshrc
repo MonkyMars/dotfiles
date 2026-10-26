@@ -20,7 +20,7 @@ export BUN_INSTALL="$HOME/.bun"
 export VOLTA_HOME="$HOME/.volta"
 export GOENV_ROOT="$HOME/.goenv"
 export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
-
+export BROWSER="$(xdg-settings get default-web-browser | sed 's/\.desktop$//')"
 typeset -U path PATH
 path=(
     "$BUN_INSTALL/bin"
