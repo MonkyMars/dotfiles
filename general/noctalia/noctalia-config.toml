@@ -77,7 +77,7 @@ concave_edge_corners = false
 enabled = true
 icon_size = 28
 magnification_scale = 1.2500000037252903
-pinned = [ "chromium", "dev.zed.Zed", "vesktop", "feishin" ]
+pinned = [ "chromium", "discord", "dev.zed.Zed", "feishin" ]
 radius = 0
 shadow = false
 show_dots = true
@@ -126,7 +126,7 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
-        background_color = "surface_variant"
+        background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
         center_password_text = false
@@ -191,11 +191,10 @@ source = "wallpaper"
 wallpaper_scheme = "soft"
 
     [theme.templates]
-    builtin_ids = [ "btop", "gtk3", "gtk4", "kitty", "niri", "qt", "starship" ]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "ghostty", "kitty", "niri", "qt", "starship" ]
     community_ids = [
         "feishin",
         "ungoogled-chromium",
-        "discord",
         "neovim",
         "zed",
         "heroiclauncher",
@@ -203,7 +202,8 @@ wallpaper_scheme = "soft"
         "steam",
         "obs",
         "zellij",
-        "starship"
+        "starship",
+        "yazi"
     ]
 
 [wallpaper]

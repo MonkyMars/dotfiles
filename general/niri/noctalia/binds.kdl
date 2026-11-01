@@ -68,7 +68,7 @@ binds {
     Mod+D { spawn "gtk-launch" "vesktop"; }
     Mod+G hotkey-overlay-title="Game launcher" { spawn "kitty" "--class" "game-launcher" "--title" "game-launcher.sh" "-e" "/home/monky/dotfiles/scripts/game-launcher.sh"; }
     Mod+J hotkey-overlay-title="Open Jellyfin Desktop" { spawn "flatpak" "run" "org.jellyfin.JellyfinDesktop"; }
-    Mod+O hotkey-overlay-title="Launch Obsidian" { spawn "gtk-launch" "obsidian"; }
+    Mod+O hotkey-overlay-title="Launch Obsidian" { spawn-sh "flatpak run org.triliumnotes.Trilium"; }
     Mod+Return { spawn "gtk-launch" "kitty"; }
     Mod+S { spawn "flatpak" "run" "org.jeffvli.feishin"; }
     Mod+Shift+X hotkey-overlay-title="Package helper" { spawn "kitty" "--class" "package-helper" "-e" "/home/monky/dotfiles/scripts/package-helper.sh"; }

@@ -7,8 +7,6 @@ input {
         accel-profile "flat"
     }
     touchpad {
-        disabled-on-external-mouse
-
         tap
         accel-speed 0.0
         accel-profile "flat"
