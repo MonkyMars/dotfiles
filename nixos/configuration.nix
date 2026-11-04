@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   # Enable flakes
@@ -168,7 +168,7 @@
   programs.gamemode.enable = true;
 
   # Network NAS
-  fileSystems."/mnt/nas" = {
+  fileSystems."/mnt/nas" = lib.mkForce {
     device = "//100.81.106.40/storage";
     fsType = "cifs";
     options = [

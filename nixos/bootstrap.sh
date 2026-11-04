@@ -33,14 +33,35 @@ for cmd in nix git sudo; do
   command -v "$cmd" >/dev/null 2>&1 || die "missing required command: $cmd"
 done
 
-if [[ $# -ge 1 ]]; then
-  HOST="$1"
-else
-  DEFAULT_HOST="$(hostname)"
-  read -rp "Hostname [$DEFAULT_HOST]: " HOST
-  HOST="${HOST:-$DEFAULT_HOST}"
-fi
-[[ -n "$HOST" ]] || die "hostname must not be empty"
+read -ra HOSTS <<< "$(nix "${NIX_FLAGS[@]}" eval --raw "$FLAKE_DIR#nixosConfigurations" \
+  --apply 'c: builtins.concatStringsSep " " (builtins.attrNames c)')"
+[[ ${#HOSTS[@]} -gt 0 ]] || die "no nixosConfigurations found in the flake"
+
+choose_host() {
+  local current reply
+  current="$(hostname)"
+
+  if [[ -n "${1:-}" ]]; then
+    HOST="$1"
+    return
+  fi
+
+  if printf '%s\n' "${HOSTS[@]}" | grep -qxF "$current"; then
+    read -rp "Host [$current] (available: ${HOSTS[*]}): " reply
+    HOST="${reply:-$current}"
+  else
+    echo "Available hosts:"
+    PS3="Select host number: "
+    select HOST in "${HOSTS[@]}"; do
+      [[ -n "$HOST" ]] && break
+    done
+  fi
+}
+
+choose_host "${1:-}"
+printf '%s\n' "${HOSTS[@]}" | grep -qxF "$HOST" \
+  || die "no nixosConfigurations.$HOST in the flake (available: ${HOSTS[*]})"
+[[ -d "$FLAKE_DIR/hosts/$HOST" ]] || die "missing directory $FLAKE_DIR/hosts/$HOST"
 
 sudo -v
 (
@@ -89,12 +110,13 @@ install_age_key() {
 }
 
 regen_hardware() {
-  local out
+  local out dest
+  dest="$FLAKE_DIR/hosts/$HOST/hardware-configuration.nix"
   out="$(mktemp)"
   sudo nixos-generate-config --show-hardware-config > "$out"
-  install -m 644 "$out" "$FLAKE_DIR/hardware-configuration.nix"
+  install -m 644 "$out" "$dest"
   rm -f "$out"
-  echo "hardware-configuration.nix regenerated"
+  echo "hosts/$HOST/hardware-configuration.nix regenerated"
 }
 
 set_password() {
@@ -114,16 +136,13 @@ set_password() {
 
 install_age_key
 
-if confirm_yes "Regenerate hardware-configuration.nix for this machine?"; then
+if [[ ! -f "$FLAKE_DIR/hosts/$HOST/hardware-configuration.nix" ]]; then
+  regen_hardware
+elif confirm_no "hardware-configuration.nix already exists for $HOST. Regenerate it?"; then
   regen_hardware
 fi
 
 git -C "$REPO_DIR" add -A
-
-available="$(nix "${NIX_FLAGS[@]}" eval --raw "$FLAKE_DIR#nixosConfigurations" \
-  --apply 'c: builtins.concatStringsSep " " (builtins.attrNames c)')"
-[[ " $available " == *" $HOST "* ]] \
-  || die "no nixosConfigurations.$HOST in the flake (available: $available)"
 
 sudo git config --global --get-all safe.directory | grep -qxF "$REPO_DIR" \
   || sudo git config --global --add safe.directory "$REPO_DIR"
