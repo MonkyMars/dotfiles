@@ -110,7 +110,6 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 zinit wait lucid for \
     atload'_zsh_autosuggest_start' \
         zsh-users/zsh-autosuggestions \
-    OMZP::command-not-found \
     OMZP::sudo
 
 # Completion widget integration must follow compinit.

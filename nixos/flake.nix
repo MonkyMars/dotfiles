@@ -9,6 +9,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     helium = {
       url = "github:oxcl/nix-flake-helium-browser";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,6 +36,8 @@
     self,
     nixpkgs,
     home-manager,
+    sops-nix,
+    nix-index-database,
     helium,
     noctalia,
     hermes-agent,
@@ -37,6 +49,9 @@
 
       modules = [
         ./configuration.nix
+
+        sops-nix.nixosModules.sops
+        nix-index-database.nixosModules.nix-index
 
         # CachyOS kernel
         ({ pkgs, ... }: {

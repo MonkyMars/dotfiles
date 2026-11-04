@@ -8,15 +8,35 @@
   # Enable flakes
   nix.settings = {
     extra-substituters = [
-      "https://attic.xuyh0120.win/lantian"
+      "https://cache.lantian.pub/lantian"
     ];
 
     extra-trusted-public-keys = [
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
     ];
 
     experimental-features = [ "nix-command" "flakes" ];
   };
+
+  # Secrets (sops-nix): encrypted in the repo, decrypted at activation
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+
+    secrets."nas-credentials" = {
+      mode = "0400";
+    };
+
+    # Readable by wheel so `nix flake update` as your user can use it
+    secrets."nix-access-tokens" = {
+      group = "wheel";
+      mode = "0440";
+    };
+  };
+
+  # GitHub token for flake input downloads (avoids HTTP 429 rate limits)
+  nix.extraOptions = "!include ${config.sops.secrets."nix-access-tokens".path}";
 
   # Store maintenance
   nix.optimise.automatic = true;
@@ -27,9 +47,13 @@
       enable = true;
       extraArgs = "--keep-since 7d --keep 5";
     };
-    # Point this at your config repo to rebuild with just `nh os switch`:
-    # flake = "/home/monky/nixos-config";
+    flake = "/home/monky/dotfiles/nixos";
   };
+
+  # Command-not-found replacement + comma (run any package with `, name`)
+  programs.nix-index.enable = true;
+  programs.nix-index-database.comma.enable = true;
+  programs.command-not-found.enable = false;
 
   # Bootloader: Limine
   boot.loader.limine = {
@@ -97,6 +121,8 @@
       xwayland-satellite
       fzf
       fd
+      nil
+      nixd
     ];
   };
 
@@ -141,7 +167,7 @@
     device = "//192.168.178.42/storage";
     fsType = "cifs";
     options = [
-      "credentials=/etc/samba/credentials-monky"
+      "credentials=${config.sops.secrets."nas-credentials".path}"
       "uid=1000"
       "gid=1000"
       "file_mode=0644"
@@ -164,6 +190,8 @@
     jq
     cifs-utils
     clang
+    sops
+    age
   ];
 
   # Do not change this after the initial install
