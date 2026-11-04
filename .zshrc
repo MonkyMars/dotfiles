@@ -16,6 +16,7 @@ export file_manager=thunar
 export EDITOR="zeditor --wait"
 export VISUAL="$EDITOR"
 
+export BU_CDP_URL=http://127.0.0.1:9222
 export BUN_INSTALL="$HOME/.bun"
 export VOLTA_HOME="$HOME/.volta"
 export GOENV_ROOT="$HOME/.goenv"
@@ -136,3 +137,6 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 
 [[ -s "$BUN_INSTALL/_bun" ]] &&
     source "$BUN_INSTALL/_bun"
+
+# Hermes Agent command
+case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac
