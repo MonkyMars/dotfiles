@@ -1,28 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-launcher=$(printf "Heroic Games Launcher\nPrism Launcher\nSteam" | fzf --prompt="Choose a launcher: ")
+launcher=$(printf "Heroic Games Launcher\nPrism Launcher\nSteam" |
+    fzf --prompt="Choose a launcher: ")
 
-if [ -z "$launcher" ]; then
-  exit 0
-fi
+# Exit if nothing was selected
+[ -z "$launcher" ] && exit 0
 
-# Fully detach the launcher process so it survives after this terminal closes
+# Launch selected application independently
 case "$launcher" in
-  "Prism Launcher")
-    setsid prismlauncher >/dev/null 2>&1 &
-    ;;
-  "Heroic Games Launcher")
-    setsid heroic >/dev/null 2>&1 &
-    ;;
-  "Steam")
-    setsid steam >/dev/null 2>&1 &
-    ;;
+    "Heroic Games Launcher")
+        setsid -f heroic >/dev/null 2>&1
+        ;;
+    "Prism Launcher")
+        setsid -f prismlauncher >/dev/null 2>&1
+        ;;
+    "Steam")
+        setsid -f steam >/dev/null 2>&1
+        ;;
 esac
 
-# Close this terminal window (if running in kitty)
+# Close this Kitty window
 sleep 0.3
 if [ -n "$KITTY_PID" ]; then
-  kitty @ close-window --self
+    kitty @ close-window --self
 else
-  exit 0
+    exit 0
 fi
