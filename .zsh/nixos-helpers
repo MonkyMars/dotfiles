@@ -1,0 +1,71 @@
+export NIXOS_DIR="${NIXOS_DIR:-$HOME/dotfiles/nixos}"
+
+_nix_host() {
+  print -r -- "${NIXOS_HOST:-$HOST}"
+}
+
+# Flakes only see git-tracked files, so stage everything before building.
+_nix_stage() {
+  git -C "$NIXOS_DIR" add -A
+}
+
+# Rebuild and switch (nh shows a diff of what changed)
+nrs() {
+  _nix_stage && nh os switch "$NIXOS_DIR" -H "$(_nix_host)" "$@"
+}
+
+# Build and activate without adding a boot entry (reverts on reboot)
+nrt() {
+  _nix_stage && nh os test "$NIXOS_DIR" -H "$(_nix_host)" "$@"
+}
+
+# Build and apply on next boot only
+nrb() {
+  _nix_stage && nh os boot "$NIXOS_DIR" -H "$(_nix_host)" "$@"
+}
+
+# Update all flake inputs, then rebuild
+nup() {
+  nix flake update --flake "$NIXOS_DIR" && nrs "$@"
+}
+
+# Update a single input, then rebuild: nupi nixpkgs
+nupi() {
+  if [[ -z "$1" ]]; then
+    echo "usage: nupi <input>" >&2
+    return 1
+  fi
+  local input="$1"
+  shift
+  nix flake update "$input" --flake "$NIXOS_DIR" && nrs "$@"
+}
+
+# Roll back to the previous generation
+nrollback() {
+  sudo nixos-rebuild switch --rollback
+}
+
+# List system generations
+ngens() {
+  nixos-rebuild list-generations
+}
+
+# Garbage collect: keep last 7 days and at least 5 generations
+ngc() {
+  nh clean all --keep-since 7d --keep 5 "$@"
+}
+
+# Search for a package
+nsearch() {
+  nh search "$@"
+}
+
+# Open the config repo in Zed
+nedit() {
+  cd "$NIXOS_DIR" && zeditor .
+}
+
+# Check the flake evaluates without building anything
+ncheck() {
+  _nix_stage && nix flake check "$NIXOS_DIR"
+}

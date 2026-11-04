@@ -1,4 +1,3 @@
-
 # ── History ──────────────────────────────────────────────────────
 HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
 HISTSIZE=5000
@@ -134,6 +133,9 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 # ── Optional scripts ─────────────────────────────────────────────
 [[ -f "$HOME/dotfiles/.zsh/usb" ]] &&
     source "$HOME/dotfiles/.zsh/usb"
+
+[[ -f "$HOME/dotfiles/.zsh/nixos-helpers" ]] &&
+    source "$HOME/dotfiles/.zsh/nixos-helpers"
 
 [[ -s "$BUN_INSTALL/_bun" ]] &&
     source "$BUN_INSTALL/_bun"
