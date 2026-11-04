@@ -26,10 +26,14 @@
 
     go
     gopls
+    bun
     umu-launcher
     file
     ncdu
     dysk
+
+    onlyoffice-desktopeditors
+    jetbrains.idea
   ];
 
   home.sessionVariables = {

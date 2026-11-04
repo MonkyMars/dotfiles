@@ -55,6 +55,7 @@
         sops-nix.nixosModules.sops
         nix-index-database.nixosModules.nix-index
 
+
         # CachyOS kernel
         ({ pkgs, ... }: {
           nixpkgs.overlays = [

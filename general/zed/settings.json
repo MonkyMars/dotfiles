@@ -1,5 +1,5 @@
 {
-  "cli_default_open_behavior": "existing_window",
+  "cli_default_open_behavior": "new_window",
   "project_panel": {
     "dock": "left"
   },
@@ -13,29 +13,23 @@
     "dock": "left"
   },
   "agent_servers": {
-    "mistral-vibe": {
-      "type": "registry"
-    },
-    "cursor": {
-      "type": "registry"
-    },
-    "github-copilot-cli": {
-      "default_config_options": {
-        "mode": "https://agentclientprotocol.com/protocol/session-modes#agent",
-        "model": "auto",
-        "allow_all": "on"
+      "github-copilot-cli": {
+         "type": "registry"
       },
-      "type": "registry"
-    },
-    "claude-acp": {
-      "type": "registry",
-    },
+      "hermes-agent": {
+        "default_config_options": {
+          "edit_approval_policy": "workspace_session"
+        },
+        "type": "custom",
+        "command": "/etc/profiles/per-user/monky/bin/hermes",
+        "args": ["acp"]
+      }
   },
   "edit_predictions": {
     "provider": "copilot",
     "disabled_globs": ["*.env*"],
   },
-  "icon_theme": "VSCode Icons for Zed (Dark Official Icons)",
+  "icon_theme": "Colored Zed Icons Theme Dark",
   "agent": {
     "dock": "right",
     "inline_assistant_model": {
@@ -66,20 +60,6 @@
     "rust-analyzer": {
       "binary": {
         "path": "/usr/bin/rust-analyzer",
-      },
-    },
-  },
-  "language_models": {
-    "openai_compatible": {
-      "api_url": {
-        "api_url": "http://localhost:1234/v1",
-        "available_models": [
-          {
-            "name": "DeepSeekCoderLocal",
-            "display_name": "DeepSeek Coder V2 Lite (local)",
-            "max_tokens": 16384,
-          },
-        ],
       },
     },
   },

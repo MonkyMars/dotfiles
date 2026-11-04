@@ -58,12 +58,6 @@
   programs.nix-index-database.comma.enable = true;
   programs.command-not-found.enable = false;
 
-  services.power-profiles-daemon.enable = true;
-  services.fwupd.enable = true;
-  services.fstrim.enable = true;
-
-  networking.networkmanager.wifi.powersave = true;
-
   zramSwap.enable = true;
 
   # Bootloader: Limine
@@ -96,7 +90,6 @@
   };
 
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
   services.espanso.enable = true;
   services.desktopManager.plasma6.enable = true;
 
@@ -119,7 +112,7 @@
   users.users."monky" = {
     isNormalUser = true;
     description = "monky";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       kdePackages.kate
       wl-clipboard
@@ -128,8 +121,10 @@
       fd
       nil
       nixd
+      docker
+      docker-compose
     ];
-  };
+};
 
   services.keyd = {
     enable = true;
@@ -141,6 +136,7 @@
     };
   };
 
+  virtualisation.docker.enable = true;
   services.flatpak.enable = true;
   services.tailscale.enable = true;
   programs.zoxide.enable = true;
@@ -188,6 +184,9 @@
     ];
   };
 
+  environment.variables.LD_LIBRARY_PATH =
+    "${pkgs.stdenv.cc.cc.lib}/lib";
+
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -197,6 +196,7 @@
     clang
     sops
     age
+    stdenv.cc.cc.lib
   ];
 
   # Do not change this after the initial install
