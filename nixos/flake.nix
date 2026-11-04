@@ -1,5 +1,5 @@
 {
-  description = "void - NixOS configuration";
+  description = "NixOS configurations";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
@@ -43,12 +43,14 @@
     hermes-agent,
     nix-cachyos-kernel,
     ...
-  }: {
-    nixosConfigurations.void = nixpkgs.lib.nixosSystem {
+  }:
+  let
+    mkHost = name: nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
 
       modules = [
         ./configuration.nix
+        ./hosts/${name}
 
         sops-nix.nixosModules.sops
         nix-index-database.nixosModules.nix-index
@@ -80,6 +82,12 @@
           };
         }
       ];
+    };
+  in
+  {
+    nixosConfigurations = {
+      void = mkHost "void";
+      monkylaptop = mkHost "monkylaptop";
     };
   };
 }

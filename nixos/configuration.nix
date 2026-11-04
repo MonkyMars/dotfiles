@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   # Enable flakes
   nix.settings = {
     extra-substituters = [
@@ -38,6 +34,13 @@
   # GitHub token for flake input downloads (avoids HTTP 429 rate limits)
   nix.extraOptions = "!include ${config.sops.secrets."nix-access-tokens".path}";
 
+  # Laptop shit
+  hardware.bluetooth = {
+     enable = true;
+     powerOnBoot = false;
+   };
+  hardware.enableRedistributableFirmware = true;
+
   # Store maintenance
   nix.optimise.automatic = true;
 
@@ -55,24 +58,26 @@
   programs.nix-index-database.comma.enable = true;
   programs.command-not-found.enable = false;
 
+  services.power-profiles-daemon.enable = true;
+  services.fwupd.enable = true;
+  services.fstrim.enable = true;
+
+  networking.networkmanager.wifi.powersave = true;
+
+  zramSwap.enable = true;
+
   # Bootloader: Limine
   boot.loader.limine = {
     enable = true;
     efiSupport = true;
     maxGenerations = 10;
-
-    extraEntries = ''
-      /Windows
-          protocol: efi
-          path: boot():/EFI/Microsoft/Boot/bootmgfw.efi
-    '';
   };
+
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Faster gpu init on boot
   hardware.amdgpu.initrd.enable = true;
 
-  networking.hostName = "void";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Amsterdam";
@@ -164,7 +169,7 @@
 
   # Network NAS
   fileSystems."/mnt/nas" = {
-    device = "//192.168.178.42/storage";
+    device = "//100.81.106.40/storage";
     fsType = "cifs";
     options = [
       "credentials=${config.sops.secrets."nas-credentials".path}"
