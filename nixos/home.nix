@@ -26,7 +26,8 @@
     rustfmt
     clippy
     rust-analyzer
-
+ 
+    moonlight-qt
 
     python313
     go

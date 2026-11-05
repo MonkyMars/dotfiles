@@ -40,6 +40,7 @@
      powerOnBoot = false;
    };
   hardware.enableRedistributableFirmware = true;
+  hardware.uinput.enable = true;
 
   # Store maintenance
   nix.optimise.automatic = true;
@@ -94,6 +95,15 @@
     enable = true;
     package = pkgs.espanso-wayland;
   };
+
+
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
   services.desktopManager.plasma6.enable = true;
 
   services.xserver.xkb = {
@@ -115,7 +125,7 @@
   users.users."monky" = {
     isNormalUser = true;
     description = "monky";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "render" "video" "uinput" ];
     packages = with pkgs; [
       kdePackages.kate
       wl-clipboard
