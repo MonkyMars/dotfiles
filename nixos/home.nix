@@ -17,6 +17,9 @@
     mangohud
     protonup-qt
     btop
+    mpv
+    feh
+    nautilus
 
     rustc
     cargo
@@ -24,6 +27,8 @@
     clippy
     rust-analyzer
 
+
+    python313
     go
     gopls
     bun

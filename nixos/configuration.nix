@@ -90,7 +90,10 @@
   };
 
   services.xserver.enable = true;
-  services.espanso.enable = true;
+  services.espanso = {
+    enable = true;
+    package = pkgs.espanso-wayland;
+  };
   services.desktopManager.plasma6.enable = true;
 
   services.xserver.xkb = {
@@ -183,9 +186,6 @@
       "x-gvfs-show"
     ];
   };
-
-  environment.variables.LD_LIBRARY_PATH =
-    "${pkgs.stdenv.cc.cc.lib}/lib";
 
   environment.systemPackages = with pkgs; [
     vim
