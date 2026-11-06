@@ -15,6 +15,7 @@
     heroic
     prismlauncher
     mangohud
+    gamescope
     protonup-qt
     btop
     mpv

@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./sunshine-headless.nix
   ];
 
   networking.hostName = "void";

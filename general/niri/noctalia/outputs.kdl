@@ -28,6 +28,13 @@ output "eDP-1" {
     }
 }
 
+// Virtual monitor for sunshine
+output "HDMI-A-2" {
+    mode "2048x1280@119.993"
+    scale 1
+    position x=10000 y=0
+}
+
 workspace "1" {
     open-on-output "DP-1"
 }

@@ -115,14 +115,6 @@
     package = pkgs.espanso-wayland;
   };
 
-
-  services.sunshine = {
-    enable = true;
-    autoStart = true;
-    capSysAdmin = true;
-    openFirewall = true;
-  };
-
   services.desktopManager.plasma6.enable = true;
 
   services.xserver.xkb = {
