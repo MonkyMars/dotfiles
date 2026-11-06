@@ -34,6 +34,25 @@
   # GitHub token for flake input downloads (avoids HTTP 429 rate limits)
   nix.extraOptions = "!include ${config.sops.secrets."nix-access-tokens".path}";
 
+  services.greetd = {
+    enable = true;
+    settings.default_session = {
+      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd niri-session";
+      user = "greeter";
+    };
+  };
+
+  # Stops boot messages from scribbling over the greeter
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal";
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
+
   # Laptop shit
   hardware.bluetooth = {
      enable = true;
