@@ -14,6 +14,8 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
+  programs.fish.enable = true;
+
   # Secrets (sops-nix): encrypted in the repo, decrypted at activation
   sops = {
     defaultSopsFile = ./secrets/secrets.yaml;
@@ -63,15 +65,6 @@
 
   # Store maintenance
   nix.optimise.automatic = true;
-
-  programs.nh = {
-    enable = true;
-    clean = {
-      enable = true;
-      extraArgs = "--keep-since 7d --keep 5";
-    };
-    flake = "/home/monky/dotfiles/nixos";
-  };
 
   # Command-not-found replacement + comma (run any package with `, name`)
   programs.nix-index.enable = true;
@@ -163,8 +156,6 @@
   virtualisation.docker.enable = true;
   services.flatpak.enable = true;
   services.tailscale.enable = true;
-  programs.zoxide.enable = true;
-  programs.zsh.enable = true;
   programs.niri.enable = true;
 
   programs.neovim.enable = true;
@@ -173,7 +164,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.fish;
 
   hardware.graphics = {
     enable = true;

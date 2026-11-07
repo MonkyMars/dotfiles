@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+
+  imports = [
+    ./fish.nix
+  ];
+
   home.username = "monky";
   home.homeDirectory = "/home/monky";
 
@@ -8,6 +13,7 @@
     vesktop
     zed-editor
     kitty
+    ncspot
     alacritty
     eza
     fastfetch
@@ -27,7 +33,7 @@
     rustfmt
     clippy
     rust-analyzer
- 
+
     moonlight-qt
 
     python313
@@ -43,13 +49,15 @@
     jetbrains.idea
   ];
 
+  home.file."nas".source = config.lib.file.mkOutOfStoreSymlink "/mnt/nas";
+
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
 
   programs.atuin = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     package = pkgs.atuin;
   };
 
@@ -75,16 +83,12 @@
   programs.git = {
     enable = true;
     settings.user = {
-      name = "xx";
-      email = "xx@proton.me";
+      name = "Levi Noppers";
+      email = "levinoppers@proton.me";
     };
   };
 
   home.file = {
-    ".zshrc".source =
-      config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/dotfiles/.zshrc";
-
     ".config/atuin".source =
       config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/dotfiles/general/atuin";
