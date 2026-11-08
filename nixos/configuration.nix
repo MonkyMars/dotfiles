@@ -1,16 +1,20 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Enable flakes
   nix.settings = {
+    auto-optimise-store = true;
+    max-jobs = 8;
+    cores = 0;
     extra-substituters = [
       "https://cache.lantian.pub/lantian"
+      "https://nix-community.cachix.org"
+      "https://cache.nixos.org"
     ];
-
     extra-trusted-public-keys = [
       "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
+      "nix-community.cachix.org-1:mBshFgYSC15i7X2EnRAiTZ0dhQVEpVTgT7NUqpkP91M="
+      "cache.nixos.org-1:6NCHd0YV2ODXoN9Zt02NzUVnSUkcWQ9yDRa+0WP0lrs="
     ];
-
     experimental-features = [ "nix-command" "flakes" ];
   };
 

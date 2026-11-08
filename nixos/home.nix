@@ -66,6 +66,7 @@
     desktop.enable = true;
   };
 
+
   programs.helium.enable = true;
   programs.noctalia.enable = true;
 
