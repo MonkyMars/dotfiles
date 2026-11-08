@@ -41,6 +41,8 @@ in
     usbScript
     pkgs.grc        # used by the grc fish plugin
     pkgs.libnotify  # notify-send, used by the done fish plugin
+    pkgs.bat        # previews for fifc and fzf-fish
+    pkgs.fd         # file search for fifc and fzf-fish
   ];
 
   # ── Environment variables ──────────────────────────────────────
@@ -66,7 +68,13 @@ in
   programs.zoxide.enable = true;
   programs.atuin.enable = true;
   programs.carapace.enable = true;
-  programs.fzf.enable = true;
+
+  # fzf stays installed (the fish plugins use it), but its own fish key
+  # bindings are off: fzf-fish replaces Ctrl+T, and atuin keeps Ctrl+R.
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = false;
+  };
 
   # Keeps fish (instead of bash) inside `nix develop` / `nix shell`
   programs.nix-your-shell.enable = true;
@@ -110,6 +118,8 @@ in
       { name = "bass"; src = pkgs.fishPlugins.bass.src; }                           # run bash scripts, import their env
       { name = "grc"; src = pkgs.fishPlugins.grc.src; }                             # colorized command output
       { name = "colored-man-pages"; src = pkgs.fishPlugins.colored-man-pages.src; } # colored man output
+      { name = "fifc"; src = pkgs.fishPlugins.fifc.src; }                           # fzf-powered Tab completion
+      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }                   # fzf pickers (files, git, processes)
     ];
 
     # Abbreviations expand as you type, so history shows the real command
@@ -164,6 +174,9 @@ in
 
     # ── Functions ────────────────────────────────────────────────
     functions = {
+      fish_user_key_bindings = ''
+             bind \t _fifc
+           '';
       # usb: the script does everything except `usb -s`, which has to
       # change this shell's directory, so it is handled here.
       usb = {
@@ -292,6 +305,12 @@ in
 
       # done: only notify for commands that ran longer than 15 seconds
       set -g __done_min_cmd_duration 15000
+
+      # fzf-fish: don't bind Ctrl+R, so atuin keeps it
+      fzf_configure_bindings --history=
+
+      # fifc: Ctrl+O in the Tab popup opens the file in Zed
+      set -g fifc_editor zeditor
     '';
   };
 }
