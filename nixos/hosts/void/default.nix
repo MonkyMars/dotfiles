@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs,... }:
 
 {
   imports = [
@@ -6,8 +6,11 @@
     #./sunshine-headless.nix
   ];
 
+  environment.systemPackages = [ pkgs.sbctl ];
+
   networking.hostName = "void";
 
+  boot.loader.limine.secureBoot.enable = true;
   boot.loader.limine.extraEntries = ''
     /Windows
         protocol: efi

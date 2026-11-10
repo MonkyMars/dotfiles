@@ -142,6 +142,7 @@
       nixd
       docker
       docker-compose
+      unzip
     ];
 };
 
@@ -211,6 +212,7 @@
     sops
     age
     stdenv.cc.cc.lib
+    ffmpeg
   ];
 
   # Do not change this after the initial install
