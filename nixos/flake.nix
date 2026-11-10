@@ -30,6 +30,9 @@
 
     # CachyOS kernel
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
+    # Declarative Flatpaks
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
   outputs = {
@@ -41,6 +44,7 @@
     noctalia,
     hermes-agent,
     nix-cachyos-kernel,
+    nix-flatpak,
     ...
   }:
   let
@@ -54,6 +58,9 @@
         sops-nix.nixosModules.sops
         nix-index-database.nixosModules.nix-index
 
+        # Declarative Flatpaks
+        nix-flatpak.nixosModules.nix-flatpak
+        ./flatpak.nix
 
         # CachyOS kernel
         ({ pkgs, ... }: {
