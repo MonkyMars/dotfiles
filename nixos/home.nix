@@ -51,7 +51,7 @@
     prusa-slicer
   ];
 
-  home.file."nas".source = config.lib.file.mkOutOfStoreSymlink "/mnt/nas";
+  home.file."nas".source = config.lib.file.mkOutOfStoreSymlink "/mnt/nas/monky";
 
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
