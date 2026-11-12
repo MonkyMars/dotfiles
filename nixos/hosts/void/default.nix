@@ -25,7 +25,7 @@
     };
 
   fileSystems."/mnt/nas" =
-    { device = "fedora:/";
+    { device = "192.168.178.42:/";
       fsType = "nfs";
       options = [ "nofail" "x-systemd.automount" "x-systemd.requires=network-online.target" "hard" "timeo=60" "retrans=3" ];
     };

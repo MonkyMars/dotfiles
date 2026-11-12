@@ -26,10 +26,6 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "/var/lib/sops-nix/key.txt";
 
-    secrets."nas-credentials" = {
-      mode = "0400";
-    };
-
     # Readable by wheel so `nix flake update` as your user can use it
     secrets."nix-access-tokens" = {
       group = "wheel";

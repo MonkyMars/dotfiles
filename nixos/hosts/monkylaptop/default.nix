@@ -17,6 +17,12 @@
 
   networking.networkmanager.wifi.powersave = true;
 
+  fileSystems."/mnt/nas" =
+    { device = "fedora:/";
+      fsType = "nfs";
+      options = [ "nofail" "x-systemd.automount" "x-systemd.requires=network-online.target" "hard" "timeo=60" "retrans=3" ];
+    };
+
   boot.loader.limine.extraEntries = ''
     /Windows
         protocol: efi
