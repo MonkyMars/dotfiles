@@ -32,6 +32,7 @@
     rustfmt
     clippy
     rust-analyzer
+    arduino-ide
 
     moonlight-qt
 

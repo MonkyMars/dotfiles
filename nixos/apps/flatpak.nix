@@ -15,6 +15,7 @@
       "ai.lmstudio.lm-studio"
       "com.spotify.Client"
       "org.jeffvli.feishin"
+      "org.triliumnotes.Trilium"
     ];
 
     # Remove Flatpak apps that aren't declared above.

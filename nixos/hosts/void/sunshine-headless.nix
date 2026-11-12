@@ -1,5 +1,5 @@
 # ~/dotfiles/nixos/hosts/void/sunshine-headless.nix
-{ config, pkgs, lib, ... }:
+{ ... }:
 
 let
   # Unused HDMI port on the 9070 XT (card1)

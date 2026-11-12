@@ -72,6 +72,24 @@
             pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
         })
 
+        # udev rules for the micro:bit v2 (DAPLink, 0d28:0204) so OpenOCD can
+        # open it as a normal user. Shipped as its own 60-* rules file because
+        # uaccess tags must be set before 73-seat-late.rules (extraRules lands
+        # in 99-local.rules, which is too late).
+        ({ pkgs, ... }: {
+          services.udev.packages = [
+            pkgs.openocd
+            (pkgs.writeTextFile {
+              name = "microbit-udev-rules";
+              destination = "/etc/udev/rules.d/60-microbit.rules";
+              text = ''
+                SUBSYSTEM=="usb", ATTRS{idVendor}=="0d28", ATTRS{idProduct}=="0204", MODE="0660", TAG+="uaccess"
+                SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0d28", ATTRS{idProduct}=="0204", MODE="0660", TAG+="uaccess"
+              '';
+            })
+          ];
+        })
+
         home-manager.nixosModules.home-manager
 
         {

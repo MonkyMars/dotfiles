@@ -131,7 +131,7 @@
   users.users."monky" = {
     isNormalUser = true;
     description = "monky";
-    extraGroups = [ "networkmanager" "wheel" "docker" "render" "video" "uinput" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "render" "video" "uinput" "dialout" ];
     packages = with pkgs; [
       kdePackages.kate
       wl-clipboard
