@@ -60,7 +60,7 @@
 
         # Declarative Flatpaks
         nix-flatpak.nixosModules.nix-flatpak
-        ./flatpak.nix
+        ./apps/flatpak.nix
 
         # CachyOS kernel
         ({ pkgs, ... }: {

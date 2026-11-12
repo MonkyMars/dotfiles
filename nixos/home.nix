@@ -3,7 +3,7 @@
 {
 
   imports = [
-    ./fish.nix
+    ./apps/fish.nix
   ];
 
   home.username = "monky";
@@ -13,7 +13,6 @@
     vesktop
     zed-editor
     kitty
-    ncspot
     alacritty
     eza
     fastfetch
@@ -47,6 +46,8 @@
 
     onlyoffice-desktopeditors
     jetbrains.idea
+
+    prusa-slicer
   ];
 
   home.file."nas".source = config.lib.file.mkOutOfStoreSymlink "/mnt/nas";

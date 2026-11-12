@@ -39,7 +39,7 @@
 
   # GitHub token for flake input downloads (avoids HTTP 429 rate limits)
   nix.extraOptions = "!include ${config.sops.secrets."nix-access-tokens".path}";
-
+  services.displayManager.defaultSession = lib.mkForce "niri";
   services.greetd = {
     enable = true;
     settings.default_session = {
@@ -177,6 +177,7 @@
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
 
   programs.gamemode.enable = true;

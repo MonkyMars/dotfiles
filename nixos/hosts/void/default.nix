@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    #./sunshine-headless.nix
+#    ./sunshine-headless.nix
   ];
 
   environment.systemPackages = [ pkgs.sbctl ];

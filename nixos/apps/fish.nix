@@ -24,7 +24,7 @@ let
   usbScript = pkgs.writeShellScriptBin "usb" ''
     export PATH="${lib.makeBinPath usbDeps}:$PATH"
 
-    ${builtins.readFile ../.zsh/usb}
+    ${builtins.readFile ../../.zsh/usb}
 
     usb "$@"
     status=$?

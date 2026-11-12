@@ -1,0 +1,4 @@
+{
+  "primary": "{{colors.primary.default.hex}}",
+  "primary_light": "{{colors.primary.light.hex}}"
+}

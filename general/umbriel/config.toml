@@ -1,0 +1,235 @@
+[general]
+autostart = ["noctalia"]
+show_cheatsheet = false
+mod_key = "Super"
+
+[appearance]
+prefer_no_csd = true
+border_width = 1
+corner_radius = 0
+drag_opacity = 0.85
+
+[appearance.blur]
+enabled = true
+optimized = true
+passes = 3
+radius = 0
+noise = 0.02
+brightness = 0.9
+contrast = 0.9
+saturation = 1.1
+
+[[window_rule]]
+match.app_id = "^dev.noctalia.Noctalia$"
+default_floating = true
+default_floating_size_px = { width = 1020, height = 900 }
+
+# Feishin and Vesktop open silently on DP-1's workspace "5".
+# default_output limits the name lookup to DP-1, so "5" is unambiguous.
+[[window_rule]]
+match.app_id = "^feishin$"
+default_output = "DP-1"
+default_workspace = "5"
+default_focused = false
+background_render = true
+
+[[window_rule]]
+match.app_id = "^vesktop$"
+default_output = "DP-1"
+default_workspace = "5"
+default_focused = false
+
+[[window_rule]]
+match = {app_id = "^game-launcher$"}
+default_floating = true
+default_floating_size = {height = 0.3, width = 0.2}
+[[layer_rule]]
+match.namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+blur = true
+blur_ignore_alpha = 0.6
+blur_optimized = false
+
+# ---------------------------------------------------------------- outputs
+# Run `umbriel outputs` to get exact modes. If a mode below isn't accepted,
+# Umbriel falls back to the preferred mode and logs a warning.
+
+[output.DP-1]
+mode = "2560x1440@240"
+position = [0, 0]
+scale = 1.0
+focus_at_startup = true
+workspaces = ["1", "2", "3", "4", "5"]
+vrr = "fullscreen"
+# "auto" switches to HDR only for fullscreen content that supplies HDR
+# metadata. Use "on" to force HDR while testing.
+hdr = "on"
+sdr_white = 203
+bit_depth = 10
+
+[output.DP-2]
+mode = "1920x1080@165"
+position = [-2560, 0]
+scale = 1.0
+workspaces = ["6", "7", "8", "9", "10"]
+
+[output.eDP-1]
+mode = "2048x1280@60"
+position = [1920, 0]
+scale = 1.0
+focus_at_startup = true
+vrr = "always"
+workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+# Virtual monitor for Sunshine
+[output.HDMI-A-2]
+mode = "2048x1280@120"
+position = [10000, 0]
+scale = 1.0
+
+# ---------------------------------------------------------------- keybinds
+
+[keybinds]
+# System: screenshots, audio, brightness
+"Ctrl+Home" = "spawn noctalia msg screenshot-fullscreen"
+"Mod+Shift+S" = "spawn noctalia msg screenshot-region"
+"Print" = "spawn noctalia msg screenshot-fullscreen"
+"XF86AudioLowerVolume" = { action = "spawn noctalia msg volume-down 5", allow_when_locked = true }
+"XF86AudioRaiseVolume" = { action = "spawn noctalia msg volume-up 5", allow_when_locked = true }
+"XF86AudioMute" = { action = "spawn noctalia msg volume-mute", allow_when_locked = true, repeat = false }
+"XF86Launch6" = { action = "spawn noctalia msg mic-mute", repeat = false }
+"XF86MonBrightnessDown" = { action = "spawn noctalia msg brightness-down 5", allow_when_locked = true }
+"XF86MonBrightnessUp" = { action = "spawn noctalia msg brightness-up 5", allow_when_locked = true }
+
+# Workspaces (names, so Mod+1..5 jump to DP-1 and Mod+6..0 to DP-2)
+"Mod+1" = "workspace-switch --name 1"
+"Mod+2" = "workspace-switch --name 2"
+"Mod+3" = "workspace-switch --name 3"
+"Mod+4" = "workspace-switch --name 4"
+"Mod+5" = "workspace-switch --name 5"
+"Mod+6" = "workspace-switch --name 6"
+"Mod+7" = "workspace-switch --name 7"
+"Mod+8" = "workspace-switch --name 8"
+"Mod+9" = "workspace-switch --name 9"
+"Mod+0" = "workspace-switch --name 10"
+"Mod+Shift+1" = "column-move-to-workspace --name 1"
+"Mod+Shift+2" = "column-move-to-workspace --name 2"
+"Mod+Shift+3" = "column-move-to-workspace --name 3"
+"Mod+Shift+4" = "column-move-to-workspace --name 4"
+"Mod+Shift+5" = "column-move-to-workspace --name 5"
+"Mod+Shift+6" = "column-move-to-workspace --name 6"
+"Mod+Shift+7" = "column-move-to-workspace --name 7"
+"Mod+Shift+8" = "column-move-to-workspace --name 8"
+"Mod+Shift+9" = "column-move-to-workspace --name 9"
+"Mod+Shift+0" = "column-move-to-workspace --name 10"
+
+# Navigation
+"Mod+Ctrl+WheelDown" = { action = "column-move-to-workspace-next", cooldown_ms = 100 }
+"Mod+Ctrl+WheelUp" = { action = "column-move-to-workspace-previous", cooldown_ms = 100 }
+"Mod+WheelDown" = { action = "workspace-next", cooldown_ms = 100 }
+"Mod+WheelUp" = { action = "workspace-previous", cooldown_ms = 100 }
+
+# Window and column management
+"Mod+A" = "window-modify-primary-extent -0.1"
+"Mod+E" = "window-modify-primary-extent +0.1"
+"Mod+R" = "window-set-primary-extent 0.5"
+"Alt+Tab" = "spawn noctalia msg window-switcher hold"
+"Mod+Tab" = "spawn noctalia msg window-switcher hold"
+"Mod+BracketLeft" = "window-consume-or-expel-left"
+"Mod+BracketRight" = "window-consume-or-expel-right"
+"Mod+F" = "window-toggle-maximize"
+"Mod+Left" = "window-focus-left"
+"Mod+Right" = "window-focus-right"
+"Mod+Up" = "window-focus-up"
+"Mod+Down" = "window-focus-down"
+"Mod+Shift+Left" = "column-move-left"
+"Mod+Shift+Right" = "column-move-right"
+"Mod+Q" = "window-close"
+"Mod+Shift+F" = "window-toggle-fullscreen"
+"Mod+T" = "window-toggle-floating"
+"Mod+Shift+E" = "session-quit"
+"Mod+P" = "overview-toggle"
+"Mod+X" = "overview-toggle"
+
+# Pass shortcuts through to a game; press again to restore
+"Mod+Shift+Escape" = { action = "shortcuts-inhibit-toggle", allow_when_inhibited = true, repeat = false }
+
+# Noctalia controls
+"Mod+B" = "spawn gtk-launch $(xdg-settings get default-web-browser)"
+"Mod+C" = "spawn noctalia msg panel-toggle clipboard"
+"Mod+L" = "spawn noctalia msg session lock"
+"Mod+Z" = "spawn noctalia msg panel-toggle control-center"
+"Mod+Space" = "spawn noctalia msg panel-toggle launcher"
+
+# Applications
+"Mod+D" = "spawn gtk-launch vesktop"
+"Mod+G" = "spawn kitty --class game-launcher --title game-launcher.sh -e /home/monky/dotfiles/scripts/game-launcher.sh"
+"Mod+J" = "spawn flatpak run org.jellyfin.JellyfinDesktop"
+"Mod+O" = "spawn flatpak run org.triliumnotes.Trilium"
+"Mod+Return" = { action = "spawn gtk-launch kitty", repeat = false }
+"Mod+S" = "spawn flatpak run org.jeffvli.feishin"
+"Mod+Shift+X" = "spawn kitty --class package-helper -e /home/monky/dotfiles/scripts/package-helper.sh"
+"Mod+Alt+A" = "spawn wayscriber --daemon-toggle"
+
+[input]
+mod_right_double_click = "maximize"
+window_drag_toggle = "floating"
+[input.cursor]
+hide_timeout_ms = 2000
+hide_when_typing = true
+size = 24
+
+[input.focus]
+follows_mouse = true
+
+[input.mouse]
+accel_profile = "flat"
+scroll_button_lock = false
+sensitivity = -0.02
+
+[input.touch]
+map_to_output = "eDP-1"
+
+[input.touchpad]
+accel_profile = "flat"
+disable_while_typing = true
+disable_on_external_mouse = true
+scroll_method = "two_finger"
+
+
+[layout]
+gap = 4
+
+[layout.scrolling]
+default_extent_fraction = 0.5   # every new scrolling column opens at 1/2 of the screen
+
+[overview]
+background_blur = false        # false = sharp wallpaper behind the overview; true = blurred
+workspace_wallpaper = true     # shows the wallpaper inside each workspace preview
+
+[colors.overview]
+background_tint = "#10101400"       # alpha 00 = no tint over the wallpaper
+workspace_background = "#00000000"  # alpha 00 = no dark fill behind each workspace preview
+
+[colors.tab_bar]
+urgent = "#000000FF"
+
+[workspaces]
+empty_above = true
+back_and_forth = false
+
+
+[animation]
+duration_ms = 150
+enabled = true
+curve = "ease"
+[animation.layers]
+enabled = true
+curve = "easeoutcubic"
+duration_ms = 220
+
+
+[include]
+files = ["shaders/community/animation/panel-glide/effect.toml"]
+
+[include.optional]
+files = ["noctalia.toml"]
