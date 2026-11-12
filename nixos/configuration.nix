@@ -59,6 +59,13 @@
     TTYVTDisallocate = true;
   };
 
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";   # loads i2c-piix4 for AMD boards (7800X3D)
+  };
+
+  hardware.i2c.enable = true;
+
   # Laptop shit
   hardware.bluetooth = {
      enable = true;
@@ -131,7 +138,7 @@
   users.users."monky" = {
     isNormalUser = true;
     description = "monky";
-    extraGroups = [ "networkmanager" "wheel" "docker" "render" "video" "uinput" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "render" "video" "uinput" "dialout" "i2c" ];
     packages = with pkgs; [
       kdePackages.kate
       wl-clipboard
@@ -182,27 +189,6 @@
 
   programs.gamemode.enable = true;
 
-  # Network NAS
-  fileSystems."/mnt/nas" = lib.mkForce {
-    device = "//100.81.106.40/storage";
-    fsType = "cifs";
-    options = [
-      "credentials=${config.sops.secrets."nas-credentials".path}"
-      "uid=1000"
-      "gid=1000"
-      "file_mode=0644"
-      "dir_mode=0755"
-      "vers=3.1.1"
-      "_netdev"
-      "nofail"
-      "noauto"
-      "x-systemd.automount"
-      "x-systemd.idle-timeout=60"
-      "x-systemd.mount-timeout=10"
-      "x-gvfs-show"
-    ];
-  };
-
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -214,6 +200,7 @@
     age
     stdenv.cc.cc.lib
     ffmpeg
+    usbutils
   ];
 
   # Do not change this after the initial install

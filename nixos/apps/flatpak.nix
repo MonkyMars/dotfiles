@@ -15,7 +15,11 @@
       "ai.lmstudio.lm-studio"
       "com.spotify.Client"
       "org.jeffvli.feishin"
+<<<<<<< HEAD
       "org.triliumnotes.Trilium"
+=======
+      "org.openrgb.OpenRGB"
+>>>>>>> 9a0876a (nas)
     ];
 
     # Remove Flatpak apps that aren't declared above.

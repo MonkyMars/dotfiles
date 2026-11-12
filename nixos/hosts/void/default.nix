@@ -23,4 +23,10 @@
       fsType = "ext4";
       options = [ "nofail" "defaults" ];
     };
+
+  fileSystems."/mnt/nas" =
+    { device = "fedora:/";
+      fsType = "nfs";
+      options = [ "nofail" "x-systemd.automount" "x-systemd.requires=network-online.target" "hard" "timeo=60" "retrans=3" ];
+    };
 }
