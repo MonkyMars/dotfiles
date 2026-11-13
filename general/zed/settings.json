@@ -1,4 +1,17 @@
 {
+  "ssh_connections": [
+    {
+      "host": "void",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/monky/Coding/Fullstack/mamabloemetjes"
+          ]
+        }
+      ]
+    }
+  ],
   "cli_default_open_behavior": "new_window",
   "project_panel": {
     "dock": "left"
