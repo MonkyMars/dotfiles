@@ -6,9 +6,11 @@ command_timeout = 1000
 scan_timeout = 30
 
 format = """
+$hostname\
 $directory\
 $git_branch\
 $git_status\
+$nix_shell\
 $line_break\
 $character"""
 
@@ -24,6 +26,14 @@ error_symbol = '[❯](bold red)'
 vimcmd_replace_one_symbol = '[❮](bold yellow)'
 vimcmd_replace_symbol = '[❮](bold yellow)'
 vimcmd_visual_symbol = '[❮](bold yellow)'
+
+# Shows "hostname in ~/path" only when connected over SSH
+[hostname]
+ssh_only = true
+ssh_symbol = ''
+style = 'bold yellow'
+format = '[$ssh_symbol$hostname]($style) [in](dimmed white) '
+disabled = false
 
 [directory]
 style = 'bold white'
@@ -59,6 +69,17 @@ modified = '!${count}'
 staged = '+${count}'
 renamed = '»${count}'
 deleted = 'x${count}'
+
+# Shows when inside nix-shell, nix shell, or nix develop (shell.nix / flake.nix)
+[nix_shell]
+disabled = false
+heuristic = true
+style = 'bold blue'
+symbol = '❄ '
+impure_msg = 'nix'
+pure_msg = 'nix pure'
+unknown_msg = 'nix'
+format = '  [$symbol$state( \($name\))]($style)'
 
 [cmd_duration]
 style = 'dimmed yellow'
