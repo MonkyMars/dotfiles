@@ -70,16 +70,13 @@ staged = '+${count}'
 renamed = '»${count}'
 deleted = 'x${count}'
 
-# Shows when inside nix-shell, nix shell, or nix develop (shell.nix / flake.nix)
+# Shows only the symbol when inside nix-shell, nix shell, or nix develop
 [nix_shell]
 disabled = false
 heuristic = true
 style = 'bold blue'
-symbol = '❄ '
-impure_msg = 'nix'
-pure_msg = 'nix pure'
-unknown_msg = 'nix'
-format = '  [$symbol$state( \($name\))]($style)'
+symbol = '❄'
+format = '  [$symbol]($style)'
 
 [cmd_duration]
 style = 'dimmed yellow'
