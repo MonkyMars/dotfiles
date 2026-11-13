@@ -24,6 +24,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zapfast = {
+      url = "github:crmne/zapfast";
+      inputs.nixpkgs.follows = "nixpkgs";
+  };
+
     noctalia.url = "github:noctalia-dev/noctalia";
 
     hermes-agent.url = "github:NousResearch/hermes-agent";
@@ -45,6 +50,7 @@
     hermes-agent,
     nix-cachyos-kernel,
     nix-flatpak,
+    zapfast,
     ...
   }:
   let
@@ -103,6 +109,7 @@
               helium.homeModules.default
               noctalia.homeModules.default
               hermes-agent.homeManagerModules.default
+              zapfast.homeManagerModules.default
             ];
           };
         }

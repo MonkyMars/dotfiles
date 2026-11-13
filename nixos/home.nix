@@ -4,6 +4,7 @@
 
   imports = [
     ./apps/fish.nix
+    ./apps/gh.nix
   ];
 
   home.username = "monky";
@@ -33,6 +34,7 @@
     clippy
     rust-analyzer
     arduino-ide
+    gh
 
     moonlight-qt
 
@@ -68,7 +70,7 @@
     desktop.enable = true;
   };
 
-
+  programs.zapfast.enable = true;
   programs.helium.enable = true;
   programs.noctalia.enable = true;
 
