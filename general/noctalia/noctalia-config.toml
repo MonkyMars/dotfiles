@@ -1,3 +1,6 @@
+[audio]
+colorize_icons = true
+
 [backdrop]
 enabled = true
 
@@ -37,12 +40,13 @@ type = "nightlight"
 type = "notification"
 
 [[control_center.shortcuts]]
-type = "power_profile"
-
-[[control_center.shortcuts]]
 type = "audio"
 
+[[control_center.shortcuts]]
+type = "caffeine"
+
 [desktop_widgets]
+enabled = false
 schema_version = 2
 widget_order = [ "desktop-widget-0000000000000001" ]
 
@@ -73,8 +77,9 @@ widget_order = [ "desktop-widget-0000000000000001" ]
 active_scale = 1.1000000163912773
 background_opacity = 0.44999998994171619
 border_width = 0.5
+colorize_icons = true
 concave_edge_corners = false
-enabled = true
+enabled = false
 icon_size = 28
 magnification_scale = 1.2500000037252903
 pinned = [ "chromium", "discord", "dev.zed.Zed", "feishin" ]
@@ -137,12 +142,15 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
         show_keyboard_layout = true
         show_login_button = true
         show_media = true
+        show_media_controls = true
+        show_password_reveal = true
         show_session_buttons = true
         show_unlock_hint = true
         show_weather = true
 
 [notification]
 background_opacity = 0.44999998994171619
+colorize_icons = true
 position = "bottom_right"
 
 [osd]
@@ -156,12 +164,13 @@ enabled = [ "8bury/mini-docker", "davemhammer/tailscale" ]
 
 [shell]
 app_icon_color = "primary"
-app_icon_colorize = true
 avatar_path = "/home/monky/monky.webp"
 corner_radius_scale = 0.0
 niri_overview_type_to_launch_enabled = true
 panel_anchor_bar = "default"
 polkit_agent = true
+polkit_colorize_icons = true
+screen_time_colorize_icons = true
 settings_window_translucent = true
 
     [shell.greeter_sync]
@@ -169,6 +178,7 @@ settings_window_translucent = true
 
     [shell.launcher]
     categories = false
+    colorize_icons = true
     compact = true
     fetch_exchange_rates = false
     layout = "simple"
@@ -182,11 +192,16 @@ settings_window_translucent = true
     confirm_region = true
     remember_last_region = true
 
+    [shell.window_switcher]
+    colorize_icons = true
+
 [system.monitor]
 enabled = false
 
 [theme]
+builtin = "Noctalia"
 community_palette = "Oxocarbon"
+mode = "dark"
 source = "wallpaper"
 wallpaper_scheme = "soft"
 
@@ -195,6 +210,7 @@ wallpaper_scheme = "soft"
     community_ids = [
         "feishin",
         "ungoogled-chromium",
+        "lazyvim",
         "neovim",
         "zed",
         "heroiclauncher",
@@ -202,6 +218,7 @@ wallpaper_scheme = "soft"
         "steam",
         "obs",
         "zellij",
+        "bat",
         "starship",
         "yazi"
     ]
@@ -211,16 +228,19 @@ directory = "/home/monky/dotfiles/wallpapers"
 fill_color = "primary"
 
     [wallpaper.default]
-    path = "/home/monky/dotfiles/wallpapers/powerlines.png"
+    path = "/home/monky/dotfiles/wallpapers/train-sideview.png"
 
     [wallpaper.last]
-    path = "/home/monky/dotfiles/wallpapers/powerlines.png"
+    path = "/home/monky/dotfiles/wallpapers/train-sideview.png"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/monky/dotfiles/wallpapers/powerlines.png"
+    path = "/home/monky/dotfiles/wallpapers/train-sideview.png"
 
 [weather]
 enabled = false
+
+[widget.active_window]
+colorize_icons = true
 
 [widget.clock.actions]
 left = "panel-toggle control-center"
@@ -237,7 +257,14 @@ show_vpn_label = true
 [widget.status]
 type = "davemhammer/tailscale:status"
 
+[widget.taskbar]
+colorize_icons = true
+
+[widget.tray]
+colorize_icons = true
+
 [widget.workspaces]
 active_pill_size = 2.25
+colorize_icons = true
 hide_when_empty = true
 scale = 1.1000000000000001
