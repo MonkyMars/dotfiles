@@ -27,9 +27,13 @@
     zapfast = {
       url = "github:crmne/zapfast";
       inputs.nixpkgs.follows = "nixpkgs";
-  };
+    };
 
     noctalia.url = "github:noctalia-dev/noctalia";
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hermes-agent.url = "github:NousResearch/hermes-agent";
 
@@ -47,6 +51,7 @@
     nix-index-database,
     helium,
     noctalia,
+    noctalia-greeter,
     hermes-agent,
     nix-cachyos-kernel,
     nix-flatpak,
@@ -63,6 +68,9 @@
 
         sops-nix.nixosModules.sops
         nix-index-database.nixosModules.nix-index
+
+        # Noctalia greeter (project flake NixOS module)
+        noctalia-greeter.nixosModules.default
 
         # Declarative Flatpaks
         nix-flatpak.nixosModules.nix-flatpak

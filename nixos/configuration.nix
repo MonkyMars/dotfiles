@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   nix.settings = {
@@ -35,12 +35,14 @@
 
   # GitHub token for flake input downloads (avoids HTTP 429 rate limits)
   nix.extraOptions = "!include ${config.sops.secrets."nix-access-tokens".path}";
-  services.displayManager.defaultSession = lib.mkForce "niri";
-  services.greetd = {
+  services.displayManager.noctalia-greeter = {
     enable = true;
-    settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd niri-session";
-      user = "greeter";
+    settings = {
+      cursor = {
+        theme = "Bibata-Modern-Ice";
+        size = 24;
+        path = pkgs.bibata-cursors;
+      };
     };
   };
 
