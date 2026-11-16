@@ -70,10 +70,12 @@ staged = '+${count}'
 renamed = '»${count}'
 deleted = 'x${count}'
 
-# Shows only the symbol when inside nix-shell, nix shell, or nix develop
+# Shows only the symbol when inside nix-shell or nix develop.
+# heuristic is off: with it on, /nix/store entries on PATH (always present
+# on NixOS) make the icon show in every shell.
 [nix_shell]
 disabled = false
-heuristic = true
+heuristic = false
 style = 'bold blue'
 symbol = '❄'
 format = '  [$symbol]($style)'
