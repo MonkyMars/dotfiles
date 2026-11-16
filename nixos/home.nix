@@ -1,7 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-
   imports = [
     ./apps/fish.nix
     ./apps/gh.nix
@@ -51,9 +50,13 @@
     jetbrains.idea
 
     prusa-slicer
+
+    # Serein
+    inputs.serein.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
-  home.file."nas".source = config.lib.file.mkOutOfStoreSymlink "/mnt/nas/monky";
+  home.file."nas".source =
+    config.lib.file.mkOutOfStoreSymlink "/mnt/nas/monky";
 
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -74,9 +77,7 @@
   programs.helium.enable = true;
   programs.noctalia.enable = true;
 
-  programs.starship = {
-    enable = true;
-  };
+  programs.starship.enable = true;
 
   programs.neovim = {
     enable = true;

@@ -31,7 +31,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="vesktop"
+    match app-id="serein"
     open-floating false
     open-on-workspace "5"
 }

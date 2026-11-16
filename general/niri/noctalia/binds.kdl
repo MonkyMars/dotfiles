@@ -65,7 +65,7 @@ binds {
     Mod+space hotkey-overlay-title="Default Launcher: Toggle" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
 
     // Applications
-    Mod+D { spawn "gtk-launch" "vesktop"; }
+    Mod+D { spawn "serein"; }
     Mod+G hotkey-overlay-title="Game launcher" { spawn "kitty" "--class" "game-launcher" "--title" "game-launcher.sh" "-e" "/home/monky/dotfiles/scripts/game-launcher.sh"; }
     Mod+J hotkey-overlay-title="Open Jellyfin Desktop" { spawn "flatpak" "run" "org.jellyfin.JellyfinDesktop"; }
     Mod+O hotkey-overlay-title="Launch Trilium" { spawn-sh "flatpak run org.triliumnotes.Trilium"; }

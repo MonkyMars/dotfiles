@@ -8,6 +8,16 @@
 
   environment.systemPackages = [ pkgs.sbctl ];
 
+  systemd.services.wol-enp10s0 = {
+    description = "Enable Wake-on-LAN on enp10s0";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-pre.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.ethtool}/bin/ethtool -s enp10s0 wol g";
+    };
+  };
+
   networking.hostName = "void";
 
   boot.loader.limine.secureBoot.enable = true;

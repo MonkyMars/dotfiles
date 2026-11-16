@@ -9,6 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    serein = {
+      url = "github:ViceVerse-cz/Serein";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,6 +34,7 @@
     };
 
     noctalia.url = "github:noctalia-dev/noctalia";
+
     noctalia-greeter = {
       url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +49,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
-  outputs = {
+  outputs = inputs@{
     nixpkgs,
     home-manager,
     sops-nix,
@@ -58,6 +63,7 @@
     zapfast,
     ...
   }:
+
   let
     mkHost = name: nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -69,10 +75,8 @@
         sops-nix.nixosModules.sops
         nix-index-database.nixosModules.nix-index
 
-        # Noctalia greeter (project flake NixOS module)
         noctalia-greeter.nixosModules.default
 
-        # Declarative Flatpaks
         nix-flatpak.nixosModules.nix-flatpak
         ./apps/flatpak.nix
 
@@ -86,10 +90,7 @@
             pkgs.cachyosKernels.linuxPackages-cachyos-latest-zen4;
         })
 
-        # udev rules for the micro:bit v2 (DAPLink, 0d28:0204) so OpenOCD can
-        # open it as a normal user. Shipped as its own 60-* rules file because
-        # uaccess tags must be set before 73-seat-late.rules (extraRules lands
-        # in 99-local.rules, which is too late).
+        # micro:bit v2 udev rules
         ({ pkgs, ... }: {
           services.udev.packages = [
             pkgs.openocd
@@ -110,6 +111,11 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "backup";
+
+          # Pass all flake inputs to Home Manager
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+          };
 
           home-manager.users.monky = {
             imports = [
