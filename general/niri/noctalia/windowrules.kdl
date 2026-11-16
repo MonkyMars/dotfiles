@@ -1,9 +1,4 @@
 window-rule {
-    match app-id="^feishin$"
-    open-on-workspace "5"
-}
-
-window-rule {
     match app-id="game-launcher"
     open-floating true
     default-column-width { fixed 800; }
@@ -25,13 +20,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="Spotify"
-    open-floating false
-    open-on-workspace "5"
-}
-
-window-rule {
-    match app-id="serein"
+    match app-id="io.m51.Gelly" app-id="serein"
     open-floating false
     open-on-workspace "5"
 }

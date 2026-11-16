@@ -6,7 +6,7 @@
     ./sunshine-headless.nix
   ];
 
-  environment.systemPackages = [ pkgs.sbctl ];
+  environment.systemPackages = [ pkgs.sbctl pkgs.ddcutil ];
 
   systemd.services.wol-enp10s0 = {
     description = "Enable Wake-on-LAN on enp10s0";

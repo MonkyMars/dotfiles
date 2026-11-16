@@ -14,7 +14,6 @@
     packages = [
       "ai.lmstudio.lm-studio"
       "com.spotify.Client"
-      "org.jeffvli.feishin"
       "org.triliumnotes.Trilium"
       "org.openrgb.OpenRGB"
     ];

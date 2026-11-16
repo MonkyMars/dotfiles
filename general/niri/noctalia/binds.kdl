@@ -70,7 +70,7 @@ binds {
     Mod+J hotkey-overlay-title="Open Jellyfin Desktop" { spawn "flatpak" "run" "org.jellyfin.JellyfinDesktop"; }
     Mod+O hotkey-overlay-title="Launch Trilium" { spawn-sh "flatpak run org.triliumnotes.Trilium"; }
     Mod+Return { spawn "gtk-launch" "kitty"; }
-    Mod+S { spawn "flatpak" "run" "org.jeffvli.feishin"; }
+    Mod+S { spawn "gelly"; }
     Mod+Shift+X hotkey-overlay-title="Package helper" { spawn "kitty" "--class" "package-helper" "-e" "/home/monky/dotfiles/scripts/package-helper.sh"; }
     Mod+P hotkey-overlay-title="Toggle Overview" { toggle-overview; }
     Mod+X hotkey-overlay-title="Toggle Overview" { toggle-overview; }

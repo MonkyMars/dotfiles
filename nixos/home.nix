@@ -34,6 +34,7 @@
     rust-analyzer
     arduino-ide
     gh
+    gelly
 
     moonlight-qt
 

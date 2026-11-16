@@ -25,6 +25,7 @@ warning_threshold = 30
     warning_threshold = 50
 
 [brightness]
+enable_ddcutil = true
 sync_all_monitors = true
 
 [[control_center.shortcuts]]
@@ -82,10 +83,13 @@ concave_edge_corners = false
 enabled = false
 icon_size = 28
 magnification_scale = 1.2500000037252903
-pinned = [ "chromium", "discord", "dev.zed.Zed", "feishin" ]
+pinned = [ "helium", "vesktop", "dev.zed.Zed", "feishin" ]
 radius = 0
 shadow = false
 show_dots = true
+
+[hooks]
+wallpaper_changed = "/home/monky/dotfiles/scripts/wallpaper-change.sh $1"
 
 [idle]
 behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
@@ -112,12 +116,105 @@ transition_duration = 1000
 [lockscreen_widgets]
 enabled = false
 schema_version = 2
-widget_order = [ "lockscreen-login-box@eDP-1" ]
+widget_order = [
+    "lockscreen-login-box@eDP-1",
+    "lockscreen-login-box@winit",
+    "lockscreen-login-box@DP-1",
+    "lockscreen-login-box@DP-2",
+    "lockscreen-login-box@HDMI-A-2"
+]
 
     [lockscreen_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1280.0
+    cy = 1258.0
+    output = "DP-1"
+    placement_height = 1440.0
+    placement_width = 2560.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_media_controls = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "DP-2"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_media_controls = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-2"]
+    box_height = 196.0
+    box_width = 720.0
+    cx = 1024.0
+    cy = 1064.2962646484375
+    output = "HDMI-A-2"
+    placement_height = 1280.0
+    placement_width = 2048.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-2".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_media_controls = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 196.0
@@ -131,6 +228,35 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
     type = "login_box"
 
         [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_media_controls = true
+        show_password_reveal = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@winit"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 640.0
+    cy = 618.0
+    output = "winit"
+    placement_height = 800.0
+    placement_width = 1280.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@winit".settings]
         background_color = "surface_container"
         background_opacity = 0.88
         background_radius = 12.0
@@ -172,6 +298,8 @@ polkit_agent = true
 polkit_colorize_icons = true
 screen_time_colorize_icons = true
 settings_window_translucent = true
+umbriel_overview_close_on_launch_enabled = true
+umbriel_overview_type_to_launch_enabled = true
 
     [shell.greeter_sync]
     auto_sync = true
@@ -196,7 +324,7 @@ settings_window_translucent = true
     colorize_icons = true
 
 [system.monitor]
-enabled = false
+enabled = true
 
 [theme]
 builtin = "Noctalia"
@@ -206,7 +334,7 @@ source = "wallpaper"
 wallpaper_scheme = "soft"
 
     [theme.templates]
-    builtin_ids = [ "btop", "gtk3", "gtk4", "ghostty", "kitty", "niri", "qt", "starship" ]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "ghostty", "kcolorscheme", "kitty", "niri", "qt", "umbriel" ]
     community_ids = [
         "feishin",
         "ungoogled-chromium",
@@ -218,7 +346,6 @@ wallpaper_scheme = "soft"
         "steam",
         "obs",
         "zellij",
-        "bat",
         "starship",
         "yazi"
     ]
@@ -231,6 +358,15 @@ fill_color = "primary"
     path = "/home/monky/dotfiles/wallpapers/train-sideview.png"
 
     [wallpaper.last]
+    path = "/home/monky/dotfiles/wallpapers/train-sideview.png"
+
+    [wallpaper.monitors.DP-1]
+    path = "/home/monky/dotfiles/wallpapers/train-sideview.png"
+
+    [wallpaper.monitors.DP-2]
+    path = "/home/monky/dotfiles/wallpapers/train-sideview.png"
+
+    [wallpaper.monitors.HDMI-A-2]
     path = "/home/monky/dotfiles/wallpapers/train-sideview.png"
 
     [wallpaper.monitors.eDP-1]
@@ -268,3 +404,4 @@ active_pill_size = 2.25
 colorize_icons = true
 hide_when_empty = true
 scale = 1.1000000000000001
+urgent_color = "secondary"
