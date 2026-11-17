@@ -1,4 +1,4 @@
-{ pkgs,... }:
+{ config, pkgs,... }:
 
 {
   imports = [
@@ -15,6 +15,28 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.ethtool}/bin/ethtool -s enp10s0 wol g";
+    };
+  };
+
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";   # loads i2c-piix4 for AMD boards (7800X3D)
+  };
+
+  systemd.services.rgb-off = {
+    description = "Turn off all RGB";
+    wantedBy = [ "multi-user.target" "post-resume.target" ];
+    after = [ "openrgb.service" "post-resume.target" ];
+    requires = [ "openrgb.service" ];
+    serviceConfig = let
+      openrgb = "${config.services.hardware.openrgb.package}/bin/openrgb";
+    in {
+      Type = "oneshot";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 3";
+      ExecStart = [
+        "${openrgb} --device 0 --mode static --color 000000"
+        "${openrgb} --device 1 --zone 0 --size 30 --zone 1 --size 30 --mode direct --color 000000"
+      ];
     };
   };
 
